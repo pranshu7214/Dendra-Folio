@@ -1312,7 +1312,7 @@ footer {
 }
 
 /* =========================================
-   THE READING ROOM - CONTENT LAYOUTS
+   DENDRA FOLIO - CONTENT LAYOUTS
    ========================================= */
 
 /* 1. Page Intro Quote */
@@ -1625,7 +1625,7 @@ a.solid-glass:hover {
     opacity: 0; 
 }
 
-/* --- Mobile Adjustments for Reading Room --- */
+/* --- Mobile Adjustments for Dendra Folio --- */
 @media (max-width: 900px) {
     .reading-container {
         flex-direction: column;

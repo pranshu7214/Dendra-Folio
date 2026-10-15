@@ -1,2 +1,2 @@
-# Pranshu-space
-A quiet personal website for my poems, essays, and stories.
+# Dendra Folio
+An online publication under Dendra House for essays, poetry, and literary fiction.
