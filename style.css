@@ -1,0 +1,2575 @@
+:root {
+  --font-main: "Spectral", serif;
+  --text-color: #e0e0e0;
+  --ribbon-bg: rgba(5, 10, 15, 0.6); /* Slightly darker for contrast */
+  
+  /* UPDATED THEME COLORS */
+  --color-earth: #81C784; /* Softer Earth Green */
+  --color-fire: #E57373;  /* Softer Fire Red */
+  --color-water: #64B5F6; /* Softer Water Blue */
+}
+
+html { scroll-behavior: smooth; }
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+body {
+  font-family: var(--font-main);
+  background: #000;
+  color: var(--text-color);
+  overflow-x: hidden;
+  /* Fix for sticky footer on short pages */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- VISUAL POLISH --- */
+::selection {
+  background: rgba(255, 215, 0, 0.3); /* Gold selection background */
+  color: #fff;
+}
+
+/* --- CUSTOM SCROLLBAR --- */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #050508; 
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2); 
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #FFD700; /* Gold on hover */
+}
+
+/* --- BACKGROUNDS --- */
+.space-bg {
+  position: fixed;
+  top: -20%; left: 0;
+  width: 100%; height: 140%; /* Taller to allow parallax movement */
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("images/universe.webp") center/cover no-repeat;
+  z-index: -10; /* Pushed further back */
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden; /* Improves scroll/parallax performance */
+}
+
+/* Page Specific Backgrounds */
+.space-bg.bg-poems {
+  background-image: radial-gradient(circle at center, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.7) 100%),
+              url("images/bg-poems.webp");
+}
+.space-bg.bg-essays {
+  background-image: radial-gradient(circle at center, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 100%),
+              url("images/bg-essays.webp");
+}
+.space-bg.bg-fiction {
+  background-image: radial-gradient(circle at center, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.85) 100%),
+              url("images/bg-fiction.webp");
+}
+.space-bg.bg-about {
+  background-image: radial-gradient(circle at center, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 100%),
+              url("images/bg-about.webp");
+}
+
+/* PLANETS: Fixed by default, JS controls position */
+.planet {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-repeat: no-repeat;
+  background-size: contain;
+  pointer-events: none;
+  z-index: -1; /* Behind content, in front of background */
+  will-change: transform, opacity;
+  transform: translateZ(0); /* Force hardware acceleration */
+  backface-visibility: hidden;
+  contain: layout paint;
+}
+
+/* Initial States */
+.jupiter { 
+  width: 450px; height: 450px; 
+  background-image: url("images/jupiter.png"); 
+  opacity: 0; /* JS will handle fade in */
+}
+
+.saturn { 
+  width: 400px; height: 400px; 
+  background-image: url("images/saturn.png"); 
+  opacity: 0; 
+}
+
+/* --- RIBBON (Desktop Layout) --- */
+.ribbon {
+  position: fixed;
+  top: 0; width: 100%; 
+  height: 90px; /* Slightly bigger ribbon */
+  background: rgba(10, 15, 20, 0.95);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  justify-content: space-between; /* Spread left, center, right */
+  align-items: center;
+  z-index: 1000;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.8); /* Reduced shadow for performance */
+  padding: 0 3rem;
+}
+
+/* Layout Grid: Left Nav | Logo | Right Nav */
+.nav-left, .nav-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 4rem; /* Increased gap between words */
+}
+
+.nav-left { justify-content: flex-start; }
+.nav-right { justify-content: flex-end; }
+
+/* LOGO SPILL OVER */
+.nav-logo {
+  flex: 0 0 auto; /* Don't stretch */
+  position: relative;
+  z-index: 1001;
+}
+
+.nav-logo img {
+  height: 115px; /* Slightly larger */
+  margin-top: 25px; /* Adjusted spill */
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.7));
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.nav-logo:hover img {
+  transform: scale(1.1) rotate(5deg); /* Pop up effect */
+}
+
+/* NAV LINKS */
+.nav-left a, .nav-right a, .nav-socials a {
+  text-decoration: none; color: #fff;
+  font-size: 1.2rem; 
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: color 0.5s, text-shadow 0.5s;
+}
+
+/* Yellow Hover */
+.nav-left a:hover, .nav-right a:hover, .nav-socials a:hover { 
+  color: #FFD700; 
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+}
+
+/* Active State (Static Yellow) */
+.nav-left a.active, .nav-right a.active {
+  color: #FFD700;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+}
+
+/* SUBSCRIBE BUTTON */
+.subscribe-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 215, 0, 0.4);
+    color: #e0e0e0;
+    padding: 0.5rem 1.5rem;
+    font-family: var(--font-main);
+    font-size: 0.9rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.5s ease;
+    border-radius: 2px;
+    margin-left: 2rem;
+    cursor: pointer;
+}
+.subscribe-btn:hover {
+    color: #FFD700;
+    border-color: #FFD700;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.4);
+}
+
+/* Mobile Elements - Hidden on Desktop */
+.menu-toggle, .mobile-home-icon, .mobile-nav-overlay { display: none; }
+
+/* Force hide mobile menu on desktop even if JS sets inline styles */
+@media (min-width: 901px) {
+    .mobile-nav-overlay { display: none !important; }
+}
+
+.mobile-home-icon.active {
+  color: #FFD700;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+}
+
+/* --- HERO --- */
+.hero {
+  height: 100vh;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  text-align: center; padding-top: 140px;
+  position: relative;
+  z-index: 2; /* Ensure title sits above planets */
+}
+
+.hero h1 {
+  /* One point bigger - increased clamp max */
+  font-size: clamp(3rem, 6vw, 5.5rem); 
+  color: #fff;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  letter-spacing: 0.2em; text-transform: uppercase;
+  margin-bottom: 2rem; 
+  animation: floatHero 6s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes floatHero {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -15px; }
+}
+
+.spinning-logo { 
+  width: 250px; 
+  opacity: 0.9; 
+  /* Combine spinning (transform) and floating (translate) */
+  animation: spinForever 25s infinite linear, floatHero 6s ease-in-out infinite; 
+  will-change: transform, translate; 
+}
+
+@keyframes spinForever {
+  to { transform: rotate(360deg); } 
+}
+
+/* Disable spinning logo animation on mobile to reduce lag */
+@media (max-width: 900px) {
+  .spinning-logo {
+    animation: none !important;
+    will-change: auto !important;
+    width: 140px; /* Smaller logo under title on mobile */
+  }
+}
+
+/* --- QUOTE --- */
+.about {
+  min-height: 60vh;
+  display: flex; justify-content: center; align-items: center;
+  padding: 4rem 15vw; text-align: center;
+  position: relative;
+  z-index: 2; /* Above planets if they cross */
+}
+
+@keyframes quoteGlow {
+  0%, 100% { text-shadow: 0 0 20px rgba(255, 215, 0, 0.3), 0 0 40px rgba(255, 255, 255, 0.2); }
+  50% { text-shadow: 0 0 30px rgba(255, 215, 0, 0.6), 0 0 60px rgba(255, 255, 255, 0.4); }
+}
+
+.quote-text { 
+    font-size: clamp(1.4rem, 2.5vw, 2.2rem); 
+    font-style: italic; 
+    line-height: 1.8; 
+    color: #f0f0f0; /* More White */
+    /* animation: quoteGlow 4s ease-in-out infinite; */
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+    letter-spacing: 0.05em;
+}
+
+/* Disable quote glow animation on mobile to reduce lag */
+@media (max-width: 900px) {
+  .quote-text {
+    animation: none !important;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.3) !important;
+    font-size: 1rem !important; /* Smaller quote on mobile */
+  }
+  .hero h1 { 
+    animation: none !important; 
+    font-size: 2.2rem !important; /* Smaller title on mobile */
+  }
+}
+.highlight { color: #fff; font-weight: 600; text-shadow: 0 0 15px rgba(255, 255, 255, 0.2); }
+
+/* --- LIBRARY CARDS --- */
+.library { min-height: 80vh; padding: 2rem 2rem 6rem; display: flex; justify-content: center; position: relative; z-index: 5; }
+
+/* Theme Borders & Colors */
+/* Note: Specific theme borders are now handled by .solid-glass.theme-name */
+
+/* --- MUSEUM DISPLAY --- */
+.museum-display {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr; /* Balanced for medium size */
+  gap: 4rem;
+  width: 100%;
+  max-width: 1200px; /* Aligns with other content blocks */
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  align-items: center;
+  min-height: 60vh; /* Give it some space */
+}
+
+.museum-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+  align-items: flex-start;
+  padding-left: 3rem;
+}
+
+.museum-item {
+  cursor: pointer;
+  position: relative;
+  padding-left: 3.5rem;
+  transition: color 0.4s ease;
+  text-decoration: none;
+  display: block;
+}
+
+.museum-item h2 {
+  font-size: clamp(1.9rem, 4vw, 3.4rem);
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  transition: color 0.4s ease;
+}
+
+.museum-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 2px;
+  background: rgba(255, 215, 0, 0.3);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: width, box-shadow;
+}
+
+.museum-item.active h2 {
+  color: #fff;
+}
+
+.museum-item.active::before {
+  width: 40px;
+  background: #FFD700;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+}
+
+@media (hover: hover) {
+  .museum-item:hover h2 { 
+    color: #fff; 
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.2); /* Negligible glow */
+  }
+  .museum-item:hover::before { width: 40px; background: #FFD700; box-shadow: 0 0 15px rgba(255, 215, 0, 0.5); }
+}
+
+.museum-stage {
+  align-self: center;
+  margin-top: 2rem;
+}
+
+.stage-content {
+  padding: 2.5rem;
+  min-height: 280px; /* Adjusted to match menu height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5rem;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-mask-image: linear-gradient(to right, black 70%, transparent 100%);
+  mask-image: linear-gradient(to right, black 70%, transparent 100%);
+}
+
+.stage-content.stage-fade-out #stage-label,
+.stage-content.stage-fade-out #stage-quote {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+#stage-label {
+  font-size: 0.95rem;
+  letter-spacing: 2px;
+  color: #FFD700;
+  text-transform: uppercase;
+  font-weight: 600;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#stage-quote {
+  font-size: 1.3rem;
+  font-style: italic;
+  line-height: 1.6;
+  color: #e0e0e0;
+  text-shadow: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  text-align: justify;
+}
+
+/* Museum Stage Card Hover - Yellow Glow */
+.stage-content:hover {
+    border-color: #FFD700 !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(255, 215, 0, 0.3) !important;
+}
+
+.museum-mobile-content {
+  display: none;
+}
+
+/* =========================================
+   SHOWCASE GALLERY
+   ========================================= */
+.showcase-container {
+    max-width: 1050px;
+    margin: 0rem auto;
+    padding: 0 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 5rem; /* Spacious breathing room between sections */
+}
+
+.category-heading {
+    text-align: center;
+    font-size: 1.6rem;
+    letter-spacing: 4px;
+    color: #ffcc00; 
+    text-transform: uppercase;
+    margin-bottom: 6rem;
+    font-weight: 600;
+}
+
+.card-grid {
+    display: grid;
+    gap: 2rem;
+}
+
+/* 3 Columns for Prose */
+.prose-grid {
+    grid-template-columns: 0.85fr 1fr;
+    align-items: center;
+}
+
+.prose-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* 3 Columns for Verse (Matching Prose Layout) */
+.verse-grid {
+    grid-template-columns: 0.85fr 1fr;
+    align-items: center;
+}
+
+/* 1 Column for Tales */
+.tales-grid {
+    grid-template-columns: 1fr;
+}
+
+/* Glass Panel Base */
+.glass-panel {
+    background: rgba(10, 15, 20, 0.5); /* Increased transparency */
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    position: relative; /* Required for torch effect positioning */
+    overflow: hidden;   /* Keeps torch glow inside */
+    /* Add the noise texture to match museum cards exactly */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.07'/%3E%3C/svg%3E");
+    padding: 2.5rem 2rem;
+    text-decoration: none;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: box-shadow 0.8s ease, background 0.8s ease, border-color 0.8s ease;
+    
+    /* Hardware acceleration to prevent text blur on hover */
+    -webkit-font-smoothing: antialiased;
+    will-change: transform;
+}
+
+.glass-panel:hover {
+    transform: translateY(-5px); /* Match solid-glass lift */
+    background: rgba(10, 15, 20, 0.65);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Theme specific hovers for Showcase Gallery */
+.prose-grid .showcase-card:hover {
+    border-color: var(--color-earth);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(129, 199, 132, 0.3); /* Increased glow */
+}
+
+.verse-grid .showcase-card:hover {
+    border-color: var(--color-fire);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(229, 115, 115, 0.3);
+}
+
+.tales-grid .showcase-card:hover {
+    border-color: var(--color-water);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(100, 181, 246, 0.3);
+}
+
+/* Subscribe Card Hover */
+.subscribe-card:hover {
+    border-color: #FFD700;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(255, 215, 0, 0.3);
+}
+
+/* Inner Card Typography */
+.card-meta {
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    display: block;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    font-weight: 400;
+    line-height: 1.4;
+}
+
+.read-link {
+    font-size: 0.85rem;
+    color: #ffcc00;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    opacity: 0.7;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    margin-top: auto; /* Pushes the link to the bottom */
+}
+
+.glass-panel:hover .read-link {
+    opacity: 1;
+    transform: translateY(-3px);
+}
+
+/* Custom Tales Spotlight Card */
+.large-title {
+    font-size: 1.8rem; /* Made smaller */
+    color: #fff; /* Changed to white */
+    margin-bottom: 1.5rem;
+}
+
+.tales-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Add space at the bottom of the showcase so it doesn't touch footer */
+#showcase-gallery {
+    padding-bottom: 4rem;
+}
+
+.read-button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: #ffcc00;
+    color: #000;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 6px;
+    transition: background 0.5s ease;
+}
+
+.read-button:hover {
+    background: #e6b800;
+}
+
+/* =========================================
+   MOBILE RESPONSIVENESS
+   ========================================= */
+@media (max-width: 900px) {
+    .prose-grid, .verse-grid {
+        grid-template-columns: 1fr; /* Stacks cards vertically */
+    }
+    
+    .showcase-container {
+        margin: 2rem auto;
+        padding: 0 1rem;
+        gap: 4rem;
+    }
+    
+    .glass-panel {
+        padding: 1.8rem 1.5rem;
+    }
+    
+    .large-title {
+        font-size: 1.8rem;
+    }
+}
+
+/* --- FOOTER --- */
+/* --- PREMIUM HEADER SUBSCRIBE BUTTON --- */
+.nav-right .subscribe-btn {
+    color: #FFD700;
+    text-decoration: none;
+    font-size: 0.95rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    border: 1px solid rgba(255, 215, 0, 0.4);
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px; /* Elegant pill shape */
+    transition: all 0.5s ease;
+    margin-left: 1rem;
+    cursor: pointer;
+}
+.nav-right .subscribe-btn:hover {
+    background: rgba(255, 215, 0, 0.1);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+    border-color: #FFD700;
+}
+
+footer {
+    position: relative; 
+    z-index: 60; 
+    padding: 1.2rem 4rem 1rem;
+    background: rgba(10, 15, 20, 0.95);
+    border-top: 1px solid rgba(255,255,255,0.05); 
+    margin-top: auto; 
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    gap: 2rem;
+}
+
+/* The Catch (Subscribe Area) */
+.footer-catch {
+    text-align: left;
+    justify-self: start;
+}
+.footer-catch p {
+    color: #e0e0e0;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.05em;
+    max-width: 350px; /* Constrain width */
+}
+.footer-subscribe-form {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-start;
+    align-items: center;
+}
+.footer-subscribe-form input[type="email"] {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    padding: 0.6rem 1rem;
+    border-radius: 4px;
+    font-family: var(--font-main);
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.3s;
+    width: 200px;
+}
+.footer-subscribe-form input[type="email"]:focus {
+    border-color: #FFD700;
+}
+.footer-subscribe-form button {
+    background: #FFD700;
+    color: #000;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: var(--font-main);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+.footer-subscribe-form button:hover {
+    background: #fff;
+    transform: translateY(-2px);
+}
+.footer-success-message {
+    margin-top: 1rem;
+}
+.footer-success-message p {
+    color: #FFD700;
+    font-style: italic;
+    font-size: 1rem;
+    margin-bottom: 0; /* Override generic p margin */
+}
+
+/* Right column container */
+.footer-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Align content to the right */
+    text-align: right;
+    justify-self: end;
+    gap: 2rem;
+}
+
+/* Site Map Links */
+.footer-links {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+.footer-links a {
+    color: #aaa;
+    text-decoration: none;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    transition: color 0.5s;
+}
+.footer-links a:hover {
+    color: #FFD700;
+}
+.footer-links span {
+    color: rgba(255,255,255,0.2);
+}
+
+/* Social Icons (Elegant Circles) */
+.footer-socials {
+    display: flex;
+    gap: 1.5rem;
+}
+.footer-socials a {
+    color: #aaa;
+    font-size: 1.2rem;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 50%;
+    transition: all 0.5s ease;
+    text-decoration: none;
+}
+.footer-socials a:hover {
+    color: #FFD700;
+    border-color: #FFD700;
+    background: rgba(255, 215, 0, 0.1);
+    transform: translateY(-3px);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+}
+
+/* Brand Specific Hovers */
+.footer-socials a[href*="instagram"]:hover {
+    color: #E4405F;
+    border-color: #E4405F;
+    background: rgba(228, 64, 95, 0.1);
+    box-shadow: 0 0 15px rgba(228, 64, 95, 0.4);
+}
+.footer-socials a[href*="x.com"]:hover {
+    color: #fff;
+    border-color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+.footer-socials a[href*="linkedin"]:hover {
+    color: #0077b5;
+    border-color: #0077b5;
+    background: rgba(0, 119, 181, 0.1);
+    box-shadow: 0 0 15px rgba(0, 119, 181, 0.4);
+}
+.footer-socials a[href^="mailto"]:hover {
+    color: #EA4335; /* Gmail Red */
+    border-color: #EA4335;
+    background: rgba(234, 67, 53, 0.1);
+    box-shadow: 0 0 15px rgba(234, 67, 53, 0.4);
+}
+
+/* Bottom Copyright */
+.footer-bottom {
+    text-align: center; /* Centered copyright */
+    justify-self: center;
+    width: auto;
+    border-top: none;
+    padding-top: 0;
+}
+.footer-bottom p {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.05em;
+}
+.legal-link {
+    color: rgba(255, 255, 255, 0.2);
+}
+.legal-link a {
+    color: #666;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+.legal-link a:hover {
+    color: #FFD700;
+}
+.footer-bottom .footer-quote {
+    font-style: italic;
+    color: #888;
+    margin-top: 0.5rem;
+}
+
+/* --- MOBILE OPTIMIZATION --- */
+@media (max-width: 900px) {
+  /* Planets REMOVED for mobile */
+  .planet { display: none !important; }
+  
+  /* Mobile Background Override - COMPLETE DISABLE of parallax */
+  .space-bg {
+      background-attachment: scroll !important; /* Fixes scroll lag */
+      filter: none !important; /* Disable heavy filters */
+      will-change: auto !important; /* Save memory on mobile */
+      transform: none !important; /* Disable parallax transform completely */
+      position: fixed !important; /* Keep fixed but no transform */
+      height: 100dvh !important; /* Prevent URL bar jump */
+      top: 0 !important; /* Reset the offset used for desktop parallax */
+  }
+
+  /* PERFORMANCE PATCH: Disable heavy effects on mobile */
+  .ribbon, .mobile-nav-overlay, footer {
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      background: rgba(10, 15, 20, 0.95) !important; /* Less transparent */
+  }
+  
+  /* Footer Mobile */
+  footer {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 1rem !important; 
+    padding: 1.5rem 1rem 1rem !important; 
+  }
+
+  /* 1. Tame the Subscribe Button */
+  .footer-catch {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer-catch p {
+    font-size: 0.75rem !important;
+    margin-bottom: 0.5rem !important;
+    max-width: none;
+  }
+  .footer-subscribe-form {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.8rem;
+    align-items: center;
+  }
+  .footer-subscribe-form input[type="email"] {
+    width: 85%;
+    max-width: 300px;
+    font-size: 0.8rem !important;
+  }
+  .footer-subscribe-form button {
+    padding: 0.5rem 1.5rem !important;
+    font-size: 0.7rem !important;
+  }
+  /* 2. Fix the Missing Links (Essays/Poems/etc) */
+  .footer-right {
+    width: 100%;
+    align-items: center !important;
+    gap: 0.8rem !important; 
+    justify-content: center;
+  }
+
+  .footer-links {
+    width: 100%;
+    justify-content: center !important;
+    flex-wrap: wrap !important; /* This brings "Essays" back! */
+    gap: 0.3rem !important;
+  }
+
+  /* Hide the dots (·) on mobile because they look weird when wrapped */
+  .footer-links span {
+    display: none !important;
+  }
+
+  /* Add nice spacing to links since dots are gone */
+  .footer-links a {
+    margin: 0 0.2rem;
+    font-size: 0.7rem !important; 
+    border-bottom: 1px solid rgba(255,255,255,0.1); /* Subtle underline */
+    padding-bottom: 1px;
+  }
+
+  /* 3. Social Icons Spacing */
+  .footer-socials {
+    gap: 0.8rem !important; 
+  }
+
+  .footer-socials a {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 0.8rem !important;
+  }
+
+  .footer-bottom {
+    width: 100%;
+    padding-top: 0;
+  }
+
+  .footer-bottom p {
+    font-size: 0.65rem !important;
+  }
+  
+  .card, .ribbon, .nav-logo img {
+      box-shadow: none !important;
+      filter: none !important;
+  }
+
+  /* Ribbon Changes */
+  .ribbon { justify-content: space-between; padding: 0 2rem; height: 60px; }
+  .desktop-only { display: none; }
+  .menu-toggle { display: block; font-size: 1.1rem; color: #fff; cursor: pointer; }
+  .mobile-home-icon { display: block; font-size: 0.95rem; color: #fff; text-decoration: none; }
+  .mobile-home-icon.active { color: #FFD700 !important; text-shadow: 0 0 10px rgba(255, 215, 0, 0.6) !important; }
+
+  /* Center Logo on Mobile */
+  .nav-logo {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+  }
+
+  /* Adjust Logo for Mobile Ribbon */
+  .nav-logo img { 
+      height: 75px; margin-top: 18px; /* Slightly larger mobile logo */
+      filter: none; transform: none; 
+  }
+  .nav-logo:hover img { transform: none !important; }
+
+  /* Mobile Menu Overlay - Floating Glass Card */
+  .mobile-nav-overlay {
+      display: none; /* JS toggles flex */
+      position: fixed; 
+      top: 75px; right: 1.5rem; left: auto; width: 220px;
+      background: rgba(15, 20, 25, 0.95) !important;
+      border: 1px solid rgba(255, 215, 0, 0.15);
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.1);
+      flex-direction: column; padding: 1.5rem; gap: 1.2rem;
+      z-index: 2000;
+      align-items: center;
+  }
+  .mobile-nav-overlay a {
+      color: #e0e0e0; font-size: 0.9rem; text-decoration: none; text-transform: uppercase;
+      letter-spacing: 0.15em;
+      transition: color 0.3s, text-shadow 0.3s;
+  }
+  .mobile-nav-overlay a.active { color: #FFD700; text-shadow: 0 0 10px rgba(255, 215, 0, 0.6); }
+  
+  /* Mobile Cards - Static View */
+  .card { 
+      width: 90vw; height: auto; min-height: 80px; 
+      flex-direction: column; padding: 0.4rem;
+      background: rgba(10, 15, 20, 0.4) !important; /* Transparent like desktop */
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+  }
+  
+  .card-title { font-size: 1.1rem; opacity: 1; margin-bottom: 0.2rem; }
+  
+  /* Hide Quote on Mobile */
+  .card-quote { 
+      display: none !important; 
+  }
+
+  /* Subpage Constraints - Prevent touching edges */
+  .content-featured, .content-archive, .page-intro {
+      width: 92vw;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+  }
+  .page-intro { padding-top: 100px; padding-bottom: 2rem; }
+
+  /* Smaller Subpage Cards */
+  .card-anchor {
+      min-height: 120px !important; /* Reduced height */
+      padding: 1.5rem !important;
+      border: 1px solid rgba(255, 215, 0, 0.15); /* Subtle gold border */
+      background: rgba(15, 20, 25, 0.9) !important; /* More solid background */
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5); /* Lifted effect */
+  }
+  .card-anchor .item-title { font-size: 1.2rem !important; margin-bottom: 0.5rem; }
+  .card-anchor .item-meta { margin-bottom: 0.2rem; }
+  .item-meta { font-size: 0.75rem; }
+
+  /* Remove hover effects on mobile */
+  .card-anchor:hover .item-excerpt {
+      max-height: 0 !important;
+      opacity: 0 !important;
+      margin-top: 0 !important;
+  }
+  .card-anchor:hover .item-title {
+      transform: none !important;
+      opacity: 1 !important;
+      margin-bottom: 0.5rem !important;
+  }
+  a.solid-glass:hover {
+      transform: none !important;
+      background: rgba(10, 15, 20, 0.6) !important;
+      box-shadow: none !important;
+  }
+
+  /* COMPACT MOBILE SPACING */
+  .hero {
+      height: auto !important;
+      min-height: 50vh;
+      padding-top: 110px;
+      padding-bottom: 1rem;
+  }
+  .about {
+      min-height: auto !important;
+      padding: 2rem 1rem;
+  }
+  .library {
+      min-height: auto !important;
+      padding-top: 0 !important;
+      padding-bottom: 4rem;
+  }
+
+  /* --- MUSEUM MOBILE LAYOUT --- */
+  .museum-display {
+    grid-template-columns: 1fr; /* Stack columns */
+    padding: 2rem 1rem;
+    gap: 2rem;
+  }
+
+  .museum-stage {
+    display: none;
+  }
+
+  .museum-menu {
+    gap: 2.5rem;
+    width: 100%;
+    padding-left: 0;
+  }
+
+  .museum-item {
+    padding-left: 0;
+    width: 100%;
+  }
+
+  .museum-item::before {
+    display: none;
+  }
+
+  .museum-item h2 {
+    font-size: 1.4rem;
+    color: #FFD700;
+    margin-bottom: 1rem;
+  }
+  
+  .museum-item.active h2 {
+    color: #FFD700;
+  }
+
+  .museum-mobile-content {
+    display: block;
+    padding: 1rem;
+    background: rgba(10, 15, 20, 0.6);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  .mobile-label {
+    display: block;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    color: #FFD700;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+  }
+
+  .museum-mobile-content p {
+    font-size: 0.95rem;
+    font-style: italic;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .museum-mobile-content .subscribe-btn-footer {
+    font-size: 0.8rem;
+    padding: 0.6rem 1.5rem;
+  }
+
+  /* 4. Mobile Menu Subscribe Button */
+  .mobile-subscribe-btn {
+    color: #FFD700 !important;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    padding: 0.6rem 1.5rem;
+    border-radius: 50px;
+    margin-top: 0.5rem;
+    width: 100%; /* Stretches to fill the compact card */
+    text-align: center;
+    align-self: center;
+    cursor: pointer;
+  }
+  
+  #silent-subscribe-form button .btn-arrow {
+      display: none;
+  }
+
+  /* 5. Fix for Squished Next/Previous Buttons */
+  .read-next-wrapper {
+    flex-direction: column !important; /* Stacks them one on top of the other */
+    gap: 1rem !important; /* Adds breathing room between the two buttons */
+    align-items: stretch !important;
+  }
+
+  .read-next-btn {
+    width: 100% !important; /* Forces them to be full width */
+    justify-content: center !important; /* Centers the text inside */
+    padding: 0.7rem 1rem !important; /* Trims the height */
+    text-align: center !important;
+    max-width: none !important;
+    font-size: 0.8rem !important;
+  }
+
+  /* 6. Reduce Content Font Size */
+  .reading-text, .poem-content, .page-intro p, .sealed-text {
+    font-size: 0.85rem !important; /* Reduced size */
+    line-height: 1.6 !important;
+  }
+
+  /* 7. About Page / Full Width Content (Fix Specificity) */
+    /* This rule makes all reading pages (essays, poems, about) go edge-to-edge on mobile */
+  .reading-container.container-centered {
+    padding: 100px 0 4rem 0 !important; /* Consistent top padding */
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* COMPACT SUBPAGE SPACING */
+  .content-grid, .content-featured, .content-archive {
+      padding-top: 0 !important;
+      padding-bottom: 3rem !important;
+      gap: 1.5rem !important;
+      min-height: 0 !important; /* Resets the reserved height on mobile */
+
+  }
+  
+  /* COMPACT HOMEPAGE SUBSCRIBE */
+  #subscribe-engine {
+      margin-top: 2rem !important;
+      margin-bottom: 2rem !important;
+      padding: 0 1rem !important;
+  }
+  #subscribe-engine .glass-panel {
+      padding: 2rem 1.5rem !important;
+  }
+  #subscribe-engine h2 {
+      font-size: 1.4rem !important;
+      margin-bottom: 0.5rem !important;
+  }
+  #subscribe-engine p {
+      font-size: 0.9rem !important;
+      margin-bottom: 1.5rem !important;
+  }
+  #silent-subscribe-form button {
+      padding: 0.6rem 1.5rem !important;
+      font-size: 0.75rem !important;
+      max-width: 160px !important;
+  }
+  #silent-subscribe-form input[type="email"] {
+      font-size: 1.0rem !important;
+  }
+
+  .archive-divider {
+      margin-bottom: 1.5rem !important;
+      margin-top: 1rem !important;
+  }
+
+  /* DISABLE HOVER EFFECTS ON MOBILE */
+  .glass-panel:hover, 
+  .subscribe-card:hover {
+      transform: none !important;
+      box-shadow: none !important;
+      background: rgba(10, 15, 20, 0.5) !important;
+      border-color: rgba(255, 255, 255, 0.05) !important;
+  }
+
+  /* Disable Archive Card Hover on Mobile */
+  .card-simple:hover {
+      transform: none !important;
+      box-shadow: none !important;
+      background: rgba(10, 15, 20, 0.3) !important;
+      border-color: rgba(255, 255, 255, 0.08) !important;
+  }
+  .card-simple:hover .archive-content-default {
+      opacity: 1 !important;
+      transform: none !important;
+      pointer-events: auto !important;
+  }
+  .card-simple:hover .archive-content-hover {
+      opacity: 0 !important;
+      transform: translateY(10px) !important;
+  }
+
+  /* Disable Share & Read Next Hovers */
+  .sidebar-share-btn:not(.copied):hover,
+  .read-next-btn:hover {
+      transform: none !important;
+      box-shadow: none !important;
+      color: #e0e0e0 !important;
+      border-color: rgba(255, 255, 255, 0.15) !important;
+      letter-spacing: 0.15em !important;
+  }
+  .sidebar-share-btn:not(.copied):hover i { transform: none !important; opacity: 1 !important; }
+  .sidebar-share-btn:not(.copied):hover::after { opacity: 0 !important; }
+
+  /* Disable Sidebar Link Hover Effects */
+  .sidebar-list a:hover {
+      padding-left: 0 !important;
+  }
+  .sidebar-list a:not(.active-link):hover {
+      color: #aaa !important;
+      text-shadow: none !important;
+  }
+
+      /* Disable Footer Links & Socials Hover on Mobile */
+      .footer-links a:hover {
+          color: #aaa !important;
+      }
+      .footer-socials a:hover {
+          color: #aaa !important;
+          border-color: rgba(255,255,255,0.1) !important;
+          background: rgba(255, 255, 255, 0.03) !important;
+          transform: none !important;
+          box-shadow: none !important;
+      }
+
+      /* Disable Legal Link Hover on Mobile */
+      .legal-link a:hover {
+          color: #666 !important;
+      }
+}
+
+/* --- ABOUT PAGE --- */
+.page-main {
+  padding-top: 160px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.page-content {
+  flex: 1;
+  text-align: center;
+  padding: 0 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.page-content h1 {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+}
+.page-content .tagline {
+  font-size: 1.2rem;
+  color: #ccc;
+}
+
+/* --- MOBILE BACKGROUND FIX --- */
+@media (max-width: 768px) {
+    .space-bg {
+        /* Mobile optimized background */
+        background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("images/universe-mobile.webp");
+
+        /* Center it so you see the core of the galaxy */
+        background-position: center center !important;
+        
+        /* Ensure it covers the full height of the phone */
+        background-size: cover !important;
+        
+        /* Prevents the "tearing" lag when scrolling */
+        background-attachment: scroll !important;
+    }
+}
+
+/* =========================================
+   DENDRA FOLIO - CONTENT LAYOUTS
+   ========================================= */
+
+/* 1. Page Intro Quote */
+.page-intro {
+    padding: 160px 2rem 4rem;
+    text-align: center;
+    max-width: 1350px; /* Increased to accommodate wider reading layout */
+    margin: 0 auto;
+    position: relative;
+    z-index: 5;
+}
+
+.quote-glass {
+    background: rgba(10, 15, 20, 0.6);
+    padding: 2.5rem 3rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    margin: 0 auto;
+    display: block;
+    width: 100%;
+    max-width: 1100px; /* Constrained to match About page content */
+    text-align: center;
+}
+
+/* Mobile adjustment for quote box */
+@media (max-width: 600px) {
+    .quote-glass { padding: 2rem 1.5rem; }
+}
+
+.page-title {
+    font-size: 1.8rem;
+    color: #FFD700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 1rem;
+}
+
+.page-intro p {
+    font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+    font-style: italic;
+    color: #f0f0f0;
+    line-height: 1.6;
+    letter-spacing: 0.05em;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8); /* Text shadow for readability */
+}
+
+/* 2. Content Grid (The Shelves) */
+.content-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 0 5vw 6rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 5;
+}
+
+/* 3. The "Solid Glass" Panel */
+.solid-glass, a.solid-glass {
+    position: relative; /* Required for glow positioning */
+    overflow: hidden;   /* Keeps glow inside the border */
+    background: rgba(10, 15, 20, 0.6) !important; /* More transparent to blend */
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    /* Subtle Noise Texture */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.07'/%3E%3C/svg%3E") !important;
+    padding: 1rem 1.5rem; /* UPDATED: Removed fixed height to prevent overlap */
+    transition: box-shadow 0.8s ease,
+                background 0.8s ease,
+                border-color 0.8s ease;
+    text-decoration: none !important;
+    color: #fff !important;
+    display: flex;
+    flex-direction: column;
+    -webkit-font-smoothing: antialiased;
+}
+
+a.solid-glass:hover {
+    background: rgba(10, 15, 20, 0.75) !important;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    border-color: rgba(255, 255, 255, 0.15);
+    z-index: 10; /* Ensure hovered card stays on top */
+}
+
+/* --- STATIC CARD OVERRIDE (No Glow/Tilt) --- */
+.card-static, 
+.card-static:hover,
+.solid-glass.card-static:hover {
+    transform: none !important;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.1) !important;
+    background: rgba(10, 15, 20, 0.6) !important;
+    border: 1px solid rgba(255, 215, 0, 0.5) !important;
+    z-index: 5 !important;
+}
+
+/* Theme overrides for solid-glass to ensure visibility */
+.solid-glass.earth-theme { border-left: 6px solid var(--color-earth); }
+.solid-glass.fire-theme { border-left: 6px solid var(--color-fire); }
+.solid-glass.water-theme { border-left: 6px solid var(--color-water); }
+
+.solid-glass.earth-theme:hover { box-shadow: 0 0 30px var(--color-earth); border-color: var(--color-earth); }
+.solid-glass.fire-theme:hover { box-shadow: 0 0 30px var(--color-fire); border-color: var(--color-fire); }
+.solid-glass.water-theme:hover { box-shadow: 0 0 30px var(--color-water); border-color: var(--color-water); }
+
+/* Hide Meta and Excerpt initially */
+
+/* Show on Hover */
+/* --- MOUSE FOLLOW GLOW EFFECT --- */
+.card::after, .solid-glass::after, .glass-panel::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    /* The glow: a radial gradient following the mouse coordinates */
+    background: radial-gradient(
+        600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+        rgba(255, 255, 255, 0.08), 
+        transparent 40%
+    );
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: 3;
+    pointer-events: none; /* Let clicks pass through */
+    border-radius: inherit;
+    will-change: opacity;
+}
+
+.card:hover::after, .solid-glass:hover::after, .glass-panel:hover::after {
+    opacity: 1;
+}
+
+.card-static::after {
+    display: none !important;
+}
+
+.item-meta {
+    font-size: 0.9rem;
+    color: #888;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.item-title {
+    font-size: 1.5rem;
+    color: #fff;
+    margin-bottom: 1rem;
+    font-weight: 400;
+}
+
+.item-excerpt {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #ccc;
+    font-style: italic;
+}
+
+/* 4. Individual Reading Page */
+.reading-container {
+    display: flex;
+    gap: 3rem;
+    /* Asymmetric padding: Right aligns to 1100px center, Left pushes out for sidebar */
+    padding: 200px max(2rem, calc(50vw - 550px)) 6rem max(2rem, calc(50vw - 650px)) !important;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    position: relative;
+    z-index: 5;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+
+.reading-main {
+    flex: 1;
+    padding: 3rem 4rem;
+    max-width: 1100px; /* Increased to fill available space */
+    width: 100%;
+}
+
+/* Override for Centered pages (About) */
+.reading-container.container-centered {
+    padding: 200px 2rem 6rem !important;
+    max-width: 1100px;
+    margin: 0 auto;
+    justify-content: center;
+    flex-direction: column; 
+    align-items: center;
+}
+
+.reading-main h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    color: #fff;
+}
+
+.reading-text h2[id],
+.reading-text h3[id] {
+    scroll-margin-top: 120px;
+}
+
+.reading-text {
+    margin-top: 3rem;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #e0e0e0;
+    text-align: justify;
+}
+
+.reading-text p {
+    margin-bottom: 2rem;
+}
+
+/* POEM SPECIFIC STYLE - Apply class 'poem' to reading-text div for poems */
+.reading-text.poem,
+.reading-text pre {
+    font-family: inherit;
+    font-size: 0.9rem;
+    white-space: pre-wrap;
+    text-align: center; /* Optional: Centers poem text */
+}
+
+/* Specific container for poem body (Moved from inline HTML) */
+.poem-content {
+    max-width: 450px; 
+    margin: 2rem auto; 
+    font-size: 1.1rem; 
+    line-height: 1.9; 
+    color: #f0f0f0; 
+    letter-spacing: 0.03em;
+}
+
+/* Replaces inline styles on poem stanzas */
+.poem-content > p {
+    margin-bottom: 2.5rem;
+}
+
+/* Drop Cap for the first letter of the story */
+.reading-text p:first-of-type::first-letter {
+    font-size: 3.5em;
+    float: left;
+    line-height: 0.8;
+    margin-right: 0.5rem;
+    color: #FFD700;
+}
+
+/* Fix the gap between 'A' and 'll' on the centered Legal page */
+.reading-text.legal-text p:first-of-type::first-letter {
+    float: none;
+    margin-right: 0.05rem;
+}
+.reading-text.legal-text {
+    text-align: center;
+}
+
+/* Disable selection for copy protection */
+.reading-text, .page-intro p, .post-content, .quote-text {
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* 5. The Sidebar Index */
+.reading-sidebar {
+    width: 320px;
+    position: sticky;
+    top: 140px;
+}
+
+.sidebar-title {
+    font-size: 1.2rem;
+    color: #fff;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 0.5rem;
+}
+
+.sidebar-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.sidebar-list a {
+    color: #aaa;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s;
+}
+
+.sidebar-list a:hover, .sidebar-list a.active-link {
+    color: #FFD700;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+    padding-left: 5px; /* Subtle shift */
+}
+
+/* --- Page Load Animation --- */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.reading-main, .reading-sidebar, .content-grid, .page-intro {
+    animation: fadeInUp 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    opacity: 0; 
+}
+
+/* --- Mobile Adjustments for Dendra Folio --- */
+@media (max-width: 900px) {
+    .reading-container {
+        flex-direction: column;
+        padding: 100px 0 4rem 0 !important; /* Full width container */
+    }
+    .reading-sidebar {
+        width: 100%;
+        position: static; 
+        margin-top: 0;
+        padding: 2rem 1.5rem; /* Add padding to sidebar so it doesn't touch edges */
+        order: 2; /* Move sidebar to bottom on mobile */
+    }
+    .reading-main {
+        padding: 2rem 1.5rem !important; /* Consistent internal padding */
+        width: 100% !important;
+        max-width: none !important;
+        border-radius: 0 !important;
+        border: 1px solid rgba(255, 215, 0, 0.5) !important;
+        margin: 0 !important;
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.1) !important;
+        order: 1; /* Ensure content appears first */
+    }
+    .reading-text, .poem-content {
+        font-size: 0.95rem !important;
+        line-height: 1.6 !important;
+    }
+}
+
+/* THE EXHIBITION (Anchors) */
+.content-featured {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adjusted for 3 columns */
+    gap: 2.5rem;
+    max-width: 1100px; /* Aligned width */
+    margin: 0 auto 4rem;
+    position: relative;
+    z-index: 5;
+    padding: 0 2rem; /* Consistent padding */
+    justify-content: center;
+    align-items: center; /* Centers cards vertically, preventing non-hovered ones from stretching */
+    min-height: 280px; /* Reserves space so the archive section doesn't jump on hover */
+}
+
+.card-anchor {
+    min-height: 160px; /* Smaller initial size for expansion effect */
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.card-anchor.water-theme { box-shadow: 0 5px 20px rgba(0, 119, 190, 0.15); }
+.card-anchor.earth-theme { box-shadow: 0 5px 20px rgba(46, 139, 87, 0.15); }
+.card-anchor.fire-theme { box-shadow: 0 5px 20px rgba(139, 0, 0, 0.15); }
+
+/* Anchor Title Watermark Effect */
+.card-anchor .item-title {
+    transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transform-origin: center top;
+}
+.card-anchor:hover .item-title {
+    transform: translateY(-8px) scale(0.92); /* Pushes it up and back */
+    opacity: 0.3; /* Ghostly watermark visibility */
+    margin-bottom: 0.5rem; /* Makes room for the description */
+}
+
+/* Anchor Hover Reveal */
+.card-anchor .item-excerpt {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.card-anchor:hover .item-excerpt {
+    max-height: 150px;
+    opacity: 1;
+    margin-top: 1rem;
+}
+
+/* ARCHIVE DIVIDER */
+.archive-divider {
+    max-width: 1100px; /* Aligned width */
+    margin: 0 auto 3rem;
+    text-align: center;
+    position: relative;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+}
+.archive-divider::before,
+.archive-divider::after {
+    content: "";
+    display: block;
+    height: 1px;
+    flex: 1;
+    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.3));
+}
+.archive-divider::after {
+    background: linear-gradient(90deg, rgba(255, 215, 0, 0.3), transparent);
+}
+.archive-divider span {
+    color: #FFD700;
+    font-size: 1.2rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+/* THE ARCHIVE (Horizontal Index) */
+.content-archive {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* Proper vertical spacing */
+    max-width: 800px; /* Kept elegantly constrained */
+    margin: 0 auto 6rem;
+    position: relative;
+    z-index: 5;
+    padding: 0 2rem; /* Consistent padding */
+}
+.card-simple {
+    position: relative !important;
+    padding: 0 !important; 
+    min-height: 90px !important;
+    background: rgba(10, 15, 20, 0.3) !important; /* Highly transparent */
+    border: 1px solid rgba(255, 255, 255, 0.08) !important; /* Faint border */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 8px;
+}
+.card-simple:hover {
+    background: rgba(20, 25, 30, 0.7) !important;
+    border-color: rgba(255, 215, 0, 0.4) !important;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.15) !important;
+    transform: translateY(-3px) !important;
+}
+.archive-content-default {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 3rem;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.archive-content-default .item-title {
+    margin: 0 !important;
+    font-size: 1.3rem;
+    color: #e0e0e0;
+    text-align: left;
+}
+.archive-content-default .item-meta {
+    margin: 0 !important;
+    font-size: 0.85rem;
+    color: #888;
+    text-align: right;
+}
+.archive-content-hover {
+    position: absolute;
+    inset: 0;
+    padding: 0 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    text-align: center;
+}
+.archive-content-hover p {
+    margin: 0;
+    font-size: 1.05rem;
+    color: #FFD700;
+    font-style: italic;
+    line-height: 1.5;
+}
+.card-simple:hover .archive-content-default {
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+}
+.card-simple:hover .archive-content-hover {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- ARCHIVE COMING SOON TOGGLE --- */
+.content-archive.coming-soon-mode .card-simple {
+    display: none !important;
+}
+.archive-toggle-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    padding: 2rem 0;
+    animation: fadeInUp 1s ease forwards;
+}
+.archive-toggle-btn {
+    background: none;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    color: #FFD700;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: all 0.5s ease;
+}
+.archive-toggle-btn:hover {
+    background: rgba(255, 215, 0, 0.1);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+}
+.archive-toggle-btn.active {
+    transform: rotate(180deg);
+    background: #FFD700;
+    color: #000;
+}
+.archive-message {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.5s ease;
+    text-align: center;
+    color: #e0e0e0;
+    font-style: italic;
+    font-size: 1.2rem;
+    letter-spacing: 0.05em;
+}
+.archive-message.visible {
+    max-height: 100px;
+    opacity: 1;
+    margin-top: 1rem;
+}
+
+/* --- READING PROGRESS --- */
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 4px;
+  background: #FFD700;
+  z-index: 9999;
+  transition: width 0.1s ease-out;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+/* --- MOBILE PAGE MAIN FIX --- */
+@media (max-width: 900px) {
+    .page-main { padding-top: 100px !important; }
+
+    /* Fix for Archive Cards on Mobile (Override Desktop Styles) */
+    .card-simple {
+        padding: 0 !important;
+    }
+    .archive-content-default {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.2rem 1.5rem;
+        gap: 0.4rem;
+    }
+    .archive-content-default .item-title { font-size: 1.1rem !important; }
+    .archive-content-default .item-meta { text-align: left !important; font-size: 0.85rem !important; opacity: 0.6; }
+    .archive-content-hover { padding: 0 1.5rem; }
+    .archive-content-hover p { font-size: 0.9rem; }
+}
+
+/* 8. Compact Sidebar & Share Button on Mobile */
+    .sidebar-title {
+        font-size: 1rem !important;
+        margin-bottom: 1rem !important;
+    }
+    .sidebar-list a {
+        font-size: 0.9rem !important;
+    }
+    .sidebar-reading-time {
+        font-size: 0.9rem !important;
+        margin-bottom: 1rem !important;
+    }
+    .sidebar-share-btn {
+        padding: 0.6rem 1rem !important;
+        font-size: 0.8rem !important;
+        margin-top: 1.5rem !important;
+    }
+    .sidebar-share-btn::after {
+        font-size: 0.8rem !important;
+    }
+
+/* Force razor-sharp text inside glass cards */
+.solid-glass h2, .solid-glass p {
+    text-shadow: none !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+    color: #ffffff !important; /* Forces maximum contrast */
+}
+
+/* --- READING PAGE SPECIFIC LAYOUT --- */
+/* Removes the gap between title and content for reading pages */
+.page-intro.reading-layout {
+    padding-top: 200px;
+    padding-bottom: 1rem;
+}
+
+.reading-container.reading-layout {
+    padding-top: 0 !important;
+}
+
+/* --- SEALED DOCUMENT STYLE --- */
+.sealed-document {
+    text-align: center; 
+    padding: 3rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.sealed-icon {
+    font-size: 3rem;
+    color: #64B5F6;
+    margin-bottom: 1.5rem;
+}
+
+.sealed-title {
+    font-size: 2rem; 
+    margin-bottom: 1rem; 
+    color: #fff;
+    font-family: var(--font-main);
+    letter-spacing: 0.05em;
+}
+
+.sealed-text {
+    font-size: 1.1rem; 
+    line-height: 1.6; 
+    color: rgba(255,255,255,0.8);
+    max-width: 500px; 
+    margin: 0 auto;
+}
+
+/* --- SIDEBAR STATES --- */
+.sidebar-link-disabled {
+    color: #555;
+    cursor: default;
+    font-size: 1.1rem;
+    transition: color 0.3s;
+}
+.sidebar-link-disabled:hover {
+    color: #777; /* Subtle change only */
+}
+
+/* --- SIDEBAR EXTRAS --- */
+.sidebar-reading-time {
+    font-size: 1rem;
+    color: #FFD700;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    opacity: 0.8;
+}
+
+.sidebar-share-btn {
+    margin-top: 2rem;
+    width: 100%;
+    padding: 0.9rem 1.5rem;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #e0e0e0;
+    cursor: pointer;
+    font-family: var(--font-main);
+    font-size: 0.9rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    border-radius: 50px;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(5px);
+}
+
+.sidebar-share-btn:hover {
+    background: rgba(255, 215, 0, 0.08);
+    border-color: #FFD700;
+    color: #FFD700;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
+    transform: translateY(-2px);
+    letter-spacing: 0.2em;
+    color: transparent;
+}
+
+.sidebar-share-btn i {
+    transition: transform 0.4s ease;
+}
+
+.sidebar-share-btn:hover i {
+    transform: translateY(-20px);
+    opacity: 0;
+}
+
+.sidebar-share-btn::after {
+    content: "Copy Link";
+    font-family: var(--font-main);
+    font-weight: 400; /* Match original button weight */
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFD700;
+    font-size: 0.9rem; /* Match original font size */
+    letter-spacing: 0.15em; /* Match original letter spacing */
+    text-transform: uppercase; /* Match original text transform */
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.sidebar-share-btn:hover::after {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.sidebar-share-btn.copied {
+    background: rgba(46, 139, 87, 0.15);
+    color: #81C784;
+    border-color: #81C784;
+    box-shadow: 0 0 20px rgba(129, 199, 132, 0.2);
+    pointer-events: none;
+}
+
+.sidebar-share-btn.copied::after {
+    display: none;
+}
+
+/* --- READ NEXT BUTTON --- */
+.read-next-wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+    width: 100%;
+    gap: 2rem;
+}
+
+.read-next-wrapper.align-right {
+    justify-content: flex-end;
+}
+
+.read-next-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.4rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: all 0.5s ease;
+    max-width: 48%;
+    text-align: center;
+    line-height: 1.4;
+}
+
+.read-next-btn:hover {
+    background: rgba(255, 215, 0, 0.1);
+    border-color: #FFD700;
+    color: #FFD700;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+    transform: translateX(5px);
+}
+
+/* --- BACK TO TOP BUTTON --- */
+.back-to-top-btn {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 50px;
+    height: 50px;
+    background: rgba(10, 15, 20, 0.8);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 50%;
+    color: #FFD700;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    z-index: 998; /* Below ribbon but above content */
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.back-to-top-btn.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+.back-to-top-btn:hover {
+    background: rgba(255, 215, 0, 0.1);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    transform: scale(1.1);
+}
+
+/* --- POEM SPECIFIC STYLES --- */
+.poem-content > * {
+    margin-bottom: 2.5rem;
+}
+
+.poem-content .poem-closing,
+.reading-text .poem-closing {
+    font-style: italic; 
+    color: #FFD700;
+    margin-top: 3rem;
+}
+
+.reading-divider {
+    border: 0; 
+    height: 1px; 
+    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.3), transparent); 
+    margin: 4rem 0 2rem;
+}
+
+/* =========================================
+   SUBSCRIBE ENGINE (Homepage)
+   ========================================= */
+#subscribe-engine {
+    margin-top: 8rem;
+    margin-bottom: 4rem;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+#subscribe-engine .glass-panel {
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+    padding: 3rem 2.5rem;
+}
+
+.accent-line {
+    width: 50px;
+    height: 2px;
+    background: #FFD700;
+    margin: 0 auto 1.5rem;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+#subscribe-engine h2 {
+    font-size: 2rem;
+    color: #FFD700;
+    margin-bottom: 1rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+}
+
+#subscribe-engine p {
+    color: #aaa;
+    margin-bottom: 2.5rem;
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+#subscribe-engine .quote-text {
+    font-size: 1.15rem; /* 0.1rem larger than the 1.05rem p text */
+    letter-spacing: normal; /* Reset from main quote style */
+    line-height: 1.6;
+}
+
+#silent-subscribe-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+#silent-subscribe-form input[type="email"] {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 1rem 0.5rem;
+    font-size: 1.1rem;
+    color: #fff;
+    width: 100%;
+    font-family: var(--font-main);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 0;
+    outline: none;
+}
+
+#silent-subscribe-form input[type="email"]:focus {
+    border-bottom-color: #FFD700;
+    box-shadow: 0 1px 0 0 rgba(255, 215, 0, 0.5);
+}
+
+#silent-subscribe-form button {
+    background: #FFD700;
+    color: #000;
+    border: none;
+    padding: 0.9rem 2rem;
+    font-family: 'Spectral', serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.5s ease;
+    margin-top: 0.5rem;
+    align-self: center;
+    width: 100%;
+    max-width: 200px;
+}
+
+#subscribe-engine .subscribe-card {
+    /* Apply hover styles statically */
+    border-color: #FFD700;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(255, 215, 0, 0.3);
+    transform: none !important; /* Prevent lift from JS and parallax */
+    cursor: default;
+    background: rgba(10, 15, 20, 0.65);
+}
+
+/* Override the hover state to do nothing */
+#subscribe-engine .subscribe-card:hover {
+    border-color: #FFD700; /* Keep same */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(255, 215, 0, 0.3); /* Keep same */
+    transform: none !important; /* Keep same */
+    background: rgba(10, 15, 20, 0.65); /* Match the general hover background */
+}
+
+/* Disable the mouse-follow glow */
+#subscribe-engine .subscribe-card::after {
+    display: none !important;
+}
+
+
+#silent-subscribe-form button:hover {
+    background: #fff;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+}
+
+/* Success Message State */
+.subscribe-success {
+    position: absolute;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    transform: scale(0.9);
+    width: 100%;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.5s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 220px;
+    text-align: center;
+}
+
+.subscribe-success p {
+    font-size: 1.5rem !important;
+    color: #FFD700 !important;
+    margin: 0 !important;
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+}
+
+/* Active State Classes (Triggered by JS) */
+.glass-panel.submitted #silent-subscribe-form {
+    opacity: 0;
+    transform: translateY(-20px);
+    pointer-events: none;
+}
+
+.glass-panel.submitted .subscribe-success {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: all;
+}
+
+/* =========================================
+   ABOUT PAGE CARD
+   ========================================= */
+.contact-email-link {
+    color: #e0e0e0;
+    text-decoration: none;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+.contact-email-link:hover {
+    color: #FFD700;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+}
+
+/* Sleek Contact Badge for About Page */
+.contact-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 2.5rem 2rem !important;
+    max-width: 600px;
+    width: 100%;
+    border-radius: 16px !important;
+    text-align: center;
+}
+
+.about-card {
+    padding: 4rem 5rem !important;
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 100%;
+    line-height: 1.8;
+}
+
+@media (max-width: 900px) {
+    .reading-container.container-centered {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        width: 100% !important;
+    }
+
+    .about-card {
+        padding: 2rem 1.5rem !important;
+        width: 100% !important;
+        max-width: none !important;
+        border-radius: 0 !important;
+        border: 1px solid rgba(255, 215, 0, 0.5) !important;
+        margin: 0 !important;
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.1) !important;
+        min-width: 100% !important;
+    }
+
+    .contact-badge {
+        order: 3; /* Forces contact badge below the reading-main (order: 1) */
+    }
+
+    /* Disable hover on contact email on mobile */
+    .contact-email-link:hover {
+        color: #e0e0e0 !important;
+        text-shadow: none !important;
+    }
+}
+
+/* --- MOBILE TOC (Divine Love Page) --- */
+.mobile-toc-card {
+    display: none; /* Hidden on Desktop */
+}
+
+@media (max-width: 900px) {
+    .mobile-toc-card {
+        display: block;
+        width: 100%;
+        padding: 2rem 1.5rem;
+        background: rgba(10, 15, 20, 0.6);
+        border: 1px solid rgba(255, 215, 0, 0.3);
+        margin-bottom: 2rem;
+        /* Order 0 by default, so it sits above Content (Order 1) and Sidebar (Order 2) */
+    }
+    .desktop-only-toc {
+        display: none;
+    }
+}
+
+/* --- MOBILE READING TIME --- */
+.mobile-reading-time { display: none; }
+
+@media (max-width: 900px) {
+    .mobile-reading-time {
+        display: block;
+        color: #FFD700;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        opacity: 0.9;
+        order: -5; /* Ensure it appears at the very top */
+        width: 100%;
+        padding: 0 1.5rem;
+    }
+    .sidebar-reading-time {
+        display: none !important;
+    }
+    .page-title { 
+        font-size: 1.2rem !important; /* Enforce smaller size for mobile */
+    }
+}
+
+/* =========================================
+   REUSABLE UTILITY CLASSES (Replaced Inline Styles)
+   ========================================= */
+.content-heading {
+    color: #FFD700;
+    margin-top: 4rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    font-weight: 400;
+}
+.about-card h3.content-heading {
+    margin-top: 3rem; /* About page specific margin */
+}
+
+.sub-heading {
+    color: #fff;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+}
+
+.earth-italic {
+    font-style: italic;
+    color: var(--color-earth);
+}
+
+.about-list {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 2rem;
+}
+.about-list li {
+    margin-bottom: 1.5rem;
+}
+.about-list strong {
+    font-size: 1.2rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+.about-list strong.earth { color: var(--color-earth); }
+.about-list strong.fire { color: var(--color-fire); }
+.about-list strong.water { color: var(--color-water); }
+
+.author-signoff {
+    margin-top: 3rem;
+    font-size: 1.3rem;
+    font-style: italic;
+    color: #fff;
+    text-align: center;
+}
+.highlight-gold {
+    color: #FFD700;
+}
+
+.reading-meta-block {
+    display: block;
+    margin-bottom: 2rem;
+}
+.reading-meta-block.earth { color: var(--color-earth); }
+.reading-meta-block.fire { color: var(--color-fire); }
+.reading-meta-block.water { color: var(--color-water); }
+
+.coming-soon-text {
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+.cursor-default {
+    cursor: default;
+}
+
+.showcase-solo-card {
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.birthday-note {
+    font-size: 0.85em;
+    text-transform: none;
+    font-style: italic;
+    opacity: 0.9;
+    margin-left: 5px;
+    color: #FFD700;
+}
+
+.inline-quote {
+    margin: 2rem 0;
+    padding-left: 1.5rem;
+    border-left: 3px solid var(--color-earth);
+    font-size: 1.4rem;
+    font-style: italic;
+    color: #fff;
+}
+.inline-quote.water { border-left-color: var(--color-water); }
+
+.section-divider {
+    border: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.3), transparent);
+    margin: 4rem 0 2rem;
+}
+
+.read-next-single {
+    max-width: 80%;
+}
+
+.read-next-disabled {
+    opacity: 0.5;
+    cursor: default;
+    pointer-events: none;
+}
+
+.sidebar-back-link {
+    margin-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 1rem;
+}
+.sidebar-back-link a {
+    font-size: 0.95rem !important;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+.sidebar-back-link a.fire { color: var(--color-fire) !important; }
+.sidebar-back-link a.earth { color: var(--color-earth) !important; }
+.sidebar-back-link a.water { color: var(--color-water) !important; }
+.sidebar-back-link i { margin-right: 8px; }
+
+.sidebar-title.gold { color: #FFD700; }
+.sidebar-title.mt-2 { margin-top: 2rem; }
+
+.about-contact-text {
+    color: #e0e0e0; 
+    font-size: 0.95rem; 
+    font-style: italic;
+}
+
+.legal-email-link {
+    color: #FFD700; 
+    text-decoration: none;
+}
