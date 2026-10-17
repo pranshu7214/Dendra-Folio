@@ -60,13 +60,13 @@
 
   <div class="nav-logo">
     <a href="/" aria-label="Dendra Folio Home">
-      <img src="images/final-logo.png" alt="Dendra Folio Logo">
+      <img src="images/final-logo-nav.png" alt="Dendra Folio Logo">
     </a>
   </div>
 
   <nav class="nav-right desktop-only">
     <a href="about/">About</a>
-    <a class="subscribe-btn">Subscribe</a>
+    <a class="subscribe-btn sign-in-btn">Sign In</a>
   </nav>
 
   <div class="menu-toggle" role="button" aria-label="Toggle Navigation" tabindex="0"><i class="fa-solid fa-bars"></i></div>
@@ -79,19 +79,29 @@
       <a href="poems/">Poems</a>
       <a href="fiction/">Fiction</a>
       <a href="about/">About</a>
-      <a class="mobile-subscribe-btn">Subscribe</a>
+      <a class="mobile-subscribe-btn mobile-sign-in-btn">Sign In</a>
   </div>
 
   <main>
 
     <section class="hero">
       <div class="hero-content">
+        <span class="hero-kicker">A Dendra House Publication</span>
         <h1>Dendra Folio</h1>
+        <p class="hero-tagline">Essays &bull; Verses &bull; Narrative Fiction</p>
         <div class="hero-logo-container">
-          <img src="images/final-logo.png" class="spinning-logo" alt="Logo">
+          <img src="images/final-logo.png" class="hero-emblem spinning-logo" alt="Dendra Folio Emblem">
         </div>
       </div>
+      <div class="hero-scroll-indicator">
+        <span class="scroll-prompt">Explore</span>
+        <div class="scroll-line"></div>
+      </div>
     </section>
+
+    <div class="section-divider-ornament">
+      <span>&#10022;</span>
+    </div>
 
     <section class="about" id="quote-section">
       <p class="quote-text">
@@ -204,16 +214,20 @@
       <div class="glass-panel subscribe-card">
         <div class="accent-line"></div>
         <h2>Join Dendra Folio</h2>
-        <p>Leave your email, and I'll leave my new words directly on your desk.<br>
+        <p>Leave your name and email, and I'll leave my new words directly on your desk.<br>
           <br>
           <em class="quote-text">"Quietest people have the loudest minds."</em><br>
         -Stephen Hawking</p>
         
          <form id="silent-subscribe-form" data-action="https://eocampaign1.com/form/a530cd3a-1aba-11f1-a0cc-abf3cee050cb" method="POST" target="hidden_iframe">
-         <input type="text" name="b_name" id="bot-trap" tabindex="-1" autocomplete="off" style="position:absolute; left:-9999px; opacity:0; z-index:-1;">
-         <input type="email" name="field_0" placeholder="Your email address..." aria-label="Email Address" required>
-         <button type="submit">Subscribe <span class="btn-arrow">&rarr;</span></button>
-        </form>
+           <input type="text" name="b_name" id="bot-trap" tabindex="-1" autocomplete="off" style="position:absolute; left:-9999px; opacity:0; z-index:-1;">
+           <div class="form-row">
+             <input type="text" name="field_1" placeholder="First Name..." aria-label="First Name" required>
+             <input type="text" name="field_2" placeholder="Last Name..." aria-label="Last Name">
+           </div>
+           <input type="email" name="field_0" placeholder="Your email address..." aria-label="Email Address" required>
+           <button type="submit">Sign In <span class="btn-arrow">&rarr;</span></button>
+         </form>
         
         <div class="subscribe-success">
           <p>"The door is unlocked. A seat is saved for you."</p>
@@ -226,10 +240,18 @@
       <div class="footer-catch">
         <p>Step inside. I'll leave my new words directly on your desk.</p>
         <form class="footer-subscribe-form" data-action="https://eocampaign1.com/form/a530cd3a-1aba-11f1-a0cc-abf3cee050cb" method="POST" target="hidden_iframe">
-            <input type="text" name="b_name" class="bot-trap" tabindex="-1" autocomplete="off" style="position:absolute; left:-9999px; opacity:0; z-index:-1;">
+        <input type="text" name="b_name" class="bot-trap" tabindex="-1" autocomplete="off" style="position:absolute; left:-9999px; opacity:0; z-index:-1;">
+        <div class="footer-form-inputs">
+          <div class="footer-name-row">
+            <input type="text" name="field_1" placeholder="First Name..." aria-label="First Name" required>
+            <input type="text" name="field_2" placeholder="Last Name..." aria-label="Last Name">
+          </div>
+          <div class="footer-email-row">
             <input type="email" name="field_0" placeholder="Your email address..." aria-label="Email Address" required>
             <button type="submit">Join <span class="btn-arrow">→</span></button>
-        </form>
+          </div>
+        </div>
+      </form>
         <div class="footer-success-message" style="display: none;">
             <p>"The door is unlocked. A seat is saved for you."</p>
         </div>

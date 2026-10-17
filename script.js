@@ -129,12 +129,12 @@ function updateCinematicPhysics(now) {
     }
     const { windowHeight, windowWidth, quoteTop, libraryBottom, showcaseTop, maxScroll, jupiterPath, saturnPath, cardMetrics } = physicsCache.metrics;
     
-    // Interpolate scroll value (Smooth feel for desktop, instant for mobile)
-    if (windowWidth < 900) {
+    // Interpolate scroll value (Silky smooth response for desktop, instant for mobile)
+    if (windowWidth < 900 || Math.abs(targetScrollY - currentScrollY) < 0.2) {
         currentScrollY = targetScrollY;
     } else {
-        // Increased lerp from 0.1 to 0.45 to remove touchpad input delay
-        currentScrollY = lerp(currentScrollY, targetScrollY, 0.45); 
+        // Tuned lerp (0.65) for instant fluid response without stiffness
+        currentScrollY = lerp(currentScrollY, targetScrollY, 0.65); 
     }
 
     // ========== READING PROGRESS (Efficient Loop Update) ==========
@@ -418,7 +418,7 @@ function initMuseumDisplay() {
 
 // ======== SUBSCRIBE SCROLL & FOCUS ========
 function initSubscribeScroll() {
-    const subscribeBtns = document.querySelectorAll('.subscribe-btn, .mobile-subscribe-btn');
+    const subscribeBtns = document.querySelectorAll('.subscribe-btn, .mobile-subscribe-btn, .sign-in-btn, .mobile-sign-in-btn');
     
     subscribeBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
@@ -426,7 +426,7 @@ function initSubscribeScroll() {
             
             // 1. Check for Homepage Subscribe Section
             const homeSubscribeSection = document.getElementById('subscribe-engine');
-            const homeInput = document.querySelector('#silent-subscribe-form input[type="email"]');
+            const homeInput = document.querySelector('#silent-subscribe-form input[name="field_1"]') || document.querySelector('#silent-subscribe-form input[type="email"]');
             
             // 2. Check for Footer (Fallback for other pages)
             const footer = document.getElementById('footer');
@@ -682,7 +682,7 @@ function initSubscribeForm() {
             
             // 1. Button Text Swap (Premium Feel)
             const btn = form.querySelector('button[type="submit"]');
-            if (btn) btn.innerHTML = "Reserving...";
+            if (btn) btn.innerHTML = "Signing In...";
 
             // 2. Cinematic Fade Out (Delayed)
             setTimeout(() => {

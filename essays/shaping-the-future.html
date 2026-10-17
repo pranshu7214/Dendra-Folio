@@ -57,12 +57,12 @@
     </nav>
 
     <div class="nav-logo">
-      <a href="/"><img src="../images/final-logo.png" alt="Dendra Folio Logo"></a>
+      <a href="/"><img src="../images/final-logo-nav.png" alt="Dendra Folio Logo"></a>
     </div>
 
     <nav class="nav-right desktop-only">
       <a href="../about/">About</a>
-      <a class="subscribe-btn">Subscribe</a>
+      <a class="subscribe-btn sign-in-btn">Sign In</a>
     </nav>
 
     <div class="menu-toggle" role="button" aria-label="Toggle Navigation" tabindex="0"><i class="fa-solid fa-bars"></i></div>
@@ -74,7 +74,7 @@
       <a href="../poems/">Poems</a>
       <a href="../fiction/">Fiction</a>
       <a href="../about/">About</a>
-      <a class="mobile-subscribe-btn">Subscribe</a>
+      <a class="mobile-subscribe-btn mobile-sign-in-btn">Sign In</a>
   </div>
 
 <main>
@@ -183,8 +183,16 @@
       <p>Step inside. I'll leave my new words directly on your desk.</p>
       <form class="footer-subscribe-form" data-action="https://eocampaign1.com/form/a530cd3a-1aba-11f1-a0cc-abf3cee050cb" method="POST" target="hidden_iframe">
         <input type="text" name="b_name" class="bot-trap" tabindex="-1" autocomplete="off" style="position:absolute; left:-9999px; opacity:0; z-index:-1;">
-        <input type="email" name="field_0" placeholder="Your email address..." aria-label="Email Address" required>
-        <button type="submit">Join <span class="btn-arrow">→</span></button>
+        <div class="footer-form-inputs">
+          <div class="footer-name-row">
+            <input type="text" name="field_1" placeholder="First Name..." aria-label="First Name" required>
+            <input type="text" name="field_2" placeholder="Last Name..." aria-label="Last Name">
+          </div>
+          <div class="footer-email-row">
+            <input type="email" name="field_0" placeholder="Your email address..." aria-label="Email Address" required>
+            <button type="submit">Join <span class="btn-arrow">→</span></button>
+          </div>
+        </div>
       </form>
       <div class="footer-success-message" style="display: none;">
         <p>"The door is unlocked. A seat is saved for you."</p>

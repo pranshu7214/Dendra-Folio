@@ -52,29 +52,40 @@ body {
   position: fixed;
   top: -20%; left: 0;
   width: 100%; height: 140%; /* Taller to allow parallax movement */
-  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("images/universe.webp") center/cover no-repeat;
+  background:
+    radial-gradient(ellipse at 50% 35%, rgba(6, 8, 12, 0.55) 0%, rgba(2, 3, 5, 0.92) 100%),
+    linear-gradient(180deg, rgba(3, 4, 7, 0.55) 0%, rgba(2, 3, 5, 0.90) 100%),
+    url("images/universe.webp") center/cover no-repeat;
   z-index: -10; /* Pushed further back */
   will-change: transform;
   transform: translateZ(0);
   backface-visibility: hidden; /* Improves scroll/parallax performance */
 }
 
-/* Page Specific Backgrounds */
+/* Page Specific Backgrounds - Art-directed Atmospheric Overlays (Hardware-Accelerated) */
 .space-bg.bg-poems {
-  background-image: radial-gradient(circle at center, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.7) 100%),
-              url("images/bg-poems.webp");
+  background-image:
+    radial-gradient(ellipse at center, rgba(12, 6, 9, 0.62) 0%, rgba(3, 2, 4, 0.94) 100%),
+    linear-gradient(180deg, rgba(8, 4, 6, 0.55) 0%, rgba(3, 2, 3, 0.92) 100%),
+    url("images/bg-poems.webp");
 }
 .space-bg.bg-essays {
-  background-image: radial-gradient(circle at center, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 100%),
-              url("images/bg-essays.webp");
+  background-image:
+    radial-gradient(ellipse at center, rgba(6, 12, 9, 0.62) 0%, rgba(2, 4, 3, 0.94) 100%),
+    linear-gradient(180deg, rgba(4, 8, 5, 0.55) 0%, rgba(2, 4, 3, 0.92) 100%),
+    url("images/bg-essays.webp");
 }
 .space-bg.bg-fiction {
-  background-image: radial-gradient(circle at center, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.85) 100%),
-              url("images/bg-fiction.webp");
+  background-image:
+    radial-gradient(ellipse at center, rgba(6, 9, 16, 0.62) 0%, rgba(2, 3, 6, 0.94) 100%),
+    linear-gradient(180deg, rgba(4, 5, 10, 0.55) 0%, rgba(2, 2, 5, 0.92) 100%),
+    url("images/bg-fiction.webp");
 }
 .space-bg.bg-about {
-  background-image: radial-gradient(circle at center, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 100%),
-              url("images/bg-about.webp");
+  background-image:
+    radial-gradient(ellipse at center, rgba(10, 8, 7, 0.62) 0%, rgba(3, 3, 4, 0.94) 100%),
+    linear-gradient(180deg, rgba(7, 5, 4, 0.55) 0%, rgba(3, 2, 3, 0.92) 100%),
+    url("images/bg-about.webp");
 }
 
 /* PLANETS: Fixed by default, JS controls position */
@@ -105,19 +116,22 @@ body {
   opacity: 0; 
 }
 
-/* --- RIBBON (Desktop Layout) --- */
+/* --- RIBBON (Desktop Layout - Merged Frosted Header) --- */
 .ribbon {
   position: fixed;
   top: 0; width: 100%; 
-  height: 90px; /* Slightly bigger ribbon */
-  background: rgba(10, 15, 20, 0.95);
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  height: 70px;
+  background: linear-gradient(180deg, rgba(8, 11, 16, 0.85) 0%, rgba(8, 11, 16, 0.60) 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
-  justify-content: space-between; /* Spread left, center, right */
+  justify-content: space-between;
   align-items: center;
   z-index: 1000;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.8); /* Reduced shadow for performance */
-  padding: 0 3rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
+  padding: 0 3.5rem;
+  transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 /* Layout Grid: Left Nav | Logo | Right Nav */
@@ -125,72 +139,97 @@ body {
   flex: 1;
   display: flex;
   align-items: center;
-  gap: 4rem; /* Increased gap between words */
+  gap: 2.8rem;
 }
 
 .nav-left { justify-content: flex-start; }
 .nav-right { justify-content: flex-end; }
 
-/* LOGO SPILL OVER */
+/* REFINED LOGO - Aspect-ratio locked to prevent distortion */
 .nav-logo {
-  flex: 0 0 auto; /* Don't stretch */
+  flex: 0 0 auto;
   position: relative;
   z-index: 1001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
 }
 
 .nav-logo img {
-  height: 115px; /* Slightly larger */
-  margin-top: 25px; /* Adjusted spill */
-  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.7));
-  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  height: 52px;
+  width: 52px;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  flex-shrink: 0;
+  display: block;
+  margin-top: 0;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.35));
+  transition: opacity 0.3s ease, filter 0.3s ease, transform 0.3s ease;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
 }
 
 .nav-logo:hover img {
-  transform: scale(1.1) rotate(5deg); /* Pop up effect */
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.5));
 }
 
-/* NAV LINKS */
+/* NAV LINKS - REFINED EDITORIAL TYPOGRAPHY */
 .nav-left a, .nav-right a, .nav-socials a {
-  text-decoration: none; color: #fff;
-  font-size: 1.2rem; 
-  letter-spacing: 0.15em;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.84rem;
+  font-weight: 400;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  transition: color 0.5s, text-shadow 0.5s;
+  transition: color 0.25s ease, text-shadow 0.25s ease;
 }
 
-/* Yellow Hover */
+.home-icon {
+  font-size: 0.95rem !important;
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+/* Vibrant Classic Gold Hover */
 .nav-left a:hover, .nav-right a:hover, .nav-socials a:hover { 
-  color: #FFD700; 
-  text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+  color: #FFD700 !important; 
+  text-shadow: 0 0 12px rgba(255, 215, 0, 0.7) !important;
 }
 
-/* Active State (Static Yellow) */
-.nav-left a.active, .nav-right a.active {
-  color: #FFD700;
-  text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+/* Active State */
+.nav-left a.active, .nav-right a.active, .home-icon.active {
+  color: #FFD700 !important;
+  text-shadow: 0 0 12px rgba(255, 215, 0, 0.7) !important;
 }
 
-/* SUBSCRIBE BUTTON */
-.subscribe-btn {
-    background: transparent;
-    border: 1px solid rgba(255, 215, 0, 0.4);
-    color: #e0e0e0;
-    padding: 0.5rem 1.5rem;
+/* SIGN IN / SUBSCRIBE BUTTON */
+.subscribe-btn, .sign-in-btn {
+    background: rgba(255, 215, 0, 0.06);
+    border: 1px solid rgba(255, 215, 0, 0.45);
+    color: #FFD700;
+    padding: 0.42rem 1.35rem;
     font-family: var(--font-main);
-    font-size: 0.9rem;
-    letter-spacing: 0.15em;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     text-decoration: none;
-    transition: all 0.5s ease;
-    border-radius: 2px;
-    margin-left: 2rem;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+    margin-left: 1.5rem;
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
-.subscribe-btn:hover {
-    color: #FFD700;
-    border-color: #FFD700;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
-    text-shadow: 0 0 5px rgba(255, 215, 0, 0.4);
+.subscribe-btn:hover, .sign-in-btn:hover {
+    color: #0a0e14 !important;
+    background: #ffffff !important;
+    border-color: #ffffff !important;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.45) !important;
+    transform: translateY(-2px);
+    text-shadow: none !important;
 }
 
 /* Mobile Elements - Hidden on Desktop */
@@ -206,58 +245,141 @@ body {
   text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
 }
 
-/* --- HERO --- */
+/* --- HERO SECTION --- */
 .hero {
-  height: 100vh;
+  min-height: 85vh;
   display: flex; flex-direction: column;
   justify-content: center; align-items: center;
-  text-align: center; padding-top: 140px;
+  text-align: center;
+  padding: 105px 2rem 4.5rem;
   position: relative;
-  z-index: 2; /* Ensure title sits above planets */
+  z-index: 2;
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-kicker {
+  font-size: 0.74rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: #FFD700;
+  margin-bottom: 0.65rem;
+  font-weight: 400;
+  animation: floatHero 7s ease-in-out infinite;
 }
 
 .hero h1 {
-  /* One point bigger - increased clamp max */
-  font-size: clamp(3rem, 6vw, 5.5rem); 
-  color: #fff;
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-  letter-spacing: 0.2em; text-transform: uppercase;
-  margin-bottom: 2rem; 
-  animation: floatHero 6s ease-in-out infinite;
+  font-size: clamp(1.85rem, 3.2vw, 2.85rem); 
+  color: #ffffff;
+  text-shadow: 0 2px 25px rgba(255, 255, 255, 0.22);
+  letter-spacing: 0.25em; text-transform: uppercase;
+  margin-bottom: 0.5rem; 
+  animation: floatHero 7s ease-in-out infinite;
   will-change: transform;
+  font-weight: 400;
+}
+
+.hero-tagline {
+  font-size: 0.78rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+  margin-bottom: 1.5rem;
+  font-weight: 300;
+  animation: floatHero 7s ease-in-out infinite;
 }
 
 @keyframes floatHero {
   0%, 100% { translate: 0 0; }
-  50% { translate: 0 -15px; }
+  50% { translate: 0 -10px; }
 }
 
-.spinning-logo { 
-  width: 250px; 
-  opacity: 0.9; 
-  /* Combine spinning (transform) and floating (translate) */
-  animation: spinForever 25s infinite linear, floatHero 6s ease-in-out infinite; 
-  will-change: transform, translate; 
+/* DIGNIFIED HERO EMBLEM */
+.hero-emblem, .spinning-logo { 
+  width: 125px;
+  height: auto;
+  opacity: 0.95;
+  animation: floatHero 7s ease-in-out infinite; 
+  filter: drop-shadow(0 0 20px rgba(247, 224, 139, 0.25));
+  will-change: transform;
 }
 
-@keyframes spinForever {
-  to { transform: rotate(360deg); } 
+/* Scroll indicator to anchor the hero and lead the reader */
+.hero-scroll-indicator {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0.65;
+  pointer-events: none;
+}
+.hero-scroll-indicator .scroll-prompt {
+  font-family: var(--font-main);
+  font-size: 0.68rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+}
+.hero-scroll-indicator .scroll-line {
+  width: 1px;
+  height: 24px;
+  background: linear-gradient(180deg, rgba(255, 215, 0, 0.8), transparent);
+  animation: scrollPulse 2.4s ease-in-out infinite;
+}
+@keyframes scrollPulse {
+  0% { transform: scaleY(0); transform-origin: top; opacity: 0; }
+  50% { transform: scaleY(1); transform-origin: top; opacity: 1; }
+  100% { transform: scaleY(1); transform-origin: bottom; opacity: 0; }
+}
+
+/* Section divider ornament */
+.section-divider-ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 360px;
+  margin: 1rem auto 0;
+  opacity: 0.55;
+  position: relative;
+  z-index: 2;
+}
+.section-divider-ornament::before,
+.section-divider-ornament::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.45), transparent);
+}
+.section-divider-ornament span {
+  color: #FFD700;
+  font-size: 0.85rem;
 }
 
 /* Disable spinning logo animation on mobile to reduce lag */
 @media (max-width: 900px) {
-  .spinning-logo {
+  .hero-emblem, .spinning-logo {
     animation: none !important;
     will-change: auto !important;
-    width: 140px; /* Smaller logo under title on mobile */
+    width: 110px;
   }
 }
 
 /* --- QUOTE --- */
 .about {
-  min-height: 60vh;
+  min-height: auto;
   display: flex; justify-content: center; align-items: center;
-  padding: 4rem 15vw; text-align: center;
+  padding: 3.5rem 12vw 4rem; text-align: center;
   position: relative;
   z-index: 2; /* Above planets if they cross */
 }
@@ -268,13 +390,14 @@ body {
 }
 
 .quote-text { 
-    font-size: clamp(1.4rem, 2.5vw, 2.2rem); 
+    font-size: clamp(1.02rem, 1.4vw, 1.35rem); 
     font-style: italic; 
-    line-height: 1.8; 
-    color: #f0f0f0; /* More White */
-    /* animation: quoteGlow 4s ease-in-out infinite; */
-    text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
-    letter-spacing: 0.05em;
+    line-height: 1.75; 
+    color: #f0f0f0;
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+    letter-spacing: 0.03em;
+    max-width: 820px;
+    margin: 0 auto;
 }
 
 /* Disable quote glow animation on mobile to reduce lag */
@@ -282,17 +405,17 @@ body {
   .quote-text {
     animation: none !important;
     text-shadow: 0 0 10px rgba(255, 215, 0, 0.3) !important;
-    font-size: 1rem !important; /* Smaller quote on mobile */
+    font-size: 0.92rem !important; /* Smaller quote on mobile */
   }
   .hero h1 { 
     animation: none !important; 
-    font-size: 2.2rem !important; /* Smaller title on mobile */
+    font-size: 1.75rem !important; /* Smaller title on mobile */
   }
 }
 .highlight { color: #fff; font-weight: 600; text-shadow: 0 0 15px rgba(255, 255, 255, 0.2); }
 
 /* --- LIBRARY CARDS --- */
-.library { min-height: 80vh; padding: 2rem 2rem 6rem; display: flex; justify-content: center; position: relative; z-index: 5; }
+.library { min-height: auto; padding: 2.5rem 2rem 5rem; display: flex; justify-content: center; position: relative; z-index: 5; }
 
 /* Theme Borders & Colors */
 /* Note: Specific theme borders are now handled by .solid-glass.theme-name */
@@ -301,34 +424,34 @@ body {
 .museum-display {
   display: grid;
   grid-template-columns: 1fr 1.2fr; /* Balanced for medium size */
-  gap: 4rem;
+  gap: 3rem;
   width: 100%;
-  max-width: 1200px; /* Aligns with other content blocks */
+  max-width: 1100px; /* Aligns with other content blocks */
   margin: 0 auto;
-  padding: 4rem 2rem;
+  padding: 2.5rem 2rem;
   align-items: center;
-  min-height: 60vh; /* Give it some space */
+  min-height: auto;
 }
 
 .museum-menu {
   display: flex;
   flex-direction: column;
-  gap: 3.5rem;
+  gap: 2.5rem;
   align-items: flex-start;
-  padding-left: 3rem;
+  padding-left: 2rem;
 }
 
 .museum-item {
   cursor: pointer;
   position: relative;
-  padding-left: 3.5rem;
+  padding-left: 3rem;
   transition: color 0.4s ease;
   text-decoration: none;
   display: block;
 }
 
 .museum-item h2 {
-  font-size: clamp(1.9rem, 4vw, 3.4rem);
+  font-size: clamp(1.45rem, 2.4vw, 2.2rem);
   font-weight: 300;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -342,7 +465,7 @@ body {
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  width: 20px;
+  width: 18px;
   height: 2px;
   background: rgba(255, 215, 0, 0.3);
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -354,7 +477,7 @@ body {
 }
 
 .museum-item.active::before {
-  width: 40px;
+  width: 32px;
   background: #FFD700;
   box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
 }
@@ -364,21 +487,22 @@ body {
     color: #fff; 
     text-shadow: 0 0 12px rgba(255, 255, 255, 0.2); /* Negligible glow */
   }
-  .museum-item:hover::before { width: 40px; background: #FFD700; box-shadow: 0 0 15px rgba(255, 215, 0, 0.5); }
+  .museum-item:hover::before { width: 32px; background: #FFD700; box-shadow: 0 0 15px rgba(255, 215, 0, 0.5); }
 }
 
 .museum-stage {
   align-self: center;
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 
 .stage-content {
-  padding: 2.5rem;
-  min-height: 280px; /* Adjusted to match menu height */
+  padding: 2rem 2.2rem;
+  min-height: 230px;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 1.5rem;
+  gap: 1.2rem;
   transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
   text-decoration: none;
   cursor: pointer;
@@ -393,7 +517,7 @@ body {
 }
 
 #stage-label {
-  font-size: 0.95rem;
+  font-size: 0.8rem;
   letter-spacing: 2px;
   color: #FFD700;
   text-transform: uppercase;
@@ -402,9 +526,9 @@ body {
 }
 
 #stage-quote {
-  font-size: 1.3rem;
+  font-size: 1.08rem;
   font-style: italic;
-  line-height: 1.6;
+  line-height: 1.7;
   color: #e0e0e0;
   text-shadow: none;
   transition: opacity 0.3s ease, transform 0.3s ease;
@@ -425,27 +549,27 @@ body {
    SHOWCASE GALLERY
    ========================================= */
 .showcase-container {
-    max-width: 1050px;
+    max-width: 1000px;
     margin: 0rem auto;
     padding: 0 2rem;
     display: flex;
     flex-direction: column;
-    gap: 5rem; /* Spacious breathing room between sections */
+    gap: 3.5rem; /* Spacious breathing room between sections */
 }
 
 .category-heading {
     text-align: center;
-    font-size: 1.6rem;
-    letter-spacing: 4px;
+    font-size: 1.25rem;
+    letter-spacing: 3px;
     color: #ffcc00; 
     text-transform: uppercase;
-    margin-bottom: 6rem;
+    margin-bottom: 2.5rem;
     font-weight: 600;
 }
 
 .card-grid {
     display: grid;
-    gap: 2rem;
+    gap: 1.5rem;
 }
 
 /* 3 Columns for Prose */
@@ -457,7 +581,7 @@ body {
 .prose-stack {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1.5rem;
 }
 
 /* 3 Columns for Verse (Matching Prose Layout) */
@@ -475,12 +599,12 @@ body {
 .glass-panel {
     background: rgba(10, 15, 20, 0.5); /* Increased transparency */
     border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
+    border-radius: 10px;
     position: relative; /* Required for torch effect positioning */
     overflow: hidden;   /* Keeps torch glow inside */
     /* Add the noise texture to match museum cards exactly */
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.07'/%3E%3C/svg%3E");
-    padding: 2.5rem 2rem;
+    padding: 1.8rem 1.6rem;
     text-decoration: none;
     color: #ffffff;
     display: flex;
@@ -524,23 +648,23 @@ body {
 
 /* Inner Card Typography */
 .card-meta {
-    font-size: 0.75rem;
-    letter-spacing: 2px;
+    font-size: 0.68rem;
+    letter-spacing: 1.5px;
     color: rgba(255, 255, 255, 0.5);
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.9rem;
     text-transform: uppercase;
     display: block;
 }
 
 .card-title {
-    font-size: 1.5rem;
-    margin-bottom: 2rem;
+    font-size: 1.22rem;
+    margin-bottom: 1.25rem;
     font-weight: 400;
     line-height: 1.4;
 }
 
 .read-link {
-    font-size: 0.85rem;
+    font-size: 0.78rem;
     color: #ffcc00;
     letter-spacing: 1px;
     text-transform: uppercase;
@@ -556,9 +680,9 @@ body {
 
 /* Custom Tales Spotlight Card */
 .large-title {
-    font-size: 1.8rem; /* Made smaller */
+    font-size: 1.38rem; /* Made smaller */
     color: #fff; /* Changed to white */
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.2rem;
 }
 
 .tales-content {
@@ -616,30 +740,11 @@ body {
 }
 
 /* --- FOOTER --- */
-/* --- PREMIUM HEADER SUBSCRIBE BUTTON --- */
-.nav-right .subscribe-btn {
-    color: #FFD700;
-    text-decoration: none;
-    font-size: 0.95rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    border: 1px solid rgba(255, 215, 0, 0.4);
-    padding: 0.5rem 1.5rem;
-    border-radius: 50px; /* Elegant pill shape */
-    transition: all 0.5s ease;
-    margin-left: 1rem;
-    cursor: pointer;
-}
-.nav-right .subscribe-btn:hover {
-    background: rgba(255, 215, 0, 0.1);
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
-    border-color: #FFD700;
-}
-
+/* --- FOOTER --- */
 footer {
     position: relative; 
     z-index: 60; 
-    padding: 1.2rem 4rem 1rem;
+    padding: 1.5rem 4rem 1.2rem;
     background: rgba(10, 15, 20, 0.95);
     border-top: 1px solid rgba(255,255,255,0.05); 
     margin-top: auto; 
@@ -656,58 +761,90 @@ footer {
 }
 .footer-catch p {
     color: #e0e0e0;
-    font-size: 1.1rem;
-    margin-bottom: 1.5rem;
-    letter-spacing: 0.05em;
-    max-width: 350px; /* Constrain width */
+    font-size: 0.92rem;
+    margin-bottom: 0.85rem;
+    letter-spacing: 0.04em;
+    max-width: 320px;
 }
 .footer-subscribe-form {
     display: flex;
+    flex-direction: column;
     gap: 0.5rem;
-    justify-content: flex-start;
-    align-items: center;
+    width: 100%;
+    max-width: 310px;
 }
+.footer-form-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    width: 100%;
+}
+.footer-name-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.45rem;
+    width: 100%;
+}
+.footer-email-row {
+    display: flex;
+    gap: 0.45rem;
+    width: 100%;
+}
+.footer-subscribe-form input[type="text"]:not(.bot-trap),
 .footer-subscribe-form input[type="email"] {
-    background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.22);
     color: #fff;
-    padding: 0.6rem 1rem;
+    padding: 0.5rem 0.75rem;
     border-radius: 4px;
     font-family: var(--font-main);
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     outline: none;
-    transition: border-color 0.3s;
-    width: 200px;
+    transition: border-color 0.3s, background 0.3s;
+    width: 100%;
+    box-sizing: border-box;
 }
+.footer-subscribe-form input[type="text"]:not(.bot-trap):focus,
 .footer-subscribe-form input[type="email"]:focus {
     border-color: #FFD700;
+    background: rgba(255, 255, 255, 0.07);
+}
+.footer-subscribe-form input::placeholder {
+    color: rgba(255, 255, 255, 0.42);
+    font-size: 0.76rem;
+    font-style: italic;
 }
 .footer-subscribe-form button {
     background: #FFD700;
-    color: #000;
+    color: #050608;
     border: none;
-    padding: 0.6rem 1.2rem;
+    padding: 0.5rem 1.1rem;
     border-radius: 4px;
     cursor: pointer;
     font-family: var(--font-main);
     font-weight: 600;
     text-transform: uppercase;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
     transition: all 0.3s ease;
     white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
 }
 .footer-subscribe-form button:hover {
     background: #fff;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
     transform: translateY(-2px);
 }
 .footer-success-message {
-    margin-top: 1rem;
+    margin-top: 0.75rem;
 }
 .footer-success-message p {
     color: #FFD700;
     font-style: italic;
-    font-size: 1rem;
-    margin-bottom: 0; /* Override generic p margin */
+    font-size: 0.95rem;
+    margin-bottom: 0;
 }
 
 /* Right column container */
@@ -874,17 +1011,30 @@ footer {
   .footer-subscribe-form {
     flex-direction: column;
     width: 100%;
-    gap: 0.8rem;
-    align-items: center;
+    max-width: 310px;
+    gap: 0.5rem;
+    align-items: stretch;
   }
-  .footer-subscribe-form input[type="email"] {
-    width: 85%;
-    max-width: 300px;
-    font-size: 0.8rem !important;
+  .footer-form-inputs {
+    width: 100%;
+  }
+  .footer-name-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.4rem;
+  }
+  .footer-email-row {
+    display: flex;
+    gap: 0.4rem;
+  }
+  .footer-subscribe-form input[type="email"],
+  .footer-subscribe-form input[type="text"]:not(.bot-trap) {
+    width: 100%;
+    font-size: 0.78rem !important;
   }
   .footer-subscribe-form button {
-    padding: 0.5rem 1.5rem !important;
-    font-size: 0.7rem !important;
+    padding: 0.5rem 1.1rem !important;
+    font-size: 0.72rem !important;
+    justify-content: center;
   }
   /* 2. Fix the Missing Links (Essays/Poems/etc) */
   .footer-right {
@@ -955,7 +1105,13 @@ footer {
 
   /* Adjust Logo for Mobile Ribbon */
   .nav-logo img { 
-      height: 75px; margin-top: 18px; /* Slightly larger mobile logo */
+      height: 40px;
+      width: 40px;
+      aspect-ratio: 1 / 1;
+      object-fit: contain;
+      flex-shrink: 0;
+      display: block;
+      margin-top: 0;
       filter: none; transform: none; 
   }
   .nav-logo:hover img { transform: none !important; }
@@ -1517,32 +1673,32 @@ a.solid-glass:hover {
 }
 
 .reading-text {
-    margin-top: 3rem;
-    font-size: 1.1rem;
-    line-height: 1.8;
+    margin-top: 2.5rem;
+    font-size: 1.02rem;
+    line-height: 1.78;
     color: #e0e0e0;
     text-align: justify;
 }
 
 .reading-text p {
-    margin-bottom: 2rem;
+    margin-bottom: 1.8rem;
 }
 
 /* POEM SPECIFIC STYLE - Apply class 'poem' to reading-text div for poems */
 .reading-text.poem,
 .reading-text pre {
     font-family: inherit;
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     white-space: pre-wrap;
     text-align: center; /* Optional: Centers poem text */
 }
 
 /* Specific container for poem body (Moved from inline HTML) */
 .poem-content {
-    max-width: 450px; 
+    max-width: 420px; 
     margin: 2rem auto; 
-    font-size: 1.1rem; 
-    line-height: 1.9; 
+    font-size: 1.02rem; 
+    line-height: 1.8; 
     color: #f0f0f0; 
     letter-spacing: 0.03em;
 }
@@ -2169,8 +2325,8 @@ a.solid-glass:hover {
    SUBSCRIBE ENGINE (Homepage)
    ========================================= */
 #subscribe-engine {
-    margin-top: 8rem;
-    margin-bottom: 4rem;
+    margin-top: 5rem;
+    margin-bottom: 3.5rem;
     padding: 0 2rem;
     display: flex;
     justify-content: center;
@@ -2178,36 +2334,36 @@ a.solid-glass:hover {
 
 #subscribe-engine .glass-panel {
     width: 100%;
-    max-width: 600px;
+    max-width: 520px;
     text-align: center;
-    padding: 3rem 2.5rem;
+    padding: 2.4rem 2rem;
 }
 
 .accent-line {
-    width: 50px;
+    width: 40px;
     height: 2px;
     background: #FFD700;
-    margin: 0 auto 1.5rem;
+    margin: 0 auto 1.2rem;
     box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
 }
 
 #subscribe-engine h2 {
-    font-size: 2rem;
+    font-size: 1.6rem;
     color: #FFD700;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
     font-weight: 400;
     letter-spacing: 0.05em;
 }
 
 #subscribe-engine p {
     color: #aaa;
-    margin-bottom: 2.5rem;
-    font-size: 1.05rem;
+    margin-bottom: 1.8rem;
+    font-size: 0.92rem;
     line-height: 1.6;
 }
 
 #subscribe-engine .quote-text {
-    font-size: 1.15rem; /* 0.1rem larger than the 1.05rem p text */
+    font-size: 0.95rem;
     letter-spacing: normal; /* Reset from main quote style */
     line-height: 1.6;
 }
@@ -2215,46 +2371,70 @@ a.solid-glass:hover {
 #silent-subscribe-form {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1.25rem;
     transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
-#silent-subscribe-form input[type="email"] {
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    width: 100%;
+}
+
+@media (max-width: 600px) {
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+}
+
+#silent-subscribe-form input[type="email"],
+#silent-subscribe-form input[type="text"]:not(#bot-trap) {
     background: transparent;
     border: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-    padding: 1rem 0.5rem;
-    font-size: 1.1rem;
+    padding: 0.85rem 0.5rem;
+    font-size: 1.05rem;
     color: #fff;
     width: 100%;
     font-family: var(--font-main);
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
     border-radius: 0;
     outline: none;
+    box-sizing: border-box;
 }
 
-#silent-subscribe-form input[type="email"]:focus {
+#silent-subscribe-form input[type="email"]::placeholder,
+#silent-subscribe-form input[type="text"]:not(#bot-trap):placeholder {
+    color: rgba(255, 255, 255, 0.45);
+    font-style: italic;
+    font-family: var(--font-main);
+}
+
+#silent-subscribe-form input[type="email"]:focus,
+#silent-subscribe-form input[type="text"]:not(#bot-trap):focus {
     border-bottom-color: #FFD700;
-    box-shadow: 0 1px 0 0 rgba(255, 215, 0, 0.5);
+    box-shadow: 0 1px 0 0 rgba(255, 215, 0, 0.6);
 }
 
 #silent-subscribe-form button {
     background: #FFD700;
-    color: #000;
+    color: #050608;
     border: none;
-    padding: 0.9rem 2rem;
+    padding: 0.75rem 2rem;
     font-family: 'Spectral', serif;
-    font-size: 0.9rem;
+    font-size: 0.82rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 2px;
     border-radius: 50px;
     cursor: pointer;
-    transition: all 0.5s ease;
+    transition: all 0.35s ease;
     margin-top: 0.5rem;
     align-self: center;
     width: 100%;
-    max-width: 200px;
+    max-width: 190px;
 }
 
 #subscribe-engine .subscribe-card {
