@@ -47,14 +47,14 @@ body {
   background: #FFD700; /* Gold on hover */
 }
 
-/* --- BACKGROUNDS --- */
+/* --- BACKGROUNDS (Naturally Dark & Atmospheric) --- */
 .space-bg {
   position: fixed;
   top: -20%; left: 0;
   width: 100%; height: 140%; /* Taller to allow parallax movement */
   background:
-    radial-gradient(ellipse at 50% 35%, rgba(6, 8, 12, 0.55) 0%, rgba(2, 3, 5, 0.92) 100%),
-    linear-gradient(180deg, rgba(3, 4, 7, 0.55) 0%, rgba(2, 3, 5, 0.90) 100%),
+    radial-gradient(ellipse at 50% 40%, rgba(6, 8, 12, 0.42) 0%, rgba(2, 3, 5, 0.78) 100%),
+    linear-gradient(180deg, rgba(3, 4, 7, 0.38) 0%, rgba(2, 3, 5, 0.72) 100%),
     url("images/universe.webp") center/cover no-repeat;
   z-index: -10; /* Pushed further back */
   will-change: transform;
@@ -62,29 +62,29 @@ body {
   backface-visibility: hidden; /* Improves scroll/parallax performance */
 }
 
-/* Page Specific Backgrounds - Art-directed Atmospheric Overlays (Hardware-Accelerated) */
+/* Page Specific Backgrounds - Art-directed Atmospheric Overlays */
 .space-bg.bg-poems {
   background-image:
-    radial-gradient(ellipse at center, rgba(12, 6, 9, 0.62) 0%, rgba(3, 2, 4, 0.94) 100%),
-    linear-gradient(180deg, rgba(8, 4, 6, 0.55) 0%, rgba(3, 2, 3, 0.92) 100%),
+    radial-gradient(ellipse at center, rgba(15, 6, 10, 0.45) 0%, rgba(6, 3, 6, 0.80) 100%),
+    linear-gradient(180deg, rgba(10, 4, 7, 0.40) 0%, rgba(4, 2, 4, 0.75) 100%),
     url("images/bg-poems.webp");
 }
 .space-bg.bg-essays {
   background-image:
-    radial-gradient(ellipse at center, rgba(6, 12, 9, 0.62) 0%, rgba(2, 4, 3, 0.94) 100%),
-    linear-gradient(180deg, rgba(4, 8, 5, 0.55) 0%, rgba(2, 4, 3, 0.92) 100%),
+    radial-gradient(ellipse at center, rgba(4, 12, 8, 0.45) 0%, rgba(2, 6, 4, 0.80) 100%),
+    linear-gradient(180deg, rgba(3, 8, 5, 0.40) 0%, rgba(2, 5, 3, 0.75) 100%),
     url("images/bg-essays.webp");
 }
 .space-bg.bg-fiction {
   background-image:
-    radial-gradient(ellipse at center, rgba(6, 9, 16, 0.62) 0%, rgba(2, 3, 6, 0.94) 100%),
-    linear-gradient(180deg, rgba(4, 5, 10, 0.55) 0%, rgba(2, 2, 5, 0.92) 100%),
+    radial-gradient(ellipse at center, rgba(6, 10, 20, 0.45) 0%, rgba(2, 4, 10, 0.80) 100%),
+    linear-gradient(180deg, rgba(4, 6, 14, 0.40) 0%, rgba(2, 3, 8, 0.75) 100%),
     url("images/bg-fiction.webp");
 }
 .space-bg.bg-about {
   background-image:
-    radial-gradient(ellipse at center, rgba(10, 8, 7, 0.62) 0%, rgba(3, 3, 4, 0.94) 100%),
-    linear-gradient(180deg, rgba(7, 5, 4, 0.55) 0%, rgba(3, 2, 3, 0.92) 100%),
+    radial-gradient(ellipse at center, rgba(12, 10, 8, 0.45) 0%, rgba(5, 4, 3, 0.80) 100%),
+    linear-gradient(180deg, rgba(8, 6, 4, 0.40) 0%, rgba(4, 3, 2, 0.75) 100%),
     url("images/bg-about.webp");
 }
 
@@ -116,126 +116,203 @@ body {
   opacity: 0; 
 }
 
-/* --- RIBBON (Desktop Layout - Merged Frosted Header) --- */
+/* =========================================
+   RIBBON: CONCEPT C (Dual-Tier Masthead)
+   ========================================= */
 .ribbon {
   position: fixed;
-  top: 0; width: 100%; 
-  height: 70px;
-  background: linear-gradient(180deg, rgba(8, 11, 16, 0.85) 0%, rgba(8, 11, 16, 0.60) 100%);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(6, 9, 14, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 215, 0, 0.22);
   z-index: 1000;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
-  padding: 0 3.5rem;
-  transition: background 0.3s ease, border-color 0.3s ease;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.65), 0 1px 0 rgba(255, 215, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-/* Layout Grid: Left Nav | Logo | Right Nav */
-.nav-left, .nav-right {
+/* Tier 1: The Publication Masthead */
+.masthead-tier {
+  width: 100%;
+  height: calc(60px - (12px * var(--scroll-progress, 0)));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 3.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  position: relative;
+  will-change: height;
+}
+
+.tier-left, .tier-right {
   flex: 1;
   display: flex;
   align-items: center;
-  gap: 2.8rem;
 }
 
-.nav-left { justify-content: flex-start; }
-.nav-right { justify-content: flex-end; }
+.tier-left { justify-content: flex-start; }
+.tier-right { justify-content: flex-end; }
 
-/* REFINED LOGO - Aspect-ratio locked to prevent distortion */
-.nav-logo {
+/* Centered Masthead Brand */
+.tier-center.nav-logo {
   flex: 0 0 auto;
-  position: relative;
-  z-index: 1001;
   display: flex;
   align-items: center;
   justify-content: center;
-  line-height: 0;
 }
 
-.nav-logo img {
-  height: 52px;
-  width: 52px;
+.tier-center.nav-logo a {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.05rem;
+  text-decoration: none;
+}
+
+.tier-center.nav-logo img {
+  height: calc(46px - (8px * var(--scroll-progress, 0)));
+  width: calc(46px - (8px * var(--scroll-progress, 0)));
+  max-width: 46px;
+  max-height: 46px;
   aspect-ratio: 1 / 1;
   object-fit: contain;
   flex-shrink: 0;
   display: block;
-  margin-top: 0;
-  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.35));
-  transition: opacity 0.3s ease, filter 0.3s ease, transform 0.3s ease;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.45));
+  transition: transform 0.3s ease, filter 0.3s ease;
+  will-change: height, width;
 }
 
-.nav-logo:hover img {
-  transform: scale(1.05);
-  filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.5));
+.tier-center.nav-logo:hover img {
+  transform: scale(1.06);
+  filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.55));
 }
 
-/* NAV LINKS - REFINED EDITORIAL TYPOGRAPHY */
-.nav-left a, .nav-right a, .nav-socials a {
+.masthead-brand {
+  font-family: var(--font-main);
+  font-size: calc(1.05rem - (0.15rem * var(--scroll-progress, 0)));
+  font-weight: 600;
+  letter-spacing: calc(0.36em - (0.04em * var(--scroll-progress, 0)));
+  color: #ffffff;
+  text-transform: uppercase;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+  will-change: font-size, letter-spacing;
+}
+
+.tier-center.nav-logo:hover .masthead-brand {
+  color: #FFD700;
+  text-shadow: 0 0 14px rgba(255, 215, 0, 0.55);
+}
+
+/* Tier 2: The Editorial Directory */
+.directory-tier {
+  width: 100%;
+  height: calc(30px - (4px * var(--scroll-progress, 0)));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  background: rgba(4, 6, 10, 0.45);
+  will-change: height;
+}
+
+.directory-tier a {
   text-decoration: none;
-  color: rgba(255, 255, 255, 0.85);
-  font-size: 0.84rem;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.72rem;
   font-weight: 400;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.26em;
   text-transform: uppercase;
   transition: color 0.25s ease, text-shadow 0.25s ease;
 }
 
-.home-icon {
-  font-size: 0.95rem !important;
-  color: rgba(255, 255, 255, 0.75) !important;
+.directory-tier a:hover {
+  color: #FFD700 !important;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.7) !important;
 }
 
-/* Vibrant Classic Gold Hover */
-.nav-left a:hover, .nav-right a:hover, .nav-socials a:hover { 
-  color: #FFD700 !important; 
-  text-shadow: 0 0 12px rgba(255, 215, 0, 0.7) !important;
+.directory-tier a.active {
+  color: #FFD700 !important;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.7) !important;
 }
 
-/* Active State */
-.nav-left a.active, .nav-right a.active, .home-icon.active {
+.tier-dot {
+  color: rgba(255, 215, 0, 0.35);
+  font-size: 0.8rem;
+  user-select: none;
+}
+
+/* Home Icon */
+.tier-left .home-icon {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+  transition: color 0.25s ease, text-shadow 0.25s ease;
+}
+.tier-left .home-icon:hover, .tier-left .home-icon.active {
   color: #FFD700 !important;
   text-shadow: 0 0 12px rgba(255, 215, 0, 0.7) !important;
 }
 
-/* SIGN IN / SUBSCRIBE BUTTON */
+/* Sign In Button in Masthead */
+.tier-right .subscribe-btn,
+.tier-right .sign-in-btn,
 .subscribe-btn, .sign-in-btn {
-    background: rgba(255, 215, 0, 0.06);
-    border: 1px solid rgba(255, 215, 0, 0.45);
-    color: #FFD700;
-    padding: 0.42rem 1.35rem;
-    font-family: var(--font-main);
-    font-size: 0.78rem;
-    font-weight: 500;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    border-radius: 4px;
-    margin-left: 1.5rem;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+  background: transparent;
+  border: 1px solid rgba(255, 215, 0, 0.55);
+  color: #FFD700 !important;
+  padding: 0.35rem 1.3rem;
+  font-family: var(--font-main);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  border-radius: 50px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-shadow: none !important;
 }
-.subscribe-btn:hover, .sign-in-btn:hover {
-    color: #0a0e14 !important;
-    background: #ffffff !important;
-    border-color: #ffffff !important;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.45) !important;
-    transform: translateY(-2px);
-    text-shadow: none !important;
+
+.tier-right .subscribe-btn:hover,
+.tier-right .sign-in-btn:hover,
+.subscribe-btn:hover, 
+.sign-in-btn:hover {
+  color: #000000 !important;
+  background: #ffffff !important;
+  border-color: #ffffff !important;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.6) !important;
+  transform: translateY(-2px);
+  text-shadow: none !important;
+}
+
+/* Scrolled Compression for Concept C */
+.ribbon.scrolled .masthead-tier {
+  height: 48px;
+}
+.ribbon.scrolled .tier-center.nav-logo img {
+  height: 38px;
+  width: 38px;
+  max-width: 38px;
+  max-height: 38px;
+}
+.ribbon.scrolled .masthead-brand {
+  font-size: 0.90rem;
+  letter-spacing: 0.32em;
+}
+.ribbon.scrolled .directory-tier {
+  height: 26px;
 }
 
 /* Mobile Elements - Hidden on Desktop */
 .menu-toggle, .mobile-home-icon, .mobile-nav-overlay { display: none; }
 
-/* Force hide mobile menu on desktop even if JS sets inline styles */
 @media (min-width: 901px) {
     .mobile-nav-overlay { display: none !important; }
 }
@@ -251,7 +328,7 @@ body {
   display: flex; flex-direction: column;
   justify-content: center; align-items: center;
   text-align: center;
-  padding: 105px 2rem 4.5rem;
+  padding: 115px 2rem 4.5rem;
   position: relative;
   z-index: 2;
 }
@@ -498,35 +575,34 @@ body {
 .stage-content {
   padding: 2rem 2.2rem;
   min-height: 230px;
-  border-radius: 10px;
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 1.2rem;
-  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  gap: 1.1rem;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out, border-color 0.5s ease, box-shadow 0.5s ease;
   text-decoration: none;
   cursor: pointer;
-  -webkit-mask-image: linear-gradient(to right, black 70%, transparent 100%);
-  mask-image: linear-gradient(to right, black 70%, transparent 100%);
 }
 
 .stage-content.stage-fade-out #stage-label,
-.stage-content.stage-fade-out #stage-quote {
+.stage-content.stage-fade-out #stage-quote,
+.stage-content.stage-fade-out .stage-enter-pill {
   opacity: 0;
   transform: translateY(10px);
 }
 
 #stage-label {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   letter-spacing: 2px;
   color: #FFD700;
   text-transform: uppercase;
   font-weight: 600;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease, color 0.4s ease;
 }
 
 #stage-quote {
-  font-size: 1.08rem;
+  font-size: 1.05rem;
   font-style: italic;
   line-height: 1.7;
   color: #e0e0e0;
@@ -535,10 +611,30 @@ body {
   text-align: justify;
 }
 
-/* Museum Stage Card Hover - Yellow Glow */
+.stage-enter-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #FFD700;
+  opacity: 0.75;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  margin-top: 0.4rem;
+  font-family: var(--font-main);
+}
+
+/* Museum Stage Card Hover */
 .stage-content:hover {
-    border-color: #FFD700 !important;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(255, 215, 0, 0.3) !important;
+    border-color: rgba(255, 215, 0, 0.7) !important;
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.85), 0 0 25px rgba(255, 215, 0, 0.25) !important;
+    transform: translateY(-3px);
+}
+
+.stage-content:hover .stage-enter-pill {
+    opacity: 1;
+    transform: translateX(4px);
 }
 
 .museum-mobile-content {
@@ -554,17 +650,23 @@ body {
     padding: 0 2rem;
     display: flex;
     flex-direction: column;
-    gap: 3.5rem; /* Spacious breathing room between sections */
+    gap: 4.5rem; /* Generous breathing room between category sections */
+}
+
+.showcase-category {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
 .category-heading {
     text-align: center;
-    font-size: 1.25rem;
-    letter-spacing: 3px;
-    color: #ffcc00; 
+    font-size: 0.88rem;
+    letter-spacing: 0.32em;
+    color: #FFD700; 
     text-transform: uppercase;
-    margin-bottom: 2.5rem;
-    font-weight: 600;
+    margin-bottom: 2.4rem !important;
+    font-weight: 500;
 }
 
 .card-grid {
@@ -593,6 +695,7 @@ body {
 /* 1 Column for Tales */
 .tales-grid {
     grid-template-columns: 1fr;
+    margin-top: 0.8rem;
 }
 
 /* Glass Panel Base */
@@ -618,26 +721,26 @@ body {
 }
 
 .glass-panel:hover {
-    transform: translateY(-5px); /* Match solid-glass lift */
+    transform: translateY(-5px);
     background: rgba(10, 15, 20, 0.65);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.22);
 }
 
-/* Theme specific hovers for Showcase Gallery */
+/* Theme specific hovers with refined edge glow */
 .prose-grid .showcase-card:hover {
-    border-color: var(--color-earth);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(129, 199, 132, 0.3); /* Increased glow */
+    border-color: rgba(129, 199, 132, 0.65);
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.85), 0 0 22px rgba(129, 199, 132, 0.32);
 }
 
 .verse-grid .showcase-card:hover {
-    border-color: var(--color-fire);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(229, 115, 115, 0.3);
+    border-color: rgba(229, 115, 115, 0.65);
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.85), 0 0 22px rgba(229, 115, 115, 0.32);
 }
 
 .tales-grid .showcase-card:hover {
-    border-color: var(--color-water);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(100, 181, 246, 0.3);
+    border-color: rgba(100, 181, 246, 0.65);
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.85), 0 0 22px rgba(100, 181, 246, 0.32);
 }
 
 /* Subscribe Card Hover */
@@ -646,7 +749,38 @@ body {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(255, 215, 0, 0.3);
 }
 
-/* Inner Card Typography */
+/* Inner Card Typography & Micro Metadata Badges */
+.card-badges {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin-bottom: 0.85rem;
+    flex-wrap: wrap;
+}
+
+.badge-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.75);
+    font-family: var(--font-main);
+    transition: all 0.3s ease;
+}
+
+.glass-panel:hover .badge-pill,
+.card-anchor:hover .badge-pill {
+    background: rgba(255, 215, 0, 0.12);
+    border-color: rgba(255, 215, 0, 0.45);
+    color: #FFD700;
+}
+
 .card-meta {
     font-size: 0.68rem;
     letter-spacing: 1.5px;
@@ -654,6 +788,10 @@ body {
     margin-bottom: 0.9rem;
     text-transform: uppercase;
     display: block;
+}
+
+.card-badges .card-meta {
+    margin-bottom: 0;
 }
 
 .card-title {
@@ -796,18 +934,25 @@ footer {
     border: 1px solid rgba(255, 255, 255, 0.22);
     color: #fff;
     padding: 0.5rem 0.75rem;
-    border-radius: 4px;
+    border-radius: 6px;
     font-family: var(--font-main);
     font-size: 0.8rem;
     outline: none;
-    transition: border-color 0.3s, background 0.3s;
+    transition: all 0.3s ease;
     width: 100%;
     box-sizing: border-box;
+}
+.footer-subscribe-form input[type="text"]:not(.bot-trap):hover,
+.footer-subscribe-form input[type="email"]:hover {
+    border-color: rgba(255, 215, 0, 0.65);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 12px rgba(255, 215, 0, 0.2);
 }
 .footer-subscribe-form input[type="text"]:not(.bot-trap):focus,
 .footer-subscribe-form input[type="email"]:focus {
     border-color: #FFD700;
-    background: rgba(255, 255, 255, 0.07);
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 0 16px rgba(255, 215, 0, 0.35);
 }
 .footer-subscribe-form input::placeholder {
     color: rgba(255, 255, 255, 0.42);
@@ -819,7 +964,7 @@ footer {
     color: #050608;
     border: none;
     padding: 0.5rem 1.1rem;
-    border-radius: 4px;
+    border-radius: 50px;
     cursor: pointer;
     font-family: var(--font-main);
     font-weight: 600;
@@ -860,48 +1005,51 @@ footer {
 /* Site Map Links */
 .footer-links {
     display: flex;
-    gap: 1.5rem;
+    gap: 1.2rem;
     align-items: center;
 }
 .footer-links a {
-    color: #aaa;
+    color: rgba(255, 255, 255, 0.68);
     text-decoration: none;
-    font-size: 1rem;
+    font-size: 0.74rem;
     text-transform: uppercase;
-    letter-spacing: 0.15em;
-    transition: color 0.5s;
+    letter-spacing: 0.22em;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
 }
 .footer-links a:hover {
     color: #FFD700;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
 }
 .footer-links span {
-    color: rgba(255,255,255,0.2);
+    color: rgba(255, 215, 0, 0.35);
+    font-size: 0.8rem;
+    user-select: none;
 }
 
 /* Social Icons (Elegant Circles) */
 .footer-socials {
     display: flex;
-    gap: 1.5rem;
+    gap: 0.9rem;
 }
 .footer-socials a {
-    color: #aaa;
-    font-size: 1.2rem;
-    width: 45px;
-    height: 45px;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.85rem;
+    width: 36px;
+    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
     background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 50%;
-    transition: all 0.5s ease;
+    transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
     text-decoration: none;
 }
 .footer-socials a:hover {
     color: #FFD700;
     border-color: #FFD700;
     background: rgba(255, 215, 0, 0.1);
-    transform: translateY(-3px);
+    transform: translateY(-2px);
     box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
 }
 
@@ -1089,32 +1237,71 @@ footer {
       filter: none !important;
   }
 
-  /* Ribbon Changes */
-  .ribbon { justify-content: space-between; padding: 0 2rem; height: 60px; }
-  .desktop-only { display: none; }
-  .menu-toggle { display: block; font-size: 1.1rem; color: #fff; cursor: pointer; }
-  .mobile-home-icon { display: block; font-size: 0.95rem; color: #fff; text-decoration: none; }
+  /* Ribbon Changes - Concept C Mobile */
+  .ribbon {
+      top: 0;
+      left: 0;
+      transform: none;
+      width: 100%;
+      height: auto;
+      border-radius: 0;
+      border-top: none;
+      border-bottom: 1px solid rgba(255, 215, 0, 0.22);
+      padding: 0;
+  }
+  .masthead-tier {
+      height: 56px;
+      padding: 0 1.25rem;
+      border-bottom: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+  }
+  .tier-left, .tier-right { display: none !important; }
+  .directory-tier.desktop-only { display: none !important; }
+  .desktop-only { display: none !important; }
+  .menu-toggle { display: block; font-size: 1.1rem; color: #fff; cursor: pointer; order: 3; }
+  .mobile-home-icon { display: block; font-size: 0.95rem; color: #fff; text-decoration: none; order: 1; }
   .mobile-home-icon.active { color: #FFD700 !important; text-shadow: 0 0 10px rgba(255, 215, 0, 0.6) !important; }
 
   /* Center Logo on Mobile */
-  .nav-logo {
+  .tier-center.nav-logo {
       position: absolute;
       left: 50%;
-      transform: translateX(-50%);
+      top: 50%;
+      transform: translate(-50%, -50%);
+      order: 2;
+  }
+
+  .tier-center.nav-logo a {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
   }
 
   /* Adjust Logo for Mobile Ribbon */
+  .tier-center.nav-logo img,
   .nav-logo img { 
-      height: 40px;
-      width: 40px;
+      height: 38px;
+      width: 38px;
+      max-width: 38px;
+      max-height: 38px;
       aspect-ratio: 1 / 1;
       object-fit: contain;
       flex-shrink: 0;
       display: block;
-      margin-top: 0;
+      margin: 0 auto;
       filter: none; transform: none; 
   }
+  .tier-center.nav-logo:hover img,
   .nav-logo:hover img { transform: none !important; }
+
+  .masthead-brand {
+      font-size: 0.78rem;
+      letter-spacing: 0.24em;
+  }
 
   /* Mobile Menu Overlay - Floating Glass Card */
   .mobile-nav-overlay {
@@ -1471,50 +1658,59 @@ footer {
    DENDRA FOLIO - CONTENT LAYOUTS
    ========================================= */
 
-/* 1. Page Intro Quote */
+/* 1. Page Intro Quote - Harmonized & Scaled */
 .page-intro {
-    padding: 160px 2rem 4rem;
+    padding: 110px 2rem 2.5rem;
     text-align: center;
-    max-width: 1350px; /* Increased to accommodate wider reading layout */
+    max-width: 1050px;
     margin: 0 auto;
     position: relative;
     z-index: 5;
 }
 
 .quote-glass {
-    background: rgba(10, 15, 20, 0.6);
-    padding: 2.5rem 3rem;
+    background: rgba(10, 15, 20, 0.65);
+    padding: 1.8rem 2.4rem;
     border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 215, 0, 0.38); /* Golden Perimeter */
     margin: 0 auto;
     display: block;
     width: 100%;
-    max-width: 1100px; /* Constrained to match About page content */
+    max-width: 820px;
     text-align: center;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.75), 0 0 22px rgba(255, 215, 0, 0.14);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: all 0.4s ease;
+}
+
+.quote-glass:hover {
+    border-color: rgba(255, 215, 0, 0.65);
+    box-shadow: 0 16px 45px rgba(0, 0, 0, 0.85), 0 0 30px rgba(255, 215, 0, 0.22);
 }
 
 /* Mobile adjustment for quote box */
 @media (max-width: 600px) {
-    .quote-glass { padding: 2rem 1.5rem; }
+    .quote-glass { padding: 1.5rem 1.25rem; }
 }
 
 .page-title {
-    font-size: 1.8rem;
+    font-size: 1.25rem;
     color: #FFD700;
-    letter-spacing: 0.25em;
+    letter-spacing: 0.28em;
     text-transform: uppercase;
-    margin-bottom: 1rem;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    padding-bottom: 1rem;
+    margin-bottom: 0.85rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding-bottom: 0.85rem;
 }
 
 .page-intro p {
-    font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+    font-size: 0.96rem;
     font-style: italic;
-    color: #f0f0f0;
-    line-height: 1.6;
-    letter-spacing: 0.05em;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8); /* Text shadow for readability */
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.65;
+    letter-spacing: 0.03em;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 /* 2. Content Grid (The Shelves) */
@@ -1533,27 +1729,30 @@ footer {
 .solid-glass, a.solid-glass {
     position: relative; /* Required for glow positioning */
     overflow: hidden;   /* Keeps glow inside the border */
-    background: rgba(10, 15, 20, 0.6) !important; /* More transparent to blend */
+    background: rgba(10, 15, 20, 0.5) !important; /* Matches homepage transparency */
     border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
+    border-radius: 10px;
     /* Subtle Noise Texture */
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.07'/%3E%3C/svg%3E") !important;
-    padding: 1rem 1.5rem; /* UPDATED: Removed fixed height to prevent overlap */
-    transition: box-shadow 0.8s ease,
-                background 0.8s ease,
-                border-color 0.8s ease;
+    padding: 1.8rem 1.6rem;
+    transition: box-shadow 0.65s ease,
+                background 0.65s ease,
+                border-color 0.65s ease,
+                transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
     text-decoration: none !important;
     color: #fff !important;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     -webkit-font-smoothing: antialiased;
+    will-change: transform;
 }
 
 a.solid-glass:hover {
-    background: rgba(10, 15, 20, 0.75) !important;
+    background: rgba(10, 15, 20, 0.65) !important;
     transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.22);
     z-index: 10; /* Ensure hovered card stays on top */
 }
 
@@ -1568,14 +1767,61 @@ a.solid-glass:hover {
     z-index: 5 !important;
 }
 
-/* Theme overrides for solid-glass to ensure visibility */
-.solid-glass.earth-theme { border-left: 6px solid var(--color-earth); }
-.solid-glass.fire-theme { border-left: 6px solid var(--color-fire); }
-.solid-glass.water-theme { border-left: 6px solid var(--color-water); }
+/* Themed Perimeters for Index Page Cards in Resting State */
+.solid-glass.earth-theme, 
+body:has(.bg-essays) .solid-glass,
+.card-simple.earth-theme,
+body:has(.bg-essays) .card-simple {
+    border: 1px solid rgba(129, 199, 132, 0.35) !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7), 0 0 16px rgba(129, 199, 132, 0.14) !important;
+}
 
-.solid-glass.earth-theme:hover { box-shadow: 0 0 30px var(--color-earth); border-color: var(--color-earth); }
-.solid-glass.fire-theme:hover { box-shadow: 0 0 30px var(--color-fire); border-color: var(--color-fire); }
-.solid-glass.water-theme:hover { box-shadow: 0 0 30px var(--color-water); border-color: var(--color-water); }
+.solid-glass.fire-theme, 
+body:has(.bg-poems) .solid-glass,
+.card-simple.fire-theme,
+body:has(.bg-poems) .card-simple {
+    border: 1px solid rgba(229, 115, 115, 0.35) !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7), 0 0 16px rgba(229, 115, 115, 0.14) !important;
+}
+
+.solid-glass.water-theme, 
+body:has(.bg-fiction) .solid-glass,
+.card-simple.water-theme,
+body:has(.bg-fiction) .card-simple {
+    border: 1px solid rgba(100, 181, 246, 0.35) !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7), 0 0 16px rgba(100, 181, 246, 0.14) !important;
+}
+
+/* Radiant Edge Glow and Deep Atmospheric Drop Shadows on Hover */
+a.solid-glass.earth-theme:hover, 
+body:has(.bg-essays) a.solid-glass:hover,
+.card-simple.earth-theme:hover,
+body:has(.bg-essays) .card-simple:hover {
+    border-color: rgba(129, 199, 132, 0.75) !important;
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.85), 0 0 26px rgba(129, 199, 132, 0.38) !important;
+    background: rgba(10, 15, 20, 0.65) !important;
+    transform: translateY(-5px) !important;
+}
+
+a.solid-glass.fire-theme:hover, 
+body:has(.bg-poems) a.solid-glass:hover,
+.card-simple.fire-theme:hover,
+body:has(.bg-poems) .card-simple:hover {
+    border-color: rgba(229, 115, 115, 0.75) !important;
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.85), 0 0 26px rgba(229, 115, 115, 0.38) !important;
+    background: rgba(10, 15, 20, 0.65) !important;
+    transform: translateY(-5px) !important;
+}
+
+a.solid-glass.water-theme:hover, 
+body:has(.bg-fiction) a.solid-glass:hover,
+.card-simple.water-theme:hover,
+body:has(.bg-fiction) .card-simple:hover {
+    border-color: rgba(100, 181, 246, 0.75) !important;
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.85), 0 0 26px rgba(100, 181, 246, 0.38) !important;
+    background: rgba(10, 15, 20, 0.65) !important;
+    transform: translateY(-5px) !important;
+}
 
 /* Hide Meta and Excerpt initially */
 
@@ -1629,32 +1875,32 @@ a.solid-glass:hover {
     font-style: italic;
 }
 
-/* 4. Individual Reading Page */
+/* 4. Individual Reading Page - Harmonized & Scaled */
 .reading-container {
     display: flex;
-    gap: 3rem;
-    /* Asymmetric padding: Right aligns to 1100px center, Left pushes out for sidebar */
-    padding: 200px max(2rem, calc(50vw - 550px)) 6rem max(2rem, calc(50vw - 650px)) !important;
+    gap: 2.5rem;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 2rem 5rem !important;
     width: 100%;
-    max-width: 100%;
-    margin: 0;
     position: relative;
     z-index: 5;
     align-items: flex-start;
-    min-height: 100vh;
+    min-height: 80vh;
 }
 
 .reading-main {
     flex: 1;
-    padding: 3rem 4rem;
-    max-width: 1100px; /* Increased to fill available space */
+    padding: 2.5rem 3rem;
+    max-width: 820px;
     width: 100%;
+    border-radius: 12px;
 }
 
-/* Override for Centered pages (About) */
+/* Override for Centered pages (About, Legal) */
 .reading-container.container-centered {
-    padding: 200px 2rem 6rem !important;
-    max-width: 1100px;
+    padding: 0 2rem 5rem !important;
+    max-width: 900px;
     margin: 0 auto;
     justify-content: center;
     flex-direction: column; 
@@ -1662,26 +1908,26 @@ a.solid-glass:hover {
 }
 
 .reading-main h1 {
-    font-size: 3rem;
+    font-size: 2.2rem;
     margin-bottom: 0.5rem;
     color: #fff;
 }
 
 .reading-text h2[id],
 .reading-text h3[id] {
-    scroll-margin-top: 120px;
+    scroll-margin-top: 100px;
 }
 
 .reading-text {
-    margin-top: 2.5rem;
-    font-size: 1.02rem;
-    line-height: 1.78;
+    margin-top: 1.8rem;
+    font-size: 0.98rem;
+    line-height: 1.74;
     color: #e0e0e0;
     text-align: justify;
 }
 
 .reading-text p {
-    margin-bottom: 1.8rem;
+    margin-bottom: 1.5rem;
 }
 
 /* POEM SPECIFIC STYLE - Apply class 'poem' to reading-text div for poems */
@@ -1695,25 +1941,25 @@ a.solid-glass:hover {
 
 /* Specific container for poem body (Moved from inline HTML) */
 .poem-content {
-    max-width: 420px; 
-    margin: 2rem auto; 
-    font-size: 1.02rem; 
-    line-height: 1.8; 
+    max-width: 440px; 
+    margin: 1.5rem auto; 
+    font-size: 0.98rem; 
+    line-height: 1.85; 
     color: #f0f0f0; 
     letter-spacing: 0.03em;
 }
 
 /* Replaces inline styles on poem stanzas */
 .poem-content > p {
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
 }
 
 /* Drop Cap for the first letter of the story */
 .reading-text p:first-of-type::first-letter {
-    font-size: 3.5em;
+    font-size: 2.8em;
     float: left;
-    line-height: 0.8;
-    margin-right: 0.5rem;
+    line-height: 0.85;
+    margin-right: 0.45rem;
     color: #FFD700;
 }
 
@@ -1735,39 +1981,41 @@ a.solid-glass:hover {
 
 /* 5. The Sidebar Index */
 .reading-sidebar {
-    width: 320px;
+    width: 260px;
+    flex-shrink: 0;
     position: sticky;
-    top: 140px;
+    top: 85px;
 }
 
 .sidebar-title {
-    font-size: 1.2rem;
+    font-size: 0.86rem;
     color: #fff;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.2rem;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.2em;
     border-bottom: 1px solid rgba(255,255,255,0.1);
-    padding-bottom: 0.5rem;
+    padding-bottom: 0.4rem;
 }
 
 .sidebar-list {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.75rem;
 }
 
 .sidebar-list a {
     color: #aaa;
     text-decoration: none;
-    font-size: 1rem;
-    transition: color 0.3s;
+    font-size: 0.84rem;
+    line-height: 1.5;
+    transition: color 0.3s, padding-left 0.3s;
 }
 
 .sidebar-list a:hover, .sidebar-list a.active-link {
     color: #FFD700;
     text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
-    padding-left: 5px; /* Subtle shift */
+    padding-left: 4px; /* Subtle shift */
 }
 
 /* --- Page Load Animation --- */
@@ -1810,60 +2058,99 @@ a.solid-glass:hover {
     }
 }
 
-/* THE EXHIBITION (Anchors) */
+/* THE EXHIBITION (Anchors) - Scaled to Match Homepage */
 .content-featured {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adjusted for 3 columns */
-    gap: 2.5rem;
-    max-width: 1100px; /* Aligned width */
-    margin: 0 auto 4rem;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2rem;
+    max-width: 1020px;
+    margin: 0 auto 3.5rem;
     position: relative;
     z-index: 5;
-    padding: 0 2rem; /* Consistent padding */
+    padding: 0 2rem;
     justify-content: center;
-    align-items: center; /* Centers cards vertically, preventing non-hovered ones from stretching */
-    min-height: 280px; /* Reserves space so the archive section doesn't jump on hover */
+    align-items: center;
+    min-height: 240px;
 }
 
 .card-anchor {
-    min-height: 160px; /* Smaller initial size for expansion effect */
+    min-height: 150px;
+    padding: 1.8rem 1.6rem;
+    display: flex;
     flex-direction: column;
     justify-content: center;
     text-align: center;
+    position: relative;
+    transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), 
+                box-shadow 0.65s ease, 
+                border-color 0.65s ease, 
+                background 0.65s ease;
+    will-change: transform;
 }
 
-.card-anchor.water-theme { box-shadow: 0 5px 20px rgba(0, 119, 190, 0.15); }
-.card-anchor.earth-theme { box-shadow: 0 5px 20px rgba(46, 139, 87, 0.15); }
-.card-anchor.fire-theme { box-shadow: 0 5px 20px rgba(139, 0, 0, 0.15); }
+.card-anchor .item-meta {
+    font-size: 0.68rem;
+    letter-spacing: 1.8px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    display: block;
+    transition: color 0.5s ease;
+}
 
-/* Anchor Title Watermark Effect */
+/* Anchor Title: Fades into watermark on hover */
 .card-anchor .item-title {
-    transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    font-size: 1.25rem;
+    line-height: 1.35;
+    color: #ffffff;
+    margin-bottom: 0;
+    font-weight: 400;
+    transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), 
+                opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+                margin-bottom 0.65s cubic-bezier(0.16, 1, 0.3, 1);
     transform-origin: center top;
-}
-.card-anchor:hover .item-title {
-    transform: translateY(-8px) scale(0.92); /* Pushes it up and back */
-    opacity: 0.3; /* Ghostly watermark visibility */
-    margin-bottom: 0.5rem; /* Makes room for the description */
+    will-change: transform, opacity;
 }
 
-/* Anchor Hover Reveal */
+.card-anchor:hover .item-title {
+    transform: translateY(-6px) scale(0.92);
+    opacity: 0.32;
+    margin-bottom: 0.45rem;
+}
+
+/* Anchor Text Excerpt: Appears on hover */
 .card-anchor .item-excerpt {
     max-height: 0;
     opacity: 0;
     overflow: hidden;
-    transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.88);
+    font-style: italic;
+    margin: 0;
+    transform: translateY(6px);
+    transition: max-height 0.65s cubic-bezier(0.16, 1, 0.3, 1), 
+                opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+                margin-top 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: max-height, opacity, transform;
 }
+
 .card-anchor:hover .item-excerpt {
-    max-height: 150px;
+    max-height: 140px;
     opacity: 1;
-    margin-top: 1rem;
+    transform: translateY(0);
+    margin-top: 0.85rem;
+}
+
+.card-anchor:hover .item-meta {
+    color: #FFD700 !important;
 }
 
 /* ARCHIVE DIVIDER */
 .archive-divider {
-    max-width: 1100px; /* Aligned width */
-    margin: 0 auto 3rem;
+    max-width: 950px;
+    margin: 0 auto 2.5rem;
     text-align: center;
     position: relative;
     z-index: 5;
@@ -1885,8 +2172,8 @@ a.solid-glass:hover {
 }
 .archive-divider span {
     color: #FFD700;
-    font-size: 1.2rem;
-    letter-spacing: 0.2em;
+    font-size: 0.88rem;
+    letter-spacing: 0.25em;
     text-transform: uppercase;
 }
 
@@ -2084,10 +2371,39 @@ a.solid-glass:hover {
 }
 
 /* --- READING PAGE SPECIFIC LAYOUT --- */
-/* Removes the gap between title and content for reading pages */
 .page-intro.reading-layout {
-    padding-top: 200px;
-    padding-bottom: 1rem;
+    padding: 95px 2rem 1.4rem;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.page-intro.reading-layout .page-title {
+    font-size: 1.55rem;
+    letter-spacing: 0.16em;
+    margin-bottom: 0.5rem;
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.page-intro.reading-layout .reading-meta-block {
+    margin-bottom: 1.1rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    display: inline-block;
+}
+
+.page-intro.reading-layout .quote-glass {
+    padding: 1.3rem 1.8rem;
+    max-width: 760px;
+    margin: 0 auto;
+    border: 1px solid rgba(255, 215, 0, 0.38);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.75), 0 0 20px rgba(255, 215, 0, 0.12);
+}
+
+.page-intro.reading-layout .quote-glass p {
+    font-size: 0.94rem;
+    line-height: 1.6;
 }
 
 .reading-container.reading-layout {
@@ -2111,7 +2427,7 @@ a.solid-glass:hover {
 }
 
 .sealed-title {
-    font-size: 2rem; 
+    font-size: 1.8rem; 
     margin-bottom: 1rem; 
     color: #fff;
     font-family: var(--font-main);
@@ -2119,7 +2435,7 @@ a.solid-glass:hover {
 }
 
 .sealed-text {
-    font-size: 1.1rem; 
+    font-size: 0.98rem; 
     line-height: 1.6; 
     color: rgba(255,255,255,0.8);
     max-width: 500px; 
@@ -2130,7 +2446,7 @@ a.solid-glass:hover {
 .sidebar-link-disabled {
     color: #555;
     cursor: default;
-    font-size: 1.1rem;
+    font-size: 0.84rem;
     transition: color 0.3s;
 }
 .sidebar-link-disabled:hover {
@@ -2139,33 +2455,34 @@ a.solid-glass:hover {
 
 /* --- SIDEBAR EXTRAS --- */
 .sidebar-reading-time {
-    font-size: 1rem;
+    font-size: 0.75rem;
     color: #FFD700;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.2rem;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    opacity: 0.8;
+    gap: 0.45rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.85;
 }
 
 .sidebar-share-btn {
-    margin-top: 2rem;
+    margin-top: 1.6rem;
     width: 100%;
-    padding: 0.9rem 1.5rem;
+    padding: 0.65rem 1.2rem;
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
     border: 1px solid rgba(255, 255, 255, 0.15);
     color: #e0e0e0;
     cursor: pointer;
     font-family: var(--font-main);
-    font-size: 0.9rem;
+    font-size: 0.76rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.8rem;
+    gap: 0.6rem;
     transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     border-radius: 50px;
     position: relative;
@@ -2399,10 +2716,17 @@ a.solid-glass:hover {
     color: #fff;
     width: 100%;
     font-family: var(--font-main);
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.3s ease;
     border-radius: 0;
     outline: none;
     box-sizing: border-box;
+}
+
+#silent-subscribe-form input[type="email"]:hover,
+#silent-subscribe-form input[type="text"]:not(#bot-trap):hover {
+    border-bottom-color: rgba(255, 215, 0, 0.75);
+    background: rgba(255, 255, 255, 0.04);
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.12);
 }
 
 #silent-subscribe-form input[type="email"]::placeholder,
@@ -2415,7 +2739,8 @@ a.solid-glass:hover {
 #silent-subscribe-form input[type="email"]:focus,
 #silent-subscribe-form input[type="text"]:not(#bot-trap):focus {
     border-bottom-color: #FFD700;
-    box-shadow: 0 1px 0 0 rgba(255, 215, 0, 0.6);
+    background: rgba(255, 215, 0, 0.06);
+    box-shadow: 0 1px 0 0 rgba(255, 215, 0, 0.8), 0 6px 16px rgba(255, 215, 0, 0.2);
 }
 
 #silent-subscribe-form button {
@@ -2532,11 +2857,11 @@ a.solid-glass:hover {
 }
 
 .about-card {
-    padding: 4rem 5rem !important;
-    max-width: 1100px;
+    padding: 2.8rem 3.2rem !important;
+    max-width: 860px;
     margin: 0 auto;
     width: 100%;
-    line-height: 1.8;
+    line-height: 1.75;
 }
 
 @media (max-width: 900px) {
@@ -2702,7 +3027,8 @@ a.solid-glass:hover {
     margin: 2rem 0;
     padding-left: 1.5rem;
     border-left: 3px solid var(--color-earth);
-    font-size: 1.4rem;
+    font-size: 1.05rem;
+    line-height: 1.7;
     font-style: italic;
     color: #fff;
 }

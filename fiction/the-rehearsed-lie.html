@@ -47,25 +47,39 @@
 
   <div class="space-bg bg-fiction"></div>
 
-  <header class="ribbon">
-    <a href="/" class="mobile-home-icon"><i class="fa-solid fa-house"></i></a>
+    <header class="ribbon concept-c">
+    <div class="masthead-tier">
+      <div class="tier-left">
+        <a href="/" aria-label="Home" class="home-icon ">
+          <i class="fa-solid fa-house"></i>
+        </a>
+      </div>
 
-    <nav class="nav-left desktop-only">
-      <a href="/" aria-label="Home" class="home-icon"><i class="fa-solid fa-house"></i></a>
-      <a href="../essays/">Essays</a>
-      <a href="../poems/">Poems</a>
-      <a href="../fiction/" class="active">Fiction</a> </nav>
+      <div class="tier-center nav-logo">
+        <a href="/" aria-label="Dendra Folio Home">
+          <img src="../images/final-logo-nav.png" alt="Dendra Folio Logo">
+          <span class="masthead-brand">Dendra Folio</span>
+        </a>
+      </div>
 
-    <div class="nav-logo">
-      <a href="/"><img src="../images/final-logo-nav.png" alt="Dendra Folio Logo"></a>
+      <div class="tier-right">
+        <a class="subscribe-btn sign-in-btn">Sign In</a>
+      </div>
+
+      <!-- Mobile Elements -->
+      <a href="/" class="mobile-home-icon "><i class="fa-solid fa-house"></i></a>
+      <div class="menu-toggle" role="button" aria-label="Toggle Navigation" tabindex="0"><i class="fa-solid fa-bars"></i></div>
     </div>
 
-    <nav class="nav-right desktop-only">
-      <a href="../about/">About</a>
-      <a class="subscribe-btn sign-in-btn">Sign In</a>
+    <nav class="directory-tier desktop-only">
+      <a href="../essays/" class="">Essays</a>
+      <span class="tier-dot">·</span>
+      <a href="../poems/" class="">Poems</a>
+      <span class="tier-dot">·</span>
+      <a href="../fiction/" class="active">Fiction</a>
+      <span class="tier-dot">·</span>
+      <a href="../about/" class="">About</a>
     </nav>
-
-    <div class="menu-toggle" role="button" aria-label="Toggle Navigation" tabindex="0"><i class="fa-solid fa-bars"></i></div>
   </header>
 
   <div id="mobileMenu" class="mobile-nav-overlay">
@@ -277,11 +291,11 @@
         <input type="text" name="b_name" class="bot-trap" tabindex="-1" autocomplete="off" style="position:absolute; left:-9999px; opacity:0; z-index:-1;">
         <div class="footer-form-inputs">
           <div class="footer-name-row">
-            <input type="text" name="field_1" placeholder="First Name..." aria-label="First Name" required>
-            <input type="text" name="field_2" placeholder="Last Name..." aria-label="Last Name">
+            <input type="text" name="field_1" placeholder="First Name..." aria-label="First Name" autocomplete="given-name" required>
+            <input type="text" name="field_2" placeholder="Last Name..." aria-label="Last Name" autocomplete="family-name">
           </div>
           <div class="footer-email-row">
-            <input type="email" name="field_0" placeholder="Your email address..." aria-label="Email Address" required>
+            <input type="email" name="field_0" placeholder="Your email address..." aria-label="Email Address" autocomplete="email" required>
             <button type="submit">Join <span class="btn-arrow">→</span></button>
           </div>
         </div>

@@ -46,31 +46,40 @@
   <div class="planet jupiter"></div> 
   <div class="planet saturn"></div>
 
-  <header class="ribbon">
-  <a href="/" class="mobile-home-icon active"><i class="fa-solid fa-house"></i></a>
+    <header class="ribbon concept-c">
+    <div class="masthead-tier">
+      <div class="tier-left">
+        <a href="/" aria-label="Home" class="home-icon active">
+          <i class="fa-solid fa-house"></i>
+        </a>
+      </div>
 
-  <nav class="nav-left desktop-only">
-    <a href="/" aria-label="Home" class="home-icon active">
-        <i class="fa-solid fa-house"></i>
-    </a>
-    <a href="essays/">Essays</a>
-    <a href="poems/">Poems</a>
-    <a href="fiction/">Fiction</a>
-  </nav>
+      <div class="tier-center nav-logo">
+        <a href="/" aria-label="Dendra Folio Home">
+          <img src="images/final-logo-nav.png" alt="Dendra Folio Logo">
+          <span class="masthead-brand">Dendra Folio</span>
+        </a>
+      </div>
 
-  <div class="nav-logo">
-    <a href="/" aria-label="Dendra Folio Home">
-      <img src="images/final-logo-nav.png" alt="Dendra Folio Logo">
-    </a>
-  </div>
+      <div class="tier-right">
+        <a class="subscribe-btn sign-in-btn">Sign In</a>
+      </div>
 
-  <nav class="nav-right desktop-only">
-    <a href="about/">About</a>
-    <a class="subscribe-btn sign-in-btn">Sign In</a>
-  </nav>
+      <!-- Mobile Elements -->
+      <a href="/" class="mobile-home-icon active"><i class="fa-solid fa-house"></i></a>
+      <div class="menu-toggle" role="button" aria-label="Toggle Navigation" tabindex="0"><i class="fa-solid fa-bars"></i></div>
+    </div>
 
-  <div class="menu-toggle" role="button" aria-label="Toggle Navigation" tabindex="0"><i class="fa-solid fa-bars"></i></div>
-</header>
+    <nav class="directory-tier desktop-only">
+      <a href="essays/" class="">Essays</a>
+      <span class="tier-dot">·</span>
+      <a href="poems/" class="">Poems</a>
+      <span class="tier-dot">·</span>
+      <a href="fiction/" class="">Fiction</a>
+      <span class="tier-dot">·</span>
+      <a href="about/" class="">About</a>
+    </nav>
+  </header>
 
   <!-- Mobile Menu -->
   <div id="mobileMenu" class="mobile-nav-overlay">
@@ -139,6 +148,7 @@
           <a href="essays/" class="stage-content solid-glass" id="stage-link">
             <span id="stage-label">The Prose</span>
             <p id="stage-quote">"To truly change the world, we must first change<br>the way we view education. The real test is not<br>in marksheets, but in the human beings it produces."</p>
+            <span class="stage-enter-pill">Enter Library &rarr;</span>
           </a>
         </div>
       </div>
@@ -151,7 +161,10 @@
         <div class="card-grid prose-grid">
             <!-- Left Card: Centered vertically against the right stack -->
             <a href="essays/divine-love.html" class="showcase-card glass-panel">
-                <span class="card-meta">PHILOSOPHY • 19 MIN READ</span>
+                <div class="card-badges">
+                    <span class="badge-pill">✦ 19 min read</span>
+                    <span class="card-meta">PHILOSOPHY</span>
+                </div>
                 <h4 class="card-title">The Divine Depth of Love</h4>
                 <span class="read-link">Read Prose &rarr;</span>
             </a>
@@ -159,12 +172,18 @@
             <!-- Right Stack: Two cards stacked vertically -->
             <div class="prose-stack">
                 <a href="essays/shaping-the-future.html" class="showcase-card glass-panel">
-                    <span class="card-meta">EDUCATION • 8 MIN READ</span>
+                    <div class="card-badges">
+                        <span class="badge-pill">✦ 8 min read</span>
+                        <span class="card-meta">EDUCATION</span>
+                    </div>
                     <h4 class="card-title">Education Reform and Human Intelligence</h4>
                     <span class="read-link">Read Prose &rarr;</span>
                 </a>
                 <a href="essays/education-shapes-power.html" class="showcase-card glass-panel">
-                    <span class="card-meta">EDUCATION • 12 MIN READ</span>
+                    <div class="card-badges">
+                        <span class="badge-pill">✦ 12 min read</span>
+                        <span class="card-meta">EDUCATION</span>
+                    </div>
                     <h4 class="card-title">How Education Shapes Power</h4>
                     <span class="read-link">Read Prose &rarr;</span>
                 </a>
@@ -176,18 +195,27 @@
         <h3 class="category-heading">THE VERSES</h3>
         <div class="card-grid verse-grid">
             <a href="poems/creatures-of-deep.html" class="showcase-card glass-panel">
-                <span class="card-meta">MAY 22, 2026</span>
+                <div class="card-badges">
+                    <span class="badge-pill">✦ Verse • 2 min</span>
+                    <span class="card-meta">MAY 22, 2026</span>
+                </div>
                 <h4 class="card-title">The Creatures of The Deep</h4>
                 <span class="read-link">Read Verse &rarr;</span>
             </a>
             <div class="prose-stack">
                 <a href="poems/safe-and-alone.html" class="showcase-card glass-panel">
-                    <span class="card-meta">MAR 14, 2026</span>
+                    <div class="card-badges">
+                        <span class="badge-pill">✦ Verse • 1 min</span>
+                        <span class="card-meta">MAR 14, 2026</span>
+                    </div>
                     <h4 class="card-title">Safe and Alone</h4>
                     <span class="read-link">Read Verse &rarr;</span>
                 </a>
                 <a href="poems/the-scalpel.html" class="showcase-card glass-panel">
-                    <span class="card-meta">DEC 12, 2025</span>
+                    <div class="card-badges">
+                        <span class="badge-pill">✦ Verse • 2 min</span>
+                        <span class="card-meta">DEC 12, 2025</span>
+                    </div>
                     <h4 class="card-title">The Scalpel</h4>
                     <span class="read-link">Read Verse &rarr;</span>
                 </a>
@@ -200,7 +228,10 @@
         <div class="card-grid tales-grid">
             <a href="fiction/the-rehearsed-lie.html" class="showcase-card glass-panel full-width-card">
                 <div class="tales-content">
-                    <span class="card-meta">THRILLER</span>
+                    <div class="card-badges">
+                        <span class="badge-pill">✦ Story • 7 min</span>
+                        <span class="card-meta">THRILLER</span>
+                    </div>
                     <h4 class="card-title large-title">The Rehearsed Lie</h4>
                     <span class="read-link">Read Tale &rarr;</span>
                 </div>
@@ -222,10 +253,10 @@
          <form id="silent-subscribe-form" data-action="https://eocampaign1.com/form/a530cd3a-1aba-11f1-a0cc-abf3cee050cb" method="POST" target="hidden_iframe">
            <input type="text" name="b_name" id="bot-trap" tabindex="-1" autocomplete="off" style="position:absolute; left:-9999px; opacity:0; z-index:-1;">
            <div class="form-row">
-             <input type="text" name="field_1" placeholder="First Name..." aria-label="First Name" required>
-             <input type="text" name="field_2" placeholder="Last Name..." aria-label="Last Name">
+             <input type="text" name="field_1" placeholder="First Name..." aria-label="First Name" autocomplete="given-name" required>
+             <input type="text" name="field_2" placeholder="Last Name..." aria-label="Last Name" autocomplete="family-name">
            </div>
-           <input type="email" name="field_0" placeholder="Your email address..." aria-label="Email Address" required>
+           <input type="email" name="field_0" placeholder="Your email address..." aria-label="Email Address" autocomplete="email" required>
            <button type="submit">Sign In <span class="btn-arrow">&rarr;</span></button>
          </form>
         
@@ -243,11 +274,11 @@
         <input type="text" name="b_name" class="bot-trap" tabindex="-1" autocomplete="off" style="position:absolute; left:-9999px; opacity:0; z-index:-1;">
         <div class="footer-form-inputs">
           <div class="footer-name-row">
-            <input type="text" name="field_1" placeholder="First Name..." aria-label="First Name" required>
-            <input type="text" name="field_2" placeholder="Last Name..." aria-label="Last Name">
+            <input type="text" name="field_1" placeholder="First Name..." aria-label="First Name" autocomplete="given-name" required>
+            <input type="text" name="field_2" placeholder="Last Name..." aria-label="Last Name" autocomplete="family-name">
           </div>
           <div class="footer-email-row">
-            <input type="email" name="field_0" placeholder="Your email address..." aria-label="Email Address" required>
+            <input type="email" name="field_0" placeholder="Your email address..." aria-label="Email Address" autocomplete="email" required>
             <button type="submit">Join <span class="btn-arrow">→</span></button>
           </div>
         </div>

@@ -29,9 +29,23 @@ function quadraticBezier(p0, p1, p2, t) {
     return oneMinusT * oneMinusT * p0 + 2 * oneMinusT * t * p1 + t * t * p2;
 }
 
+function updateRibbonScrollState() {
+    const ribbon = document.querySelector(".ribbon");
+    if (!ribbon) return;
+    const scrollY = window.scrollY || document.documentElement.scrollTop;
+    const progress = Math.min(Math.max(scrollY / 140, 0), 1);
+    ribbon.style.setProperty("--scroll-progress", progress.toFixed(3));
+    if (progress >= 1) {
+        ribbon.classList.add("scrolled");
+    } else {
+        ribbon.classList.remove("scrolled");
+    }
+}
+
 // Track scroll position (Passive flag makes native scrolling much faster)
 window.addEventListener("scroll", () => {
     targetScrollY = window.scrollY;
+    updateRibbonScrollState();
 
     if (animationFrameId === null) {
         animationFrameId = requestAnimationFrame(updateCinematicPhysics);
@@ -59,6 +73,7 @@ window.addEventListener("resize", () => {
 // Recalculate metrics after full page load to ensure maxScroll is correct
 window.addEventListener("load", () => {
     physicsCache.metrics = null;
+    updateRibbonScrollState();
     if (animationFrameId === null) {
         animationFrameId = requestAnimationFrame(updateCinematicPhysics);
     }
@@ -129,13 +144,8 @@ function updateCinematicPhysics(now) {
     }
     const { windowHeight, windowWidth, quoteTop, libraryBottom, showcaseTop, maxScroll, jupiterPath, saturnPath, cardMetrics } = physicsCache.metrics;
     
-    // Interpolate scroll value (Silky smooth response for desktop, instant for mobile)
-    if (windowWidth < 900 || Math.abs(targetScrollY - currentScrollY) < 0.2) {
-        currentScrollY = targetScrollY;
-    } else {
-        // Tuned lerp (0.65) for instant fluid response without stiffness
-        currentScrollY = lerp(currentScrollY, targetScrollY, 0.65); 
-    }
+    // Direct, instant 1:1 scroll tracking (Eliminates all scroll lag across the website)
+    currentScrollY = targetScrollY;
 
     // ========== READING PROGRESS (Efficient Loop Update) ==========
     if (progressBar && maxScroll > 0) {
@@ -150,7 +160,7 @@ function updateCinematicPhysics(now) {
     }
 
     // Optimization: Only update scroll-dependent elements if scroll changed
-    const isScrolling = Math.abs(currentScrollY - lastScrollY) > 0.01;
+    const isScrolling = Math.abs(currentScrollY - lastScrollY) > 0.1;
 
     // ========== BACKGROUND PARALLAX ==========
     if (spaceBg && isScrolling) {
@@ -164,26 +174,6 @@ function updateCinematicPhysics(now) {
             const parallaxY = Math.min(currentScrollY * 0.02, maxParallax);
             spaceBg.style.transform = `translate3d(0, -${parallaxY.toFixed(2)}px, 0)`;
         }
-    }
-
-    // ========== CARDS: VERTICAL PARALLAX ==========
-    if (cardMetrics && isScrolling) {
-        const viewTop = currentScrollY;
-        const viewBottom = currentScrollY + windowHeight;
-        const buffer = 200; // Render slightly outside viewport
-
-        cardMetrics.forEach((metric, index) => {
-            // Only animate if visible in viewport
-            if (metric.top < viewBottom + buffer && metric.top + metric.height > viewTop - buffer) {
-                const card = metric.el;
-                if (!card.isHovered) {
-                    // Staggered movement based on index creates incredible 3D depth
-                    const cardParallax = (currentScrollY * 0.02);
-                    card.style.transform = `translate3d(0, -${cardParallax.toFixed(2)}px, 0)`;
-                    card.dataset.currentParallax = -cardParallax; // Store for tilt handoff
-                }
-            }
-        });
     }
 
     // Update sidebar state (Throttled to 150ms to save CPU/Reflows)
@@ -257,23 +247,17 @@ function updateCinematicPhysics(now) {
     }
 }
 
-// ======== CARD GLOW & LIFT EFFECT (No Tilt to prevent blur) ========
+// ======== CARD GLOW & LIFT EFFECT (GPU-Accelerated Smooth Hover) ========
 function initCardGlow() {
     if (window.matchMedia("(hover: none)").matches) return; // Ignore on touch
 
     const cards = document.querySelectorAll(CARD_SELECTOR);
     cards.forEach(card => {
-        let rect;
-        let ticking = false; // Throttling flag for performance
+        let rect = null;
+        let ticking = false;
 
         card.addEventListener("mouseenter", () => {
-            card.isHovered = true;
             rect = card.getBoundingClientRect();
-            // Enable smooth transition for the hover lift
-            card.style.transition = "transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), height 0.7s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.6s ease, border-color 0.6s ease, background 0.6s cubic-bezier(0.25, 0.8, 0.25, 1)";
-            
-            const currentParallax = parseFloat(card.dataset.currentParallax || 0);
-            card.style.transform = `translate3d(0, ${currentParallax - 5}px, 0)`;
         });
 
         card.addEventListener("mousemove", (e) => {
@@ -284,7 +268,6 @@ function initCardGlow() {
                     const y = e.clientY - rect.top;
                     card.style.setProperty("--mouse-x", `${x}px`);
                     card.style.setProperty("--mouse-y", `${y}px`);
-
                     ticking = false;
                 });
                 ticking = true;
@@ -292,18 +275,7 @@ function initCardGlow() {
         });
 
         card.addEventListener("mouseleave", () => {
-            card.isHovered = false;
-            // Keep transition for smooth return
-            const currentParallax = parseFloat(card.dataset.currentParallax || 0);
-            card.style.transform = `translate3d(0, ${currentParallax}px, 0)`;
-
-            // Remove transform transition after tilt reset so parallax isn't laggy
-            if (card.resetTimeout) clearTimeout(card.resetTimeout);
-            card.resetTimeout = setTimeout(() => {
-                if (!card.isHovered) {
-                    card.style.transition = "transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), height 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.7s, border-color 0.7s, background 0.6s cubic-bezier(0.25, 0.8, 0.25, 1)";
-                }
-            }, 600);
+            rect = null;
         });
     });
 }
@@ -402,6 +374,8 @@ function initMuseumDisplay() {
                         stageQuote.innerHTML = data.quote;
                         stageLink.href = data.link;
                         stageContent.dataset.activeCategory = newCategory;
+                        stageContent.style.borderColor = `${data.color}55`;
+                        stageContent.style.boxShadow = `0 14px 40px rgba(0, 0, 0, 0.75), 0 0 25px ${data.color}25`;
                         stageContent.classList.remove('stage-fade-out');
                     }, 300); // Match CSS transition duration
                 }
@@ -412,8 +386,11 @@ function initMuseumDisplay() {
     // Set initial state
     const initialCategory = 'essays';
     stageContent.dataset.activeCategory = initialCategory;
-    document.querySelector(`.museum-item[data-category="${initialCategory}"]`).classList.add('active');
+    const initialItem = document.querySelector(`.museum-item[data-category="${initialCategory}"]`);
+    if (initialItem) initialItem.classList.add('active');
     stageLabel.style.color = contentData[initialCategory].color;
+    stageContent.style.borderColor = `${contentData[initialCategory].color}55`;
+    stageContent.style.boxShadow = `0 14px 40px rgba(0, 0, 0, 0.75), 0 0 25px ${contentData[initialCategory].color}25`;
 }
 
 // ======== SUBSCRIBE SCROLL & FOCUS ========
