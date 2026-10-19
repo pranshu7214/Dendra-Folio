@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://pranshu.space/sitemap.xml
+Sitemap: https://dendrafolio.com/sitemap.xml
 

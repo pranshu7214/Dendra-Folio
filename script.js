@@ -29,16 +29,33 @@ function quadraticBezier(p0, p1, p2, t) {
     return oneMinusT * oneMinusT * p0 + 2 * oneMinusT * t * p1 + t * t * p2;
 }
 
+let lastRibbonProgress = -1;
 function updateRibbonScrollState() {
     const ribbon = document.querySelector(".ribbon");
     if (!ribbon) return;
     const scrollY = window.scrollY || document.documentElement.scrollTop;
-    const progress = Math.min(Math.max(scrollY / 140, 0), 1);
-    ribbon.style.setProperty("--scroll-progress", progress.toFixed(3));
-    if (progress >= 1) {
-        ribbon.classList.add("scrolled");
+    
+    // Smooth, slow compression: reaches resting size right when quote section almost touches the ribbon
+    const quoteSection = document.getElementById("quote-section");
+    const ribbonH = ribbon.offsetHeight || 60;
+    
+    let targetDistance;
+    if (quoteSection) {
+        const quoteTop = quoteSection.getBoundingClientRect().top + scrollY;
+        targetDistance = Math.max(quoteTop - ribbonH - 25, 340);
     } else {
-        ribbon.classList.remove("scrolled");
+        targetDistance = Math.max(window.innerHeight * 0.60, 360);
+    }
+
+    const progress = Math.min(Math.max(scrollY / targetDistance, 0), 1);
+    if (Math.abs(progress - lastRibbonProgress) > 0.003) {
+        lastRibbonProgress = progress;
+        ribbon.style.setProperty("--scroll-progress", progress.toFixed(3));
+        if (progress >= 1) {
+            ribbon.classList.add("scrolled");
+        } else {
+            ribbon.classList.remove("scrolled");
+        }
     }
 }
 
@@ -105,25 +122,27 @@ function updateCinematicPhysics(now) {
     if (!physicsCache.metrics) {
         const windowHeight = window.innerHeight;
         const windowWidth = window.innerWidth;
+        // Normalize screen height on tall viewports (such as mobile "Desktop site" emulation)
+        const effectiveHeight = Math.min(windowHeight, Math.max(windowWidth * 0.72, 720));
 
-        const quoteTop = quoteSection ? quoteSection.offsetTop : windowHeight * 1.2;
-        const libraryBottom = librarySection ? (librarySection.offsetTop + librarySection.offsetHeight) : (windowHeight * 2.5);
-        const showcaseTop = showcaseSection ? showcaseSection.offsetTop : windowHeight * 3;
+        const quoteTop = quoteSection ? quoteSection.offsetTop : effectiveHeight * 1.2;
+        const libraryBottom = librarySection ? (librarySection.offsetTop + librarySection.offsetHeight) : (effectiveHeight * 2.5);
+        const showcaseTop = showcaseSection ? showcaseSection.offsetTop : effectiveHeight * 3;
         const maxScroll = Math.max(document.documentElement.scrollHeight - windowHeight, 1);
         
         // Pre-calculate celestial paths to avoid heavy math every single frame
         // JUPITER: THE ORBITAL GLIDE. Stays comfortably within viewport.
         const jupiterPath = {
-            p0: { x: -225, y: windowHeight * 0.15 }, // Half visible start (450px / 2)
-            p1: { x: windowWidth * 0.5, y: windowHeight * 0.8 }, // Deeper curve to restore gravity feel
-            p2: { x: windowWidth + 50, y: windowHeight * 0.1 } // Lands top-right
+            p0: { x: -225, y: effectiveHeight * 0.15 }, // Half visible start (450px / 2)
+            p1: { x: windowWidth * 0.5, y: effectiveHeight * 0.75 }, // Deeper curve to restore gravity feel
+            p2: { x: windowWidth + 50, y: effectiveHeight * 0.1 } // Lands top-right
         };
 
         const saturnPath = {
             // THE GRAND ARCH: Rises from bottom-right, arcs high over content, sets bottom-left
-            p0: { x: windowWidth + 200, y: windowHeight * 0.8 }, 
-            p1: { x: windowWidth * 0.5, y: -windowHeight * 0.3 }, // Peak high above screen
-            p2: { x: -200, y: windowHeight * 0.36 } 
+            p0: { x: windowWidth + 200, y: effectiveHeight * 0.8 }, 
+            p1: { x: windowWidth * 0.5, y: -effectiveHeight * 0.25 }, // Peak high above screen
+            p2: { x: -200, y: effectiveHeight * 0.36 } 
         };
 
         // Pre-calculate card positions for visibility check (Optimization)
@@ -204,8 +223,9 @@ function updateCinematicPhysics(now) {
     
         const jupiterFade = Math.min(0.4 + jupiterProgress * 2, 1); // More solid start (0.4 base)
         const jupiterRotation = (now * 0.008) % 360; // Slightly faster rotation
+        const sizeFactor = Math.min(Math.max(windowWidth / 1400, 0.72), 1.15);
         // CONTROLLED SIZE: Starts at 0.9, peaks, then shrinks to 0.7 at the end
-        const jupiterScale = 0.9 + 0.5 * Math.sin(jupiterProgress * Math.PI) - (jupiterProgress * 0.35); 
+        const jupiterScale = (0.9 + 0.5 * Math.sin(jupiterProgress * Math.PI) - (jupiterProgress * 0.35)) * sizeFactor; 
         jupiterEl.style.opacity = (jupiterFade * 0.5).toFixed(2); // Slightly more solid max opacity
         jupiterEl.style.transform = `translate3d(${jupiterX.toFixed(2)}px, ${jupiterY.toFixed(2)}px, 0) rotate(${jupiterRotation.toFixed(2)}deg) scale(${jupiterScale.toFixed(2)})`;
     
@@ -225,7 +245,7 @@ function updateCinematicPhysics(now) {
         const saturnFade = Math.min(saturnProgress * 4, 1); 
         const saturnRotation = -(now * 0.01) % 360; // Faster rotation for dynamism
         // FLYBY EFFECT: Starts distant (0.9), grows massive overhead (1.4), fades away
-        const saturnScale = 0.9 + 0.5 * Math.sin(saturnProgress * Math.PI); 
+        const saturnScale = (0.9 + 0.5 * Math.sin(saturnProgress * Math.PI)) * sizeFactor; 
     
         saturnEl.style.opacity = (saturnFade * 0.5).toFixed(2); // Slightly clearer than before
         saturnEl.style.transform = `translate3d(${saturnX.toFixed(2)}px, ${saturnY.toFixed(2)}px, 0) rotate(${saturnRotation.toFixed(2)}deg) scale(${saturnScale.toFixed(2)})`;
@@ -239,7 +259,7 @@ function updateCinematicPhysics(now) {
         currentScrollY = targetScrollY;
     }
 
-    // Keep animating if planets are visible on desktop, or if we are still scrolling.
+    // Keep animating if planets are visible on desktop (for continuous steady rotation), or while scrolling
     if ((jupiterEl && saturnEl && windowWidth >= 900) || !isIdle) {
         animationFrameId = requestAnimationFrame(updateCinematicPhysics);
     } else {
@@ -435,7 +455,9 @@ document.addEventListener("DOMContentLoaded", () => {
     updateSidebarActiveState();
     initReadingFeatures(); // Initialize Reading Time & Share
     initBackToTop(); // Initialize Back to Top button
+    initMobileQuickIndex(); // Initialize Mobile Quick Index/Top Companion
     initMuseumDisplay(); // Initialize Museum Display
+    initMobileJumpStrip(); // Initialize Mobile Category Jump Strip
     initSubscribeForm(); // Initialize Homepage Subscribe
     initSubscribeScroll(); // Initialize Subscribe Scroll & Focus
     setupArchiveComingSoon(); // Initialize Selective Archive Toggle
@@ -609,6 +631,82 @@ function initBackToTop() {
         window.scrollTo({
             top: 0,
             behavior: 'smooth'
+        });
+    });
+}
+
+// ======== MOBILE QUICK INDEX COMPANION ========
+function initMobileQuickIndex() {
+    const sidebar = document.querySelector('.reading-sidebar');
+    const readingMain = document.querySelector('.reading-main');
+    if (!sidebar || !readingMain) return;
+
+    let quickBtn = document.getElementById('mobileQuickIndexBtn');
+    if (!quickBtn) {
+        quickBtn = document.createElement('button');
+        quickBtn.id = 'mobileQuickIndexBtn';
+        quickBtn.className = 'mobile-quick-index-btn';
+        quickBtn.setAttribute('aria-label', 'Jump to Index');
+        quickBtn.innerHTML = '<i class="fa-solid fa-list-ul"></i> <span class="btn-text">Index</span>';
+        quickBtn.style.opacity = '0';
+        quickBtn.style.pointerEvents = 'none';
+        quickBtn.style.transform = 'translateY(15px)';
+        document.body.appendChild(quickBtn);
+    }
+
+    const updateVisibility = () => {
+        if (window.innerWidth >= 900) {
+            quickBtn.style.opacity = '0';
+            quickBtn.style.pointerEvents = 'none';
+            return;
+        }
+
+        const scrollY = window.scrollY || document.documentElement.scrollTop;
+        const sidebarRect = sidebar.getBoundingClientRect();
+        
+        // Show only while actively reading the body text (after passing the hero, and before reaching the sidebar)
+        const isPastHero = scrollY > 220;
+        const isBeforeSidebar = sidebarRect.top > window.innerHeight * 0.85;
+
+        if (isPastHero && isBeforeSidebar) {
+            quickBtn.style.opacity = '1';
+            quickBtn.style.pointerEvents = 'auto';
+            quickBtn.style.transform = 'translateY(0)';
+        } else {
+            // Fade out cleanly at the bottom so there is NEVER a duplicate "Top" button next to back-to-top
+            quickBtn.style.opacity = '0';
+            quickBtn.style.pointerEvents = 'none';
+            quickBtn.style.transform = 'translateY(15px)';
+        }
+    };
+
+    window.addEventListener('scroll', updateVisibility, { passive: true });
+    window.addEventListener('resize', updateVisibility, { passive: true });
+    updateVisibility();
+
+    quickBtn.addEventListener('click', () => {
+        sidebar.scrollIntoView({ behavior: 'smooth' });
+    });
+}
+
+// ======== MOBILE EDITORIAL JUMP STRIP ========
+function initMobileJumpStrip() {
+    const jumpPills = document.querySelectorAll('.mobile-jump-pill');
+    if (!jumpPills.length) return;
+
+    jumpPills.forEach(pill => {
+        pill.addEventListener('click', (e) => {
+            const targetId = pill.getAttribute('data-target');
+            const targetEl = document.getElementById(targetId);
+            if (!targetEl) return;
+            e.preventDefault();
+            const ribbon = document.querySelector('.ribbon');
+            const ribbonH = ribbon ? ribbon.offsetHeight : 56;
+            const targetTop = targetEl.getBoundingClientRect().top + window.scrollY - ribbonH - 12;
+            window.scrollTo({
+                top: targetTop,
+                behavior: 'smooth'
+            });
         });
     });
 }
