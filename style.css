@@ -67,25 +67,25 @@ body {
   background-image:
     radial-gradient(ellipse at center, rgba(15, 6, 10, 0.45) 0%, rgba(6, 3, 6, 0.80) 100%),
     linear-gradient(180deg, rgba(10, 4, 7, 0.40) 0%, rgba(4, 2, 4, 0.75) 100%),
-    url("images/bg-poems.webp");
+    url("images/universe.webp");
 }
 .space-bg.bg-essays {
   background-image:
     radial-gradient(ellipse at center, rgba(4, 12, 8, 0.45) 0%, rgba(2, 6, 4, 0.80) 100%),
     linear-gradient(180deg, rgba(3, 8, 5, 0.40) 0%, rgba(2, 5, 3, 0.75) 100%),
-    url("images/bg-essays.webp");
+    url("images/universe.webp");
 }
 .space-bg.bg-fiction {
   background-image:
     radial-gradient(ellipse at center, rgba(6, 10, 20, 0.45) 0%, rgba(2, 4, 10, 0.80) 100%),
     linear-gradient(180deg, rgba(4, 6, 14, 0.40) 0%, rgba(2, 3, 8, 0.75) 100%),
-    url("images/bg-fiction.webp");
+    url("images/universe.webp");
 }
 .space-bg.bg-about {
   background-image:
     radial-gradient(ellipse at center, rgba(12, 10, 8, 0.45) 0%, rgba(5, 4, 3, 0.80) 100%),
     linear-gradient(180deg, rgba(8, 6, 4, 0.40) 0%, rgba(4, 3, 2, 0.75) 100%),
-    url("images/bg-about.webp");
+    url("images/universe.webp");
 }
 
 /* PLANETS: Fixed by default, JS controls position */
@@ -121,18 +121,22 @@ body {
    ========================================= */
 .ribbon {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background: rgba(6, 9, 14, 0.88);
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 4.5rem);
+  max-width: 1380px;
+  background: rgba(6, 10, 15, 0.82);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255, 215, 0, 0.22);
+  border: 1px solid rgba(255, 215, 0, 0.22);
+  border-radius: 16px;
   z-index: 1000;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.65), 0 1px 0 rgba(255, 215, 0, 0.1);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7), 0 0 15px rgba(255, 215, 0, 0.06);
   display: flex;
   flex-direction: column;
   transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  overflow: hidden;
 }
 
 /* Tier 1: The Publication Masthead */
@@ -296,11 +300,12 @@ body {
 
 /* Scrolled Compression for Concept C */
 .ribbon.scrolled {
-  background: rgba(5, 7, 10, 0.75) !important;
-  backdrop-filter: blur(14px) !important;
-  -webkit-backdrop-filter: blur(14px) !important;
-  border-bottom: 1px solid rgba(255, 215, 0, 0.2) !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 1px 0 rgba(255, 215, 0, 0.15) !important;
+  top: 10px;
+  background: rgba(5, 8, 12, 0.88) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 215, 0, 0.32) !important;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.85), 0 0 25px rgba(255, 215, 0, 0.12) !important;
 }
 .ribbon.scrolled .masthead-tier {
   height: 48px;
@@ -1331,16 +1336,19 @@ footer {
   }
 
   /* Ribbon Changes - Concept C Mobile */
-  .ribbon {
-      top: 0;
-      left: 0;
-      transform: none;
-      width: 100%;
-      height: auto;
-      border-radius: 0;
-      border-top: none;
-      border-bottom: 1px solid rgba(255, 215, 0, 0.22);
-      padding: 0;
+  .ribbon, .ribbon.scrolled {
+      top: 0 !important;
+      left: 0 !important;
+      transform: none !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      height: auto !important;
+      border-radius: 0 !important;
+      border-top: none !important;
+      border-left: none !important;
+      border-right: none !important;
+      border-bottom: 1px solid rgba(255, 215, 0, 0.22) !important;
+      padding: 0 !important;
   }
   .masthead-tier {
       height: calc(56px - (8px * var(--scroll-progress, 0)));
@@ -1457,32 +1465,65 @@ footer {
       padding-left: 0 !important;
       padding-right: 0 !important;
   }
-  .page-intro { padding-top: 100px; padding-bottom: 2rem; }
-
-  /* Smaller Subpage Cards with Slim Padding & Consistent Glass Transparency */
-  .card-anchor {
-      min-height: 100px !important;
-      padding: 1.15rem 1.15rem !important;
-      border: 1px solid rgba(255, 215, 0, 0.15);
-      background: rgba(6, 10, 14, 0.74) !important;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  .page-intro { 
+      padding-top: 105px; 
+      padding-bottom: 1.5rem; 
+      margin-bottom: 3.2rem !important; 
   }
-  .card-anchor .item-title { font-size: 1.15rem !important; margin-bottom: 0.35rem !important; line-height: 1.35 !important; }
-  .card-anchor .item-meta { margin-bottom: 0.3rem !important; font-size: 0.68rem !important; }
+
+  /* Subpage Floating Celestial Bento Pods on Mobile */
+  .content-featured {
+      grid-template-columns: 1fr !important;
+      gap: 1.35rem !important;
+  }
+  .card-anchor {
+      min-height: auto !important;
+      padding: 1.6rem 1.4rem !important;
+      border: 1px solid rgba(255, 215, 0, 0.25) !important;
+      border-radius: 16px !important;
+      background: rgba(7, 12, 19, 0.8) !important;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6) !important;
+  }
+  .card-anchor .item-title {
+      font-size: 1.25rem !important;
+      margin-bottom: 0.5rem !important;
+      line-height: 1.35 !important;
+  }
+  .card-anchor .item-meta {
+      margin-bottom: 0.75rem !important;
+      font-size: 0.64rem !important;
+      padding: 0.25rem 0.75rem !important;
+      letter-spacing: 0.16em !important;
+      border-radius: 999px !important;
+      background: rgba(255, 215, 0, 0.08) !important;
+      border: 1px solid rgba(255, 215, 0, 0.25) !important;
+      color: #FFD700 !important;
+  }
   .item-meta { font-size: 0.68rem; }
 
-  /* Excerpt completely hidden on mobile subpages - no expansion or shift */
   .card-anchor .item-excerpt,
   .card-anchor:hover .item-excerpt {
-      display: none !important;
-      max-height: 0 !important;
-      opacity: 0 !important;
-      margin-top: 0 !important;
+      display: -webkit-box !important;
+      -webkit-line-clamp: 3 !important;
+      -webkit-box-orient: vertical !important;
+      overflow: hidden !important;
+      opacity: 0.78 !important;
+      font-size: 0.88rem !important;
+      line-height: 1.6 !important;
+      margin: 0 0 1.15rem 0 !important;
   }
   .card-anchor:hover .item-title {
       transform: none !important;
       opacity: 1 !important;
-      margin-bottom: 0.35rem !important;
+  }
+  .card-anchor::after {
+      font-size: 0.68rem !important;
+      padding: 0.38rem 1rem !important;
+      margin-top: 0 !important;
+      border-radius: 999px !important;
+      background: rgba(255, 215, 0, 0.06) !important;
+      border: 1px solid rgba(255, 215, 0, 0.25) !important;
+      color: #FFD700 !important;
   }
   a.solid-glass:hover {
       transform: none !important;
@@ -1731,20 +1772,21 @@ footer {
 
   /* Disable Archive Card Hover on Mobile */
   .card-simple {
-      padding: 0 !important;
-      min-height: 72px !important;
+      padding: 0.85rem 1.25rem !important;
+      min-height: 58px !important;
+      border-radius: 14px !important;
   }
   .card-simple:hover {
       transform: none !important;
-      box-shadow: none !important;
-      background: rgba(10, 15, 20, 0.3) !important;
-      border-color: rgba(255, 255, 255, 0.08) !important;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45) !important;
+      background: rgba(7, 12, 19, 0.68) !important;
+      border-color: rgba(255, 215, 0, 0.16) !important;
   }
   .archive-content-default {
       opacity: 1 !important;
       transform: none !important;
       pointer-events: auto !important;
-      padding: 0.9rem 1.15rem !important;
+      padding: 0 !important;
   }
   .card-simple:hover .archive-content-default {
       opacity: 1 !important;
@@ -1758,8 +1800,8 @@ footer {
   }
 
   /* Disable Torch Glow Pseudo-elements on Mobile */
-  .card::after, .solid-glass::after, .glass-panel::after,
-  .card:hover::after, .solid-glass:hover::after, .glass-panel:hover::after {
+  .card::after, .solid-glass:not(.card-anchor):not(.card-static)::after, .glass-panel::after,
+  .card:hover::after, .solid-glass:not(.card-anchor):not(.card-static):hover::after, .glass-panel:hover::after {
       display: none !important;
       opacity: 0 !important;
   }
@@ -1838,25 +1880,25 @@ footer {
 
     /* Subpage backgrounds matching homepage luminance */
     .space-bg.bg-poems {
-        background-image: linear-gradient(rgba(0, 0, 0, 0.76), rgba(0, 0, 0, 0.76)), url("images/bg-poems.webp") !important;
+        background-image: linear-gradient(rgba(14, 4, 8, 0.78), rgba(6, 2, 5, 0.82)), url("images/universe-mobile.webp") !important;
         background-position: center center !important;
         background-size: cover !important;
         background-attachment: scroll !important;
     }
     .space-bg.bg-essays {
-        background-image: linear-gradient(rgba(0, 0, 0, 0.76), rgba(0, 0, 0, 0.76)), url("images/bg-essays.webp") !important;
+        background-image: linear-gradient(rgba(3, 10, 6, 0.78), rgba(2, 6, 4, 0.82)), url("images/universe-mobile.webp") !important;
         background-position: center center !important;
         background-size: cover !important;
         background-attachment: scroll !important;
     }
     .space-bg.bg-fiction {
-        background-image: linear-gradient(rgba(0, 0, 0, 0.76), rgba(0, 0, 0, 0.76)), url("images/bg-fiction.webp") !important;
+        background-image: linear-gradient(rgba(4, 7, 16, 0.78), rgba(2, 4, 10, 0.82)), url("images/universe-mobile.webp") !important;
         background-position: center center !important;
         background-size: cover !important;
         background-attachment: scroll !important;
     }
     .space-bg.bg-about {
-        background-image: linear-gradient(rgba(0, 0, 0, 0.76), rgba(0, 0, 0, 0.76)), url("images/bg-about.webp") !important;
+        background-image: linear-gradient(rgba(10, 7, 4, 0.78), rgba(4, 3, 2, 0.82)), url("images/universe-mobile.webp") !important;
         background-position: center center !important;
         background-size: cover !important;
         background-attachment: scroll !important;
@@ -1867,12 +1909,12 @@ footer {
    DENDRA FOLIO - CONTENT LAYOUTS
    ========================================= */
 
-/* 1. Page Intro Quote - Harmonized & Scaled */
+/* 1. Page Intro Quote - Harmonized & Scaled with generous breathing room */
 .page-intro {
-    padding: 140px 2rem 2.5rem;
+    padding: 155px 2rem 2rem;
     text-align: center;
     max-width: 1050px;
-    margin: 0 auto;
+    margin: 0 auto 4.5rem auto; /* Seriously generous gap before content cards start */
     position: relative;
     z-index: 5;
 }
@@ -2045,7 +2087,7 @@ body:has(.bg-fiction) .card-simple {
 
 /* Show on Hover */
 /* --- MOUSE FOLLOW GLOW EFFECT --- */
-.card::after, .solid-glass::after, .glass-panel::after {
+.card::after, .solid-glass:not(.card-anchor):not(.card-static)::after, .glass-panel::after {
     content: "";
     position: absolute;
     inset: 0;
@@ -2064,7 +2106,7 @@ body:has(.bg-fiction) .card-simple {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .card:hover::after, .solid-glass:hover::after, .glass-panel:hover::after {
+  .card:hover::after, .solid-glass:not(.card-anchor):not(.card-static):hover::after, .glass-panel:hover::after {
       opacity: 1;
   }
 }
@@ -2098,10 +2140,10 @@ body:has(.bg-fiction) .card-simple {
 /* 4. Individual Reading Page - Harmonized & Scaled */
 .reading-container {
     display: flex;
-    gap: 2.5rem;
-    max-width: 1120px;
+    gap: 4rem;
+    max-width: 1380px;
     margin: 0 auto;
-    padding: 0 2rem 5rem !important;
+    padding: 0 3.5rem 6rem !important;
     width: 100%;
     position: relative;
     z-index: 5;
@@ -2111,10 +2153,10 @@ body:has(.bg-fiction) .card-simple {
 
 .reading-main {
     flex: 1;
-    padding: 2.5rem 3rem;
-    max-width: 820px;
+    padding: 3.5rem 4.5rem;
+    max-width: 980px;
     width: 100%;
-    border-radius: 12px;
+    border-radius: 16px;
 }
 
 /* Override for Centered pages (About, Legal) */
@@ -2140,8 +2182,8 @@ body:has(.bg-fiction) .card-simple {
 
 .reading-text {
     margin-top: 1.8rem;
-    font-size: 0.98rem;
-    line-height: 1.74;
+    font-size: 0.93rem;
+    line-height: 1.76;
     color: #e0e0e0;
     text-align: justify;
 }
@@ -2154,16 +2196,16 @@ body:has(.bg-fiction) .card-simple {
 .reading-text.poem,
 .reading-text pre {
     font-family: inherit;
-    font-size: 0.88rem;
+    font-size: 0.93rem;
     white-space: pre-wrap;
     text-align: left;
 }
 
-/* Specific container for poem body */
+/* Specific container for poem body - Harmonized with Essays and Fiction */
 .poem-content {
-    max-width: 440px; 
+    max-width: 460px; 
     margin: 1.5rem auto; 
-    font-size: 0.98rem; 
+    font-size: 0.93rem; 
     line-height: 1.85; 
     color: #f0f0f0; 
     letter-spacing: 0.03em;
@@ -2225,10 +2267,10 @@ body:has(.bg-fiction) .card-simple {
 
 /* 5. The Sidebar Index */
 .reading-sidebar {
-    width: 260px;
+    width: 300px;
     flex-shrink: 0;
     position: sticky;
-    top: 85px;
+    top: 105px;
 }
 
 .sidebar-title {
@@ -2300,8 +2342,8 @@ body:has(.bg-fiction) .card-simple {
     }
 
     .reading-text {
-        font-size: 0.95rem !important;
-        line-height: 1.75 !important;
+        font-size: 0.89rem !important;
+        line-height: 1.74 !important;
         text-align: left !important;
         margin-top: 1.4rem !important;
     }
@@ -2320,8 +2362,8 @@ body:has(.bg-fiction) .card-simple {
     }
 
     .poem-content {
-        max-width: 340px !important;
-        font-size: 0.92rem !important;
+        max-width: 360px !important;
+        font-size: 0.89rem !important;
         line-height: 1.8 !important;
         text-align: left !important;
         margin: 1.2rem auto !important;
@@ -2597,96 +2639,177 @@ body:has(.bg-fiction) .card-simple {
     display: none;
 }
 
-/* THE EXHIBITION (Anchors) - Scaled to Match Homepage */
+/* =======================================================
+   SUBPAGE SHOWCASE: FLOATING CELESTIAL BENTO PODS
+   ======================================================= */
 .content-featured {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 2rem;
-    max-width: 1020px;
-    margin: 0 auto 3.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+    gap: 1.8rem;
+    max-width: 1140px;
+    margin: 0 auto 4.5rem;
     position: relative;
     z-index: 5;
-    padding: 0 2rem;
-    justify-content: center;
-    align-items: center;
-    min-height: 240px;
+    padding: 0 1.5rem;
+    min-height: auto;
+    align-items: stretch;
 }
 
 .card-anchor {
-    min-height: 150px;
-    padding: 1.8rem 1.6rem;
+    min-height: 250px;
+    padding: 2.2rem 2.2rem 2rem;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    text-align: center;
+    justify-content: flex-start;
+    align-items: flex-start;
+    text-align: left;
     position: relative;
-    transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), 
-                box-shadow 0.65s ease, 
-                border-color 0.65s ease, 
-                background 0.65s ease;
-    will-change: transform;
+    border-radius: 20px;
+    background: rgba(7, 12, 19, 0.74) !important;
+    border: 1px solid rgba(255, 215, 0, 0.22) !important;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.58), 0 0 18px rgba(255, 215, 0, 0.04) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.4s ease,
+                background 0.4s ease;
+    will-change: transform, box-shadow;
+    text-decoration: none;
+    overflow: hidden;
 }
 
+/* Solo card centered exhibition (e.g. Fiction) */
+.card-anchor.showcase-solo-card {
+    grid-column: 1 / -1;
+    max-width: 740px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Theme perimeter accents in resting state */
+.card-anchor.earth-theme {
+    border-color: rgba(255, 215, 0, 0.24) !important;
+}
+.card-anchor.fire-theme {
+    border-color: rgba(255, 170, 130, 0.24) !important;
+}
+.card-anchor.water-theme {
+    border-color: rgba(140, 200, 255, 0.24) !important;
+}
+
+/* Floating Pill Meta Badge */
 .card-anchor .item-meta {
-    font-size: 0.68rem;
-    letter-spacing: 1.8px;
-    color: rgba(255, 255, 255, 0.5);
-    margin-bottom: 0.75rem;
+    font-size: 0.66rem;
+    letter-spacing: 0.2em;
+    color: #FFD700;
     text-transform: uppercase;
-    display: block;
-    transition: color 0.5s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    padding: 0.3rem 0.85rem;
+    border-radius: 999px;
+    background: rgba(255, 215, 0, 0.08);
+    border: 1px solid rgba(255, 215, 0, 0.25);
+    margin-bottom: 1.15rem;
+    transition: all 0.3s ease;
 }
 
-/* Anchor Title: Fades into watermark on hover */
 .card-anchor .item-title {
-    font-size: 1.25rem;
+    font-family: var(--font-main);
+    font-size: 1.38rem;
     line-height: 1.35;
     color: #ffffff;
-    margin-bottom: 0;
-    font-weight: 400;
-    transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), 
-                opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-                margin-bottom 0.65s cubic-bezier(0.16, 1, 0.3, 1);
-    transform-origin: center top;
-    will-change: transform, opacity;
+    margin-bottom: 1.15rem; /* Generous gap between title and excerpt */
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: color 0.3s ease;
+}
+
+.card-anchor .item-excerpt {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    opacity: 0.78;
+    font-size: 0.92rem;
+    line-height: 1.68;
+    color: #d6dbe4;
+    margin: 0 0 1.6rem 0;
+    letter-spacing: 0.015em;
+    font-style: normal;
+    flex-grow: 1;
+    transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+/* Floating Action Capsule Button */
+.card-anchor::after {
+    content: "Read Piece  \2192";
+    position: static !important;
+    inset: auto !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    align-self: flex-start !important;
+    width: fit-content !important;
+    height: auto !important;
+    margin-top: auto !important;
+    padding: 0.45rem 1.15rem !important;
+    border-radius: 999px !important;
+    background: rgba(255, 215, 0, 0.08) !important;
+    border: 1px solid rgba(255, 215, 0, 0.3) !important;
+    font-family: var(--font-main) !important;
+    font-size: 0.72rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.16em !important;
+    text-transform: uppercase !important;
+    color: #FFD700 !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    z-index: 4 !important;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .card-anchor:hover .item-title {
-      transform: translateY(-6px) scale(0.92);
-      opacity: 0.32;
-      margin-bottom: 0.45rem;
-  }
-
-  .card-anchor:hover .item-excerpt {
-      max-height: 140px;
-      opacity: 1;
-      transform: translateY(0);
-      margin-top: 0.85rem;
-  }
-
-  .card-anchor:hover .item-meta {
-      color: #FFD700 !important;
-  }
+    .card-anchor:hover {
+        background: rgba(12, 19, 30, 0.88) !important;
+        border-color: rgba(255, 215, 0, 0.55) !important;
+        box-shadow: 0 18px 45px rgba(0, 0, 0, 0.75), 0 0 28px rgba(255, 215, 0, 0.16) !important;
+        transform: translateY(-5px);
+    }
+    .card-anchor:hover .item-title {
+        color: #FFD700 !important;
+    }
+    .card-anchor:hover .item-meta {
+        background: rgba(255, 215, 0, 0.16);
+        border-color: rgba(255, 215, 0, 0.5);
+    }
+    .card-anchor:hover .item-excerpt {
+        opacity: 0.95;
+        color: #ffffff;
+    }
+    .card-anchor:hover::after {
+        position: static !important;
+        inset: auto !important;
+        width: fit-content !important;
+        height: auto !important;
+        background: rgba(255, 215, 0, 0.22) !important;
+        border-color: rgba(255, 215, 0, 0.75) !important;
+        color: #ffffff !important;
+        box-shadow: 0 0 14px rgba(255, 215, 0, 0.35) !important;
+        transform: translateX(4px) !important;
+    }
+    
+    .card-anchor.fire-theme:hover {
+        border-color: rgba(255, 170, 130, 0.6) !important;
+        box-shadow: 0 18px 45px rgba(0, 0, 0, 0.75), 0 0 28px rgba(255, 140, 100, 0.22) !important;
+    }
+    .card-anchor.water-theme:hover {
+        border-color: rgba(140, 200, 255, 0.6) !important;
+        box-shadow: 0 18px 45px rgba(0, 0, 0, 0.75), 0 0 28px rgba(100, 180, 255, 0.22) !important;
+    }
 }
 
-/* Anchor Text Excerpt: Appears on hover */
-.card-anchor .item-excerpt {
-    max-height: 0;
-    opacity: 0;
-    overflow: hidden;
-    font-size: 0.88rem;
-    line-height: 1.55;
-    color: rgba(255, 255, 255, 0.88);
-    font-style: italic;
-    margin: 0;
-    transform: translateY(6px);
-    transition: max-height 0.65s cubic-bezier(0.16, 1, 0.3, 1), 
-                opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), 
-                transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-                margin-top 0.65s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: max-height, opacity, transform;
-}
 
 /* ARCHIVE DIVIDER */
 .archive-divider {
@@ -2718,86 +2841,166 @@ body:has(.bg-fiction) .card-simple {
     text-transform: uppercase;
 }
 
-/* THE ARCHIVE (Horizontal Index) */
+/* =======================================================
+   THE ARCHIVE: CONCEPT A - SLEEK CAPSULE LEDGER
+   ======================================================= */
 .content-archive {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem; /* Proper vertical spacing */
-    max-width: 800px; /* Kept elegantly constrained */
+    gap: 0.85rem;
+    max-width: 860px;
     margin: 0 auto 6rem;
     position: relative;
     z-index: 5;
-    padding: 0 2rem; /* Consistent padding */
+    padding: 0 1.5rem;
+    counter-reset: archive-counter;
 }
+
 .card-simple {
     position: relative !important;
-    padding: 0 !important; 
-    min-height: 90px !important;
-    background: rgba(10, 15, 20, 0.3) !important; /* Highly transparent */
-    border: 1px solid rgba(255, 255, 255, 0.08) !important; /* Faint border */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    border-radius: 8px;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    min-height: 64px !important;
+    padding: 0.95rem 1.6rem !important;
+    border-radius: 16px !important;
+    background: rgba(7, 12, 19, 0.68) !important;
+    border: 1px solid rgba(255, 215, 0, 0.16) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 0 12px rgba(255, 215, 0, 0.03) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+    text-decoration: none !important;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.35s ease,
+                background 0.35s ease !important;
+    overflow: hidden !important;
+    counter-increment: archive-counter;
 }
-@media (hover: hover) and (pointer: fine) {
-  .card-simple:hover {
-      background: rgba(20, 25, 30, 0.7) !important;
-      border-color: rgba(255, 215, 0, 0.4) !important;
-      box-shadow: 0 0 20px rgba(255, 215, 0, 0.15) !important;
-      transform: translateY(-3px) !important;
-  }
+
+/* Elegant Index Counter on Left */
+.card-simple::before {
+    content: counter(archive-counter, decimal-leading-zero);
+    font-family: var(--font-main);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: rgba(255, 215, 0, 0.65);
+    margin-right: 1.25rem;
+    flex-shrink: 0;
+    transition: color 0.3s ease, transform 0.3s ease;
 }
+
+/* Container for Poems subpage */
 .archive-content-default {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.5rem 3rem;
-    transition: opacity 0.4s ease, transform 0.4s ease;
+    display: flex !important;
+    width: 100% !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    gap: 1rem !important;
+    opacity: 1 !important;
+    transform: none !important;
+    pointer-events: auto !important;
 }
+
+/* Disable legacy hover flip to preserve clean ledger readability */
+.archive-content-hover {
+    display: none !important;
+}
+
+/* Archive Title */
+.card-simple .item-title,
 .archive-content-default .item-title {
     margin: 0 !important;
-    font-size: 1.3rem;
-    color: #e0e0e0;
-    text-align: left;
+    font-family: var(--font-main) !important;
+    font-size: 1.15rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.02em !important;
+    color: #e8ecf2 !important;
+    text-align: left !important;
+    flex: 1 !important;
+    transition: color 0.3s ease, transform 0.3s ease;
 }
+
+/* Archive Metadata Pill Badge */
+.card-simple .item-meta,
 .archive-content-default .item-meta {
     margin: 0 !important;
-    font-size: 0.85rem;
-    color: #888;
-    text-align: right;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.65rem !important;
+    padding: 0.28rem 0.85rem !important;
+    border-radius: 999px !important;
+    background: rgba(255, 215, 0, 0.08) !important;
+    border: 1px solid rgba(255, 215, 0, 0.22) !important;
+    font-size: 0.65rem !important;
+    letter-spacing: 0.16em !important;
+    font-weight: 600 !important;
+    color: #FFD700 !important;
+    text-transform: uppercase !important;
+    flex-shrink: 0 !important;
+    transition: all 0.3s ease !important;
 }
-.archive-content-hover {
-    position: absolute;
-    inset: 0;
-    padding: 0 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
-    text-align: center;
-}
-.archive-content-hover p {
-    margin: 0;
-    font-size: 1.05rem;
+
+/* Micro-Arrow on the Pill */
+.card-simple .item-meta::after,
+.archive-content-default .item-meta::after {
+    content: "  \2192";
+    font-family: var(--font-main);
+    font-size: 0.72rem;
     color: #FFD700;
-    font-style: italic;
-    line-height: 1.5;
+    transition: transform 0.3s ease;
+    display: inline-block;
 }
+
+/* Hover Physics on Desktop */
 @media (hover: hover) and (pointer: fine) {
-  .card-simple:hover .archive-content-default {
-      opacity: 0;
-      transform: translateY(-10px);
-      pointer-events: none;
-  }
-  .card-simple:hover .archive-content-hover {
-      opacity: 1;
-      transform: translateY(0);
-  }
+    .card-simple:hover {
+        background: rgba(12, 19, 30, 0.86) !important;
+        border-color: rgba(255, 215, 0, 0.5) !important;
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.65), 0 0 20px rgba(255, 215, 0, 0.12) !important;
+        transform: translateY(-3px) translateX(3px) !important;
+    }
+    
+    .card-simple:hover::before {
+        color: #FFD700 !important;
+        transform: scale(1.1);
+    }
+    
+    .card-simple:hover .item-title,
+    .card-simple:hover .archive-content-default .item-title {
+        color: #ffffff !important;
+        text-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+    }
+    
+    .card-simple:hover .item-meta,
+    .card-simple:hover .archive-content-default .item-meta {
+        background: rgba(255, 215, 0, 0.18) !important;
+        border-color: rgba(255, 215, 0, 0.55) !important;
+        color: #FFF0A0 !important;
+        box-shadow: 0 0 12px rgba(255, 215, 0, 0.25) !important;
+    }
+    
+    .card-simple:hover .item-meta::after,
+    .card-simple:hover .archive-content-default .item-meta::after {
+        transform: translateX(4px);
+    }
+    
+    /* Themed hover perimeters */
+    .card-simple.earth-theme:hover {
+        border-color: rgba(129, 199, 132, 0.55) !important;
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.65), 0 0 20px rgba(129, 199, 132, 0.15) !important;
+    }
+    .card-simple.fire-theme:hover {
+        border-color: rgba(229, 115, 115, 0.55) !important;
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.65), 0 0 20px rgba(229, 115, 115, 0.15) !important;
+    }
+    .card-simple.water-theme:hover {
+        border-color: rgba(100, 181, 246, 0.55) !important;
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.65), 0 0 20px rgba(100, 181, 246, 0.15) !important;
+    }
 }
 
 /* --- ARCHIVE COMING SOON TOGGLE --- */
@@ -2871,19 +3074,33 @@ body:has(.bg-fiction) .card-simple {
 @media (max-width: 900px) {
     .page-main { padding-top: 100px !important; }
 
-    /* Fix for Archive Cards on Mobile (Slim & Professional Padding) */
+    /* Concept A: Sleek Capsule Ledger on Mobile */
     .card-simple {
-        padding: 0 !important;
-        min-height: 72px !important;
+        padding: 0.85rem 1.25rem !important;
+        min-height: 58px !important;
+        border-radius: 14px !important;
+        gap: 0.6rem !important;
+    }
+    .card-simple::before {
+        font-size: 0.72rem !important;
+        margin-right: 0.75rem !important;
     }
     .archive-content-default {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 0.85rem 1.15rem !important;
-        gap: 0.25rem;
+        flex-direction: row !important;
+        align-items: center !important;
+        padding: 0 !important;
+        gap: 0.6rem !important;
     }
-    .archive-content-default .item-title { font-size: 1.08rem !important; }
-    .archive-content-default .item-meta { text-align: left !important; font-size: 0.72rem !important; opacity: 0.6; }
+    .archive-content-default .item-title,
+    .card-simple .item-title { 
+        font-size: 1.02rem !important; 
+    }
+    .archive-content-default .item-meta,
+    .card-simple .item-meta { 
+        font-size: 0.6rem !important; 
+        padding: 0.22rem 0.65rem !important;
+        letter-spacing: 0.12em !important;
+    }
     .archive-content-hover { display: none !important; }
 }
 
@@ -2898,30 +3115,45 @@ body:has(.bg-fiction) .card-simple {
 
 /* --- READING PAGE SPECIFIC LAYOUT --- */
 .page-intro.reading-layout {
-    padding: 140px 2rem 1.6rem;
-    max-width: 900px;
+    padding: 185px 2.5rem 2.2rem;
+    max-width: 1120px;
     margin: 0 auto;
     text-align: center;
+    position: relative;
 }
 
 .page-intro.reading-layout .page-title {
-    font-size: 1.55rem;
+    font-size: 1.95rem;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.9), 0 0 35px rgba(255, 215, 0, 0.25);
     letter-spacing: 0.16em;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1.25rem; /* Generous space between title and byline */
     border-bottom: none;
     padding-bottom: 0;
 }
 
 .page-intro.reading-layout .reading-meta-block {
-    margin-bottom: 1.1rem;
+    margin-bottom: 1.8rem; /* Generous space between byline and quote block */
     font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    flex-wrap: wrap;
+    text-transform: uppercase;
+}
+
+/* Author byline matching high-end literary publications */
+.page-intro.reading-layout .reading-meta-block::before {
+    content: "BY PRANSHU GUPTA  \2022  ";
+    color: rgba(255, 255, 255, 0.75);
+    font-weight: 500;
     letter-spacing: 0.2em;
-    display: inline-block;
 }
 
 .page-intro.reading-layout .quote-glass {
-    padding: 1.3rem 1.8rem;
-    max-width: 760px;
+    padding: 1.5rem 2.4rem;
+    max-width: 880px;
     margin: 0 auto;
     border: 1px solid rgba(255, 215, 0, 0.38);
     box-shadow: 0 12px 35px rgba(0, 0, 0, 0.75), 0 0 20px rgba(255, 215, 0, 0.12);
@@ -2932,8 +3164,21 @@ body:has(.bg-fiction) .card-simple {
     line-height: 1.6;
 }
 
+/* Thin Luminous Celestial Separation Line between Article Header and Content */
+.page-intro.reading-layout::after {
+    content: "";
+    display: block;
+    width: 100%;
+    max-width: 920px;
+    height: 1px;
+    margin: 3.5rem auto 0 auto; /* Generous gap between quote-glass and divider */
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 215, 0, 0.18) 18%, rgba(255, 215, 0, 0.65) 50%, rgba(255, 215, 0, 0.18) 82%, transparent 100%);
+    box-shadow: 0 0 12px rgba(255, 215, 0, 0.3);
+}
+
 .reading-container.reading-layout {
     padding-top: 0 !important;
+    margin-top: 4.5rem !important; /* Seriously good gap between header/divider and content */
 }
 
 /* --- SEALED DOCUMENT STYLE --- */
@@ -3482,7 +3727,15 @@ body:has(.bg-fiction) .card-simple {
         display: none !important;
     }
     .page-title { 
-        font-size: 1.2rem !important; /* Enforce smaller size for mobile */
+        font-size: 1.42rem !important; /* Scaled mobile title with celestial glow */
+        text-shadow: 0 2px 14px rgba(0, 0, 0, 0.9), 0 0 25px rgba(255, 215, 0, 0.22) !important;
+    }
+    .page-intro.reading-layout::after {
+        max-width: 82% !important;
+        margin: 2.5rem auto 0 auto !important;
+    }
+    .reading-container.reading-layout {
+        margin-top: 3rem !important;
     }
 }
 
