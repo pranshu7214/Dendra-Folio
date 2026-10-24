@@ -88,32 +88,56 @@ body {
     url("images/universe.webp");
 }
 
-/* PLANETS: Fixed by default, JS controls position */
+/* =========================================
+   PLANET: JUPITER (Brand Signature)
+   ========================================= */
 .planet {
   position: fixed;
-  top: 0;
-  left: 0;
   background-repeat: no-repeat;
   background-size: contain;
   pointer-events: none;
   z-index: -1; /* Behind content, in front of background */
   will-change: transform, opacity;
-  transform: translateZ(0); /* Force hardware acceleration */
+  transform: translateZ(0);
   backface-visibility: hidden;
   contain: layout paint;
 }
 
-/* Initial States */
 .jupiter { 
-  width: 450px; height: 450px; 
   background-image: url("images/jupiter.png"); 
-  opacity: 0; /* JS will handle fade in */
 }
 
-.saturn { 
-  width: 400px; height: 400px; 
-  background-image: url("images/saturn.png"); 
-  opacity: 0; 
+/* Homepage Jupiter: Desktop initial state before JS scroll tracking takes over */
+.home-page .planet.jupiter {
+  top: 0;
+  left: 0;
+  width: 450px; 
+  height: 450px; 
+  opacity: 0; /* JS handles dynamic entrance fade and scroll tracking */
+}
+
+/* Subpages & Reading Pages: Stationary Resting Place (Desktop Only) */
+@media (min-width: 901px) {
+  body:not(.home-page) .planet.jupiter {
+    position: fixed !important;
+    top: 85px !important;
+    left: -125px !important;
+    right: auto !important;
+    width: 340px !important;
+    height: 340px !important;
+    opacity: 0.35 !important;
+    pointer-events: none !important;
+    z-index: -1 !important;
+    animation: jupiterStationaryDrift 50s ease-in-out infinite alternate !important;
+    will-change: transform;
+    transform: translateZ(0);
+  }
+}
+
+@keyframes jupiterStationaryDrift {
+  0% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50% { transform: translate3d(8px, 12px, 0) rotate(6deg); }
+  100% { transform: translate3d(15px, 22px, 0) rotate(12deg); }
 }
 
 /* =========================================
@@ -1191,21 +1215,22 @@ footer {
 /* --- MOBILE OPTIMIZATION --- */
 @keyframes mobileJupiterDrift {
   0% { transform: translate3d(0, 0, 0) rotate(0deg); }
-  50% { transform: translate3d(-15px, 20px, 0) rotate(8deg); }
-  100% { transform: translate3d(-25px, 38px, 0) rotate(15deg); }
+  50% { transform: translate3d(8px, 12px, 0) rotate(6deg); }
+  100% { transform: translate3d(14px, 20px, 0) rotate(12deg); }
 }
 
 @media (max-width: 900px) {
-  .planet.saturn { display: none !important; }
-  .planet.jupiter {
+  body .planet.jupiter,
+  body.home-page .planet.jupiter,
+  body:not(.home-page) .planet.jupiter {
     display: block !important;
     position: fixed !important;
-    top: -40px !important;
-    right: -70px !important;
-    left: auto !important;
-    width: 210px !important;
-    height: 210px !important;
-    opacity: 0.28 !important;
+    top: 65px !important;
+    left: -100px !important;
+    right: auto !important;
+    width: 255px !important;
+    height: 255px !important;
+    opacity: 0.35 !important;
     pointer-events: none !important;
     z-index: -1 !important;
     animation: mobileJupiterDrift 35s ease-in-out infinite alternate !important;
@@ -3924,4 +3949,42 @@ body:has(.bg-fiction) .card-simple {
 .legal-email-link {
     color: #FFD700; 
     text-decoration: none;
+}
+
+/* =========================================
+   BRAND & CONTENT PROTECTION
+   ========================================= */
+/* Prevent text selection on brand and titles */
+h1, h2, h3, h4,
+.page-title,
+.item-title,
+.card-title,
+.category-heading,
+.masthead-brand,
+.nav-logo,
+.reading-meta-block {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+}
+
+/* Prevent image dragging across all images (logo, thumbnails, background planets) */
+img,
+.nav-logo img,
+.brand-logo img,
+.planet {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+}
+
+.nav-logo img {
+    pointer-events: none; /* Clicks pass to parent link; image cannot be dragged or copied */
 }

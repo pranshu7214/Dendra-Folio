@@ -102,66 +102,57 @@ function updateCinematicPhysics(now) {
     // 1. Initialize Elements Cache (Runs only once)
     if (!physicsCache.elements) {
         const jupiterEl = document.querySelector(".jupiter");
-        const saturnEl = document.querySelector(".saturn");
         const quoteSection = document.getElementById("quote-section") || document.querySelector(".page-intro");
         const librarySection = document.getElementById("library-section") || document.querySelector(".content-grid");
         const showcaseSection = document.getElementById("showcase-gallery");
         const spaceBg = document.querySelector(".space-bg");
         const cards = document.querySelectorAll(CARD_SELECTOR);
         const progressBar = document.getElementById('reading-progress');
+        const isHomePage = document.body.classList.contains("home-page") || document.getElementById("showcase-gallery") !== null;
 
-        if (jupiterEl) {
-            jupiterEl.style.transition = "opacity 1.5s ease-out";
-            requestAnimationFrame(() => jupiterEl.style.opacity = "0.4");
+        if (isHomePage && jupiterEl) {
+            jupiterEl.style.transition = "opacity 1.2s ease-out";
+            requestAnimationFrame(() => {
+                jupiterEl.style.opacity = "0.35";
+                setTimeout(() => {
+                    if (jupiterEl) jupiterEl.style.transition = "none";
+                }, 1300);
+            });
         }
-        physicsCache.elements = { jupiterEl, saturnEl, quoteSection, librarySection, showcaseSection, spaceBg, cards, progressBar };
+        physicsCache.elements = { jupiterEl, quoteSection, librarySection, showcaseSection, spaceBg, cards, progressBar, isHomePage };
     }
-    const { jupiterEl, saturnEl, quoteSection, librarySection, showcaseSection, spaceBg, cards, progressBar } = physicsCache.elements;
+    const { jupiterEl, quoteSection, librarySection, showcaseSection, spaceBg, cards, progressBar, isHomePage } = physicsCache.elements;
 
     // 2. Initialize Metrics Cache (Runs on load & resize)
     if (!physicsCache.metrics) {
         const windowHeight = window.innerHeight;
         const windowWidth = window.innerWidth;
-        // Normalize screen height on tall viewports (such as mobile "Desktop site" emulation)
+        // Normalize screen height on tall viewports
         const effectiveHeight = Math.min(windowHeight, Math.max(windowWidth * 0.72, 720));
-
-        const quoteTop = quoteSection ? quoteSection.offsetTop : effectiveHeight * 1.2;
-        const libraryBottom = librarySection ? (librarySection.offsetTop + librarySection.offsetHeight) : (effectiveHeight * 2.5);
-        const showcaseTop = showcaseSection ? showcaseSection.offsetTop : effectiveHeight * 3;
         const maxScroll = Math.max(document.documentElement.scrollHeight - windowHeight, 1);
         
-        // Pre-calculate celestial paths to avoid heavy math every single frame
-        // JUPITER: THE ORBITAL GLIDE. Stays comfortably within viewport.
+        // JUPITER: THE FULL HOMEPAGE ORBITAL GLIDE
+        // Covers the WHOLE length of scrolling and parks with exactly 30% visible on right edge at maxScroll
+        const sizeFactor = Math.min(Math.max(windowWidth / 1400, 0.72), 1.15);
+        const endScale = 0.75 * sizeFactor;
+        const endDiameter = 450 * endScale;
+
+        // Exactly 30% visible on right edge:
+        // Visible width in screen = 0.30 * endDiameter (from windowWidth - 0.30*endDiameter to windowWidth).
+        // Since transform-origin is center (225px), top-left translate3d X is:
+        // windowWidth - 225 + (0.20 * endDiameter).
+        const endX = windowWidth - 225 + (0.20 * endDiameter);
+        const endY = effectiveHeight * 0.32;
+
         const jupiterPath = {
-            p0: { x: -225, y: effectiveHeight * 0.15 }, // Half visible start (450px / 2)
-            p1: { x: windowWidth * 0.5, y: effectiveHeight * 0.75 }, // Deeper curve to restore gravity feel
-            p2: { x: windowWidth + 50, y: effectiveHeight * 0.1 } // Lands top-right
+            p0: { x: -180 * sizeFactor, y: effectiveHeight * 0.12 }, // Upper-left entrance at hero masthead
+            p1: { x: windowWidth * 0.48, y: effectiveHeight * 0.70 }, // Deep gravitational curve across central cosmos
+            p2: { x: endX, y: endY } // Settles at the right edge with exactly 30% visible at the end of scroll
         };
 
-        const saturnPath = {
-            // THE GRAND ARCH: Rises from bottom-right, arcs high over content, sets bottom-left
-            p0: { x: windowWidth + 200, y: effectiveHeight * 0.8 }, 
-            p1: { x: windowWidth * 0.5, y: -effectiveHeight * 0.25 }, // Peak high above screen
-            p2: { x: -200, y: effectiveHeight * 0.36 } 
-        };
-
-        // Pre-calculate card positions for visibility check (Optimization)
-        const cardMetrics = [];
-        if (cards) {
-            cards.forEach(card => {
-                const rect = card.getBoundingClientRect();
-                const scrollTop = window.scrollY || document.documentElement.scrollTop;
-                cardMetrics.push({
-                    el: card,
-                    top: rect.top + scrollTop,
-                    height: rect.height
-                });
-            });
-        }
-
-        physicsCache.metrics = { windowHeight, windowWidth, quoteTop, libraryBottom, showcaseTop, maxScroll, jupiterPath, saturnPath, cardMetrics };
+        physicsCache.metrics = { windowHeight, windowWidth, effectiveHeight, maxScroll, sizeFactor, jupiterPath };
     }
-    const { windowHeight, windowWidth, quoteTop, libraryBottom, showcaseTop, maxScroll, jupiterPath, saturnPath, cardMetrics } = physicsCache.metrics;
+    const { windowHeight, windowWidth, effectiveHeight, maxScroll, sizeFactor, jupiterPath } = physicsCache.metrics;
     
     // Direct, instant 1:1 scroll tracking (Eliminates all scroll lag across the website)
     currentScrollY = targetScrollY;
@@ -184,11 +175,9 @@ function updateCinematicPhysics(now) {
     // ========== BACKGROUND PARALLAX ==========
     if (spaceBg && isScrolling) {
         if (spaceBg.classList.contains('long-read-bg')) {
-            // Slower speed for long reads, no clamp needed due to larger CSS buffer
             const parallaxY = currentScrollY * 0.01;
             spaceBg.style.transform = `translate3d(0, -${parallaxY.toFixed(2)}px, 0)`;
         } else {
-            // Original logic with clamp for shorter pages
             const maxParallax = windowHeight * 0.10;
             const parallaxY = Math.min(currentScrollY * 0.02, maxParallax);
             spaceBg.style.transform = `translate3d(0, -${parallaxY.toFixed(2)}px, 0)`;
@@ -206,61 +195,40 @@ function updateCinematicPhysics(now) {
     // ACCESSIBILITY: Disable for users who prefer reduced motion
     const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     if (motionQuery.matches) {
-        if (jupiterEl) jupiterEl.style.display = 'none';
-        if (saturnEl) saturnEl.style.display = 'none';
+        if (jupiterEl && isHomePage) jupiterEl.style.display = 'none';
         animationFrameId = null;
         return;
     }
 
-    // Only run planet math if the elements exist
-    if (jupiterEl && saturnEl) {
-        // ========== JUPITER: SLINGSHOT EXIT ==========
-        const jupiterZoneEnd = showcaseTop || quoteTop * 3.5; // Extended to reach showcase gallery
-        const jupiterProgress = Math.min(Math.max(currentScrollY / jupiterZoneEnd, 0), 1);
+    // ========== JUPITER: HOMEPAGE FULL-SCROLL GLIDE ==========
+    // Only runs on Homepage desktop. Non-home pages are docked in corner via CSS.
+    if (isHomePage && jupiterEl && windowWidth >= 900) {
+        const jupiterProgress = Math.min(Math.max(currentScrollY / maxScroll, 0), 1);
         
         const jupiterX = quadraticBezier(jupiterPath.p0.x, jupiterPath.p1.x, jupiterPath.p2.x, jupiterProgress);
         const jupiterY = quadraticBezier(jupiterPath.p0.y, jupiterPath.p1.y, jupiterPath.p2.y, jupiterProgress);
-    
-        const jupiterFade = Math.min(0.4 + jupiterProgress * 2, 1); // More solid start (0.4 base)
-        const jupiterRotation = (now * 0.008) % 360; // Slightly faster rotation
-        const sizeFactor = Math.min(Math.max(windowWidth / 1400, 0.72), 1.15);
-        // CONTROLLED SIZE: Starts at 0.9, peaks, then shrinks to 0.7 at the end
-        const jupiterScale = (0.9 + 0.5 * Math.sin(jupiterProgress * Math.PI) - (jupiterProgress * 0.35)) * sizeFactor; 
-        jupiterEl.style.opacity = (jupiterFade * 0.5).toFixed(2); // Slightly more solid max opacity
+
+        // Dynamic scale: starts small (0.75), looms large at center (1.25), shrinks small again at end (0.75)
+        const jupiterScale = (0.75 + 0.50 * Math.sin(jupiterProgress * Math.PI)) * sizeFactor;
+
+        // Opacity: gentle cosmic transparency (starts at 0.35, rises to 0.48 at closest flyby, docks at 0.30)
+        const jupiterFade = 0.35 - (0.05 * jupiterProgress) + (0.155 * Math.sin(jupiterProgress * Math.PI));
+
+        // Continuous gentle axial rotation
+        const jupiterRotation = (now * 0.008) % 360;
+
+        jupiterEl.style.opacity = jupiterFade.toFixed(3);
         jupiterEl.style.transform = `translate3d(${jupiterX.toFixed(2)}px, ${jupiterY.toFixed(2)}px, 0) rotate(${jupiterRotation.toFixed(2)}deg) scale(${jupiterScale.toFixed(2)})`;
-    
-        // ========== SATURN: CURVED PATH ==========
-        const saturnZoneStart = jupiterZoneEnd * 0.81; // Delayed to prevent overlap
-        const saturnZoneEnd = maxScroll;
-        const saturnZoneHeight = Math.max(saturnZoneEnd - saturnZoneStart, 1);
-    
-        let saturnProgress = 0;
-        if (currentScrollY >= saturnZoneStart) {
-            saturnProgress = Math.min(Math.max((currentScrollY - saturnZoneStart) / saturnZoneHeight, 0), 1);
-        }
-    
-        const saturnX = quadraticBezier(saturnPath.p0.x, saturnPath.p1.x, saturnPath.p2.x, saturnProgress);
-        const saturnY = quadraticBezier(saturnPath.p0.y, saturnPath.p1.y, saturnPath.p2.y, saturnProgress);
-    
-        const saturnFade = Math.min(saturnProgress * 4, 1); 
-        const saturnRotation = -(now * 0.01) % 360; // Faster rotation for dynamism
-        // FLYBY EFFECT: Starts distant (0.9), grows massive overhead (1.4), fades away
-        const saturnScale = (0.9 + 0.5 * Math.sin(saturnProgress * Math.PI)) * sizeFactor; 
-    
-        saturnEl.style.opacity = (saturnFade * 0.5).toFixed(2); // Slightly clearer than before
-        saturnEl.style.transform = `translate3d(${saturnX.toFixed(2)}px, ${saturnY.toFixed(2)}px, 0) rotate(${saturnRotation.toFixed(2)}deg) scale(${saturnScale.toFixed(2)})`;
     }
 
-    // Engine Loop Control: Stop the loop when idle to save CPU, unless planets need to rotate.
+    // Engine Loop Control: Keep animating if on homepage with desktop Jupiter (for continuous steady rotation), or while scrolling
     const isIdle = Math.abs(targetScrollY - currentScrollY) < 0.1;
 
     if (isIdle) {
-        // Snap to final position
         currentScrollY = targetScrollY;
     }
 
-    // Keep animating if planets are visible on desktop (for continuous steady rotation), or while scrolling
-    if ((jupiterEl && saturnEl && windowWidth >= 900) || !isIdle) {
+    if ((isHomePage && jupiterEl && windowWidth >= 900) || !isIdle) {
         animationFrameId = requestAnimationFrame(updateCinematicPhysics);
     } else {
         animationFrameId = null;
@@ -791,3 +759,17 @@ function initSubscribeForm() {
         });
     });
 }
+
+// =========================================
+// ACCESSIBILITY & VIEWPORT ZOOM CONTROL
+// Prevents accidental trackpad/mouse-wheel zoom distortion while keeping Ctrl + '+' / '-' keyboard zoom
+// =========================================
+window.addEventListener('wheel', (e) => {
+    if (e.ctrlKey) {
+        e.preventDefault();
+    }
+}, { passive: false });
+
+window.addEventListener('gesturestart', (e) => {
+    e.preventDefault();
+});

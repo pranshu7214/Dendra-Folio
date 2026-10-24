@@ -40,11 +40,10 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 
-<body>
+<body class="home-page">
 
   <div class="space-bg"></div>
-  <div class="planet jupiter"></div> 
-  <div class="planet saturn"></div>
+  <div class="planet jupiter"></div>
 
     <header class="ribbon concept-c">
     <div class="masthead-tier">
@@ -56,7 +55,7 @@
 
       <div class="tier-center nav-logo">
         <a href="/" aria-label="Dendra Folio Home">
-          <img src="images/final-logo-nav.png" alt="Dendra Folio Logo">
+          <img src="images/final-logo-nav.png" alt="Dendra Folio Logo" draggable="false">
           <span class="masthead-brand">Dendra Folio</span>
         </a>
       </div>
@@ -76,8 +75,6 @@
       <a href="poems/" class="">Poems</a>
       <span class="tier-dot">·</span>
       <a href="fiction/" class="">Fiction</a>
-      <span class="tier-dot">·</span>
-      <a href="about/" class="">About</a>
     </nav>
   </header>
 
@@ -87,7 +84,6 @@
       <a href="essays/">Essays</a>
       <a href="poems/">Poems</a>
       <a href="fiction/">Fiction</a>
-      <a href="about/">About</a>
       <a class="mobile-subscribe-btn mobile-sign-in-btn">Sign In</a>
   </div>
 
@@ -169,7 +165,7 @@
         <h3 class="category-heading">THE PROSE</h3>
         <div class="card-grid prose-grid">
             <!-- Left Card: Centered vertically against the right stack -->
-            <a href="essays/divine-love.html" class="showcase-card glass-panel">
+            <a href="essays/divine-love.html" class="showcase-card glass-panel" data-article-id="DF-PRS-0001">
                 <div class="card-badges">
                     <span class="badge-pill">✦ 19 min read</span>
                     <span class="card-meta">PHILOSOPHY</span>
@@ -180,7 +176,7 @@
             
             <!-- Right Stack: Two cards stacked vertically -->
             <div class="prose-stack">
-                <a href="essays/shaping-the-future.html" class="showcase-card glass-panel">
+                <a href="essays/shaping-the-future.html" class="showcase-card glass-panel" data-article-id="DF-PRS-0002">
                     <div class="card-badges">
                         <span class="badge-pill">✦ 8 min read</span>
                         <span class="card-meta">EDUCATION</span>
@@ -188,7 +184,7 @@
                     <h4 class="card-title">Education Reform and Human Intelligence</h4>
                     <span class="read-link">Read Prose &rarr;</span>
                 </a>
-                <a href="essays/education-shapes-power.html" class="showcase-card glass-panel">
+                <a href="essays/education-shapes-power.html" class="showcase-card glass-panel" data-article-id="DF-PRS-0003">
                     <div class="card-badges">
                         <span class="badge-pill">✦ 7 min read</span>
                         <span class="card-meta">EDUCATION</span>
@@ -203,7 +199,7 @@
     <div class="showcase-category" id="showcase-verses">
         <h3 class="category-heading">THE VERSES</h3>
         <div class="card-grid verse-grid">
-            <a href="poems/creatures-of-deep.html" class="showcase-card glass-panel">
+            <a href="poems/creatures-of-deep.html" class="showcase-card glass-panel" data-article-id="DF-VRS-0005">
                 <div class="card-badges">
                     <span class="badge-pill">✦ Verse • 2 min</span>
                     <span class="card-meta">MAY 22, 2026</span>
@@ -212,7 +208,7 @@
                 <span class="read-link">Read Verse &rarr;</span>
             </a>
             <div class="prose-stack">
-                <a href="poems/safe-and-alone.html" class="showcase-card glass-panel">
+                <a href="poems/safe-and-alone.html" class="showcase-card glass-panel" data-article-id="DF-VRS-0004">
                     <div class="card-badges">
                         <span class="badge-pill">✦ Verse • 1 min</span>
                         <span class="card-meta">MAR 14, 2026</span>
@@ -220,7 +216,7 @@
                     <h4 class="card-title">Safe and Alone</h4>
                     <span class="read-link">Read Verse &rarr;</span>
                 </a>
-                <a href="poems/the-scalpel.html" class="showcase-card glass-panel">
+                <a href="poems/the-scalpel.html" class="showcase-card glass-panel" data-article-id="DF-VRS-0001">
                     <div class="card-badges">
                         <span class="badge-pill">✦ Verse • 2 min</span>
                         <span class="card-meta">DEC 12, 2025</span>
@@ -235,7 +231,7 @@
     <div class="showcase-category" id="showcase-tales">
         <h3 class="category-heading">THE TALES</h3>
         <div class="card-grid tales-grid">
-            <a href="fiction/the-rehearsed-lie.html" class="showcase-card glass-panel full-width-card">
+            <a href="fiction/the-rehearsed-lie.html" class="showcase-card glass-panel full-width-card" data-article-id="DF-TLS-0001">
                 <div class="tales-content">
                     <div class="card-badges">
                         <span class="badge-pill">✦ 16 min read</span>
