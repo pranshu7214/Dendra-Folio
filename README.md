@@ -1,6 +1,6 @@
 # Dendra Folio
 
-An independent literary and philosophical publication under Dendra House, publishing essays, poetry, and narrative fiction.
+An independent literary and philosophical publication publishing essays, poetry, and narrative fiction.
 
 ---
 

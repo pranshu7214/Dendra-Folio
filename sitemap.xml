@@ -72,7 +72,32 @@
   </url>
   <url>
     <loc>https://dendrafolio.com/legal/</loc>
-    <lastmod>2026-10-17</lastmod>
+    <lastmod>2026-10-25</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://dendrafolio.com/privacy-policy/</loc>
+    <lastmod>2026-10-25</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://dendrafolio.com/terms-of-use/</loc>
+    <lastmod>2026-10-25</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://dendrafolio.com/ai-policy/</loc>
+    <lastmod>2026-10-25</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://dendrafolio.com/write-for-us/</loc>
+    <lastmod>2026-10-25</lastmod>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dendrafolio.com/support-us/</loc>
+    <lastmod>2026-10-25</lastmod>
+    <priority>0.7</priority>
   </url>
 </urlset>

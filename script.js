@@ -200,8 +200,9 @@ function updateCinematicPhysics(now) {
         return;
     }
 
-    // ========== JUPITER: HOMEPAGE FULL-SCROLL GLIDE ==========
-    // Only runs on Homepage desktop. Non-home pages are docked in corner via CSS.
+    /* ==========================================================================
+       PREVIOUS SCROLL-BOUND JUPITER CODE (NULLIFIED / PRESERVED FOR REFERENCE)
+       ==========================================================================
     if (isHomePage && jupiterEl && windowWidth >= 900) {
         const jupiterProgress = Math.min(Math.max(currentScrollY / maxScroll, 0), 1);
         
@@ -220,15 +221,51 @@ function updateCinematicPhysics(now) {
         jupiterEl.style.opacity = jupiterFade.toFixed(3);
         jupiterEl.style.transform = `translate3d(${jupiterX.toFixed(2)}px, ${jupiterY.toFixed(2)}px, 0) rotate(${jupiterRotation.toFixed(2)}deg) scale(${jupiterScale.toFixed(2)})`;
     }
+    ========================================================================== */
 
-    // Engine Loop Control: Keep animating if on homepage with desktop Jupiter (for continuous steady rotation), or while scrolling
+    // ==========================================================================
+    // DIRECTION A: UNIVERSAL CELESTIAL CLOCK ENGINE (1-HOUR ORBITAL SWING ONE-WAY)
+    // Synchronized across all pages via Universal Epoch Time (Date.now())
+    // 1 hour (3,600,000ms) one way -> 2 hours (7,200,000ms) full to-and-fro cycle
+    // 30 minutes (1,800,000ms) full 360° axial rotation
+    // Fixed constant celestial scale eliminates vertical beating / throbbing
+    // ==========================================================================
+    const CELESTIAL_ORBIT_CYCLE_MS = 7200000;   // 2 hours full swing (1 hour one side)
+    const CELESTIAL_ROTATION_CYCLE_MS = 1800000; // 30 minutes full 360° axial rotation
+
+    if (jupiterEl && windowWidth >= 900) {
+        const epochNow = Date.now();
+
+        // 1. Harmonic Pendulum Progress (0.0 -> 1.0 -> 0.0)
+        // Cosine wave gives natural gravitational deceleration at turnarounds
+        const timeInOrbit = (epochNow % CELESTIAL_ORBIT_CYCLE_MS) / CELESTIAL_ORBIT_CYCLE_MS;
+        const jupiterProgress = (1 - Math.cos(2 * Math.PI * timeInOrbit)) / 2;
+
+        // 2. Position along curved bezier path
+        const jupiterX = quadraticBezier(jupiterPath.p0.x, jupiterPath.p1.x, jupiterPath.p2.x, jupiterProgress);
+        const jupiterY = quadraticBezier(jupiterPath.p0.y, jupiterPath.p1.y, jupiterPath.p2.y, jupiterProgress);
+
+        // 3. Steady Celestial Scale (fixed majestic size: eliminates optical beating / throbbing)
+        const jupiterScale = 0.85 * sizeFactor;
+
+        // 4. Tranquil Ambient Opacity (subtle, non-intrusive backdrop)
+        const jupiterFade = 0.26;
+
+        // 5. Continuous Glacial Axial Rotation (never resets across page navigation)
+        const jupiterRotation = ((epochNow % CELESTIAL_ROTATION_CYCLE_MS) / CELESTIAL_ROTATION_CYCLE_MS) * 360;
+
+        jupiterEl.style.opacity = jupiterFade.toFixed(3);
+        jupiterEl.style.transform = `translate3d(${jupiterX.toFixed(2)}px, ${jupiterY.toFixed(2)}px, 0) rotate(${jupiterRotation.toFixed(2)}deg) scale(${jupiterScale.toFixed(2)})`;
+    }
+
+    // Engine Loop Control: Continuous requestAnimationFrame loop on desktop for the Universal Clock, or while scrolling
     const isIdle = Math.abs(targetScrollY - currentScrollY) < 0.1;
 
     if (isIdle) {
         currentScrollY = targetScrollY;
     }
 
-    if ((isHomePage && jupiterEl && windowWidth >= 900) || !isIdle) {
+    if ((jupiterEl && windowWidth >= 900) || !isIdle) {
         animationFrameId = requestAnimationFrame(updateCinematicPhysics);
     } else {
         animationFrameId = null;

@@ -309,48 +309,67 @@
   </main>
 
   <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
-  <footer id="footer">
-    <div class="footer-catch">
-      <p>Step inside. I'll leave my new words directly on your desk.</p>
-      <form class="footer-subscribe-form" data-action="https://eocampaign1.com/form/a530cd3a-1aba-11f1-a0cc-abf3cee050cb" method="POST" target="hidden_iframe">
-        <input type="text" name="b_name" class="bot-trap" tabindex="-1" autocomplete="off" style="position:absolute; left:-9999px; opacity:0; z-index:-1;">
-        <div class="footer-form-inputs">
-          <div class="footer-name-row">
-            <input type="text" name="field_1" placeholder="First Name..." aria-label="First Name" autocomplete="given-name" required>
-            <input type="text" name="field_2" placeholder="Last Name..." aria-label="Last Name" autocomplete="family-name">
-          </div>
-          <div class="footer-email-row">
-            <input type="email" name="field_0" placeholder="Your email address..." aria-label="Email Address" autocomplete="email" required>
-            <button type="submit">Join <span class="btn-arrow">→</span></button>
+    <footer id="footer" class="footer-grid-layout">
+      <div class="footer-grid-container">
+        
+        <!-- Left: The Dispatch -->
+        <div class="footer-catch">
+          <p>Step inside. I'll leave my new words directly on your desk.</p>
+          <form class="footer-subscribe-form" data-action="https://eocampaign1.com/form/a530cd3a-1aba-11f1-a0cc-abf3cee050cb" method="POST" target="hidden_iframe">
+            <input type="text" name="b_name" class="bot-trap" tabindex="-1" autocomplete="off" style="position:absolute; left:-9999px; opacity:0; z-index:-1;">
+            <div class="footer-form-inputs">
+              <div class="footer-name-row">
+                <input type="text" name="field_1" placeholder="First Name..." aria-label="First Name" autocomplete="given-name" required>
+                <input type="text" name="field_2" placeholder="Last Name..." aria-label="Last Name" autocomplete="family-name">
+              </div>
+              <div class="footer-email-row">
+                <input type="email" name="field_0" placeholder="Your email address..." aria-label="Email Address" autocomplete="email" required>
+                <button type="submit">Sign In <span class="btn-arrow">&rarr;</span></button>
+              </div>
+            </div>
+          </form>
+          <div class="footer-success-message" style="display: none;">
+            <p>"The door is unlocked. A seat is saved for you."</p>
           </div>
         </div>
-      </form>
-      <div class="footer-success-message" style="display: none;">
-        <p>"The door is unlocked. A seat is saved for you."</p>
+
+        <!-- Center: Quote, Copyright, Legal Links -->
+        <div class="footer-center">
+          <p class="footer-quote">"The ultimate goal is to be free."</p>
+          <p class="copyright">© 2026 Dendra Folio. All rights reserved.</p>
+          <div class="footer-legal-links">
+            <a href="../ai-policy/">AI Policy</a>
+            <span class="legal-dot">·</span>
+            <a href="../privacy-policy/">Privacy Policy</a>
+            <span class="legal-dot">·</span>
+            <a href="../terms-of-use/">Terms of Use</a>
+          </div>
+        </div>
+
+        <!-- Right: Navigation Rows & Socials -->
+        <div class="footer-right">
+          <div class="footer-nav-row">
+            <a href="../essays/">Essays</a>
+            <span class="nav-dot">·</span>
+            <a href="../poems/">Poems</a>
+            <span class="nav-dot">·</span>
+            <a href="../fiction/">Fiction</a>
+          </div>
+          <div class="footer-nav-row footer-nav-secondary">
+            <a href="../support-us/">Support</a>
+            <span class="nav-dot">·</span>
+            <a href="../about/">About</a>
+          </div>
+          <div class="footer-socials">
+            <a href="https://instagram.com/pranshu.space/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://x.com/dendrafolio" target="_blank" rel="noopener noreferrer" aria-label="X Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="https://www.linkedin.com/in/pranshu-gupta-7020883a8/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="mailto:think@pranshu.space" target="_blank" rel="noopener noreferrer" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+          </div>
+        </div>
+
       </div>
-    </div>
-    <div class="footer-bottom">
-      <p class="copyright">© 2026 Dendra Folio. All rights reserved. <span class="legal-link">· <a href="../legal/">Legal</a></span></p>
-      <p class="footer-quote">"The ultimate goal is to be free."</p>
-    </div>
-    <div class="footer-right">
-      <div class="footer-links">
-        <a href="../essays/">Essays</a> 
-        <span>&#183;</span> 
-        <a href="../poems/">Poems</a> 
-        <span>&#183;</span> 
-        <a href="../fiction/">Fiction</a> 
-        <span>&#183;</span> 
-        <a href="../about/">About</a>
-      </div>
-      <div class="footer-socials">
-        <a href="https://instagram.com/pranshu.space/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i></a>
-        <a href="https://x.com/dendrafolio" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i></a>
-        <a href="https://www.linkedin.com/in/pranshu-gupta-7020883a8/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin-in"></i></a>
-        <a href="mailto:think@pranshu.space" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-envelope"></i></a>
-      </div>
-    </div>
-  </footer>
+    </footer>
 
   <a href="#" id="back-to-top" class="back-to-top-btn"><i class="fa-solid fa-arrow-up"></i></a>
 

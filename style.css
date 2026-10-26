@@ -107,30 +107,20 @@ body {
   background-image: url("images/jupiter.png"); 
 }
 
-/* Homepage Jupiter: Desktop initial state before JS scroll tracking takes over */
-.home-page .planet.jupiter {
-  top: 0;
-  left: 0;
-  width: 450px; 
-  height: 450px; 
-  opacity: 0; /* JS handles dynamic entrance fade and scroll tracking */
-}
-
-/* Subpages & Reading Pages: Stationary Resting Place (Desktop Only) */
+/* Universal Celestial Clock Jupiter (Direction A - All Desktop Pages) */
 @media (min-width: 901px) {
-  body:not(.home-page) .planet.jupiter {
+  .planet.jupiter {
     position: fixed !important;
-    top: 85px !important;
-    left: -125px !important;
+    top: 0 !important;
+    left: 0 !important;
     right: auto !important;
-    width: 340px !important;
-    height: 340px !important;
-    opacity: 0.35 !important;
+    width: 450px !important;
+    height: 450px !important;
+    opacity: 0.25;
     pointer-events: none !important;
     z-index: -1 !important;
-    animation: jupiterStationaryDrift 50s ease-in-out infinite alternate !important;
-    will-change: transform;
-    transform: translateZ(0);
+    transform-origin: center center !important;
+    will-change: transform, opacity;
   }
 }
 
@@ -977,39 +967,47 @@ body {
     }
 }
 
-/* --- FOOTER --- */
-/* --- FOOTER --- */
+/* --- FOOTER (TIER A ARCHITECTURE) --- */
 footer {
     position: relative; 
     z-index: 60; 
-    padding: 1.5rem 4rem 1.2rem;
-    background: rgba(10, 15, 20, 0.95);
-    border-top: 1px solid rgba(255,255,255,0.05); 
+    padding: 2.4rem 4rem 1.4rem;
+    background: rgba(10, 15, 20, 0.96);
+    border-top: 1px solid rgba(255, 255, 255, 0.06); 
     margin-top: auto; 
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    align-items: center;
-    gap: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem;
 }
 
-/* The Catch (Subscribe Area) */
+/* Tier 1: Main Action & Editorial Presence */
+.footer-top-tier {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 3.5rem;
+}
+
 .footer-catch {
     text-align: left;
-    justify-self: start;
+    flex: 0 0 340px;
+    max-width: 360px;
 }
 .footer-catch p {
     color: #e0e0e0;
     font-size: 0.92rem;
     margin-bottom: 0.85rem;
     letter-spacing: 0.04em;
-    max-width: 320px;
+    max-width: 340px;
+    line-height: 1.5;
 }
 .footer-subscribe-form {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     width: 100%;
-    max-width: 310px;
+    max-width: 320px;
 }
 .footer-form-inputs {
     display: flex;
@@ -1077,12 +1075,10 @@ footer {
     align-items: center;
     gap: 0.3rem;
 }
-@media (hover: hover) and (pointer: fine) {
-  .footer-subscribe-form button:hover {
-      background: #fff;
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
-      transform: translateY(-2px);
-  }
+.footer-subscribe-form button:hover {
+    background: #fff;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
 }
 .footer-success-message {
     margin-top: 0.75rem;
@@ -1094,29 +1090,31 @@ footer {
     margin-bottom: 0;
 }
 
-/* Right column container */
+/* Right Side of Top Tier */
 .footer-right {
     display: flex;
     flex-direction: column;
-    align-items: flex-end; /* Align content to the right */
+    align-items: flex-end;
     text-align: right;
-    justify-self: end;
-    gap: 2rem;
+    gap: 1.4rem;
+    flex: 1;
 }
 
-/* Site Map Links */
+/* The 5 Horizontal Navigation Rooms */
 .footer-links {
     display: flex;
-    gap: 1.2rem;
+    gap: 1.4rem;
     align-items: center;
+    flex-wrap: nowrap;
 }
 .footer-links a {
-    color: rgba(255, 255, 255, 0.68);
+    color: rgba(255, 255, 255, 0.72);
     text-decoration: none;
-    font-size: 0.74rem;
+    font-size: 0.76rem;
     text-transform: uppercase;
     letter-spacing: 0.22em;
     transition: color 0.3s ease, text-shadow 0.3s ease;
+    white-space: nowrap;
 }
 .footer-links a:hover {
     color: #FFD700;
@@ -1128,10 +1126,26 @@ footer {
     user-select: none;
 }
 
-/* Social Icons (Elegant Circles) */
+/* Quote + Social Icons Row */
+.footer-meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 2rem;
+}
+.footer-meta-row .footer-quote {
+    font-style: italic;
+    color: #888;
+    font-size: 0.86rem;
+    margin: 0;
+    letter-spacing: 0.04em;
+}
+
+/* Social Icons (Circles) */
 .footer-socials {
     display: flex;
-    gap: 0.9rem;
+    gap: 0.85rem;
+    align-items: center;
 }
 .footer-socials a {
     color: rgba(255, 255, 255, 0.75);
@@ -1175,41 +1189,46 @@ footer {
     box-shadow: 0 0 15px rgba(0, 119, 181, 0.4);
 }
 .footer-socials a[href^="mailto"]:hover {
-    color: #EA4335; /* Gmail Red */
+    color: #EA4335;
     border-color: #EA4335;
     background: rgba(234, 67, 53, 0.1);
     box-shadow: 0 0 15px rgba(234, 67, 53, 0.4);
 }
 
-/* Bottom Copyright */
-.footer-bottom {
-    text-align: center; /* Centered copyright */
-    justify-self: center;
-    width: auto;
-    border-top: none;
-    padding-top: 0;
+/* Tier 2: Bottom Colophon & Legal Bar */
+.footer-bottom-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1.2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    width: 100%;
 }
-.footer-bottom p {
-    font-size: 0.85rem;
-    color: #666;
-    margin-bottom: 0.5rem;
-    letter-spacing: 0.05em;
+.footer-bottom-bar .copyright {
+    font-size: 0.8rem;
+    color: #717d8e;
+    margin: 0;
+    letter-spacing: 0.04em;
 }
-.legal-link {
-    color: rgba(255, 255, 255, 0.2);
+.legal-links-row {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
 }
-.legal-link a {
-    color: #666;
-    text-decoration: none;
-    transition: color 0.3s ease;
+.legal-links-row a {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.55) !important;
+    text-decoration: none !important;
+    transition: color 0.25s ease, text-shadow 0.25s ease !important;
 }
-.legal-link a:hover {
-    color: #FFD700;
+.legal-links-row a:hover {
+    color: #FFD700 !important;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.7) !important;
 }
-.footer-bottom .footer-quote {
-    font-style: italic;
-    color: #888;
-    margin-top: 0.5rem;
+.legal-links-row .legal-dot {
+    color: rgba(255, 255, 255, 0.25);
+    font-size: 0.8rem;
+    user-select: none;
 }
 
 /* --- MOBILE OPTIMIZATION --- */
@@ -1256,17 +1275,24 @@ footer {
       background: rgba(10, 15, 20, 0.95) !important; /* Less transparent */
   }
   
-  /* Footer Mobile */
+  /* Footer Mobile - Tier A Architecture */
   footer {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
     text-align: center !important;
-    gap: 1rem !important; 
-    padding: 1.5rem 1rem 1rem !important; 
+    gap: 1.6rem !important; 
+    padding: 2.2rem 1.2rem 1.2rem !important; 
   }
 
-  /* 1. Tame the Subscribe Button */
+  .footer-top-tier {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 1.6rem !important;
+    width: 100% !important;
+  }
+
   .footer-catch {
     width: 100%;
     display: flex;
@@ -1275,9 +1301,10 @@ footer {
   }
 
   .footer-catch p {
-    font-size: 0.75rem !important;
-    margin-bottom: 0.5rem !important;
+    font-size: 0.8rem !important;
+    margin-bottom: 0.6rem !important;
     max-width: none;
+    text-align: center;
   }
   .footer-subscribe-form {
     flex-direction: column;
@@ -1307,35 +1334,46 @@ footer {
     font-size: 0.72rem !important;
     justify-content: center;
   }
-  /* 2. Fix the Missing Links (Essays/Poems/etc) */
+
   .footer-right {
     width: 100%;
     align-items: center !important;
-    gap: 0.8rem !important; 
+    gap: 1.2rem !important; 
     justify-content: center;
   }
 
   .footer-links {
     width: 100%;
     justify-content: center !important;
-    flex-wrap: wrap !important; /* This brings "Essays" back! */
-    gap: 0.3rem !important;
+    flex-wrap: wrap !important;
+    gap: 0.4rem 0.8rem !important;
   }
 
-  /* Hide the dots (·) on mobile because they look weird when wrapped */
   .footer-links span {
     display: none !important;
   }
 
-  /* Add nice spacing to links since dots are gone */
   .footer-links a {
     margin: 0 0.2rem;
-    font-size: 0.7rem !important; 
-    border-bottom: 1px solid rgba(255,255,255,0.1); /* Subtle underline */
+    font-size: 0.72rem !important; 
+    border-bottom: 1px solid rgba(255,255,255,0.1);
     padding-bottom: 1px;
   }
 
-  /* 3. Social Icons Spacing */
+  .footer-meta-row {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.8rem !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100%;
+  }
+
+  .footer-meta-row .footer-quote {
+    font-size: 0.76rem !important;
+    margin: 0 !important;
+  }
+
   .footer-socials {
     gap: 0.8rem !important; 
   }
@@ -1346,13 +1384,28 @@ footer {
     font-size: 0.8rem !important;
   }
 
-  .footer-bottom {
-    width: 100%;
-    padding-top: 0;
+  .footer-bottom-bar {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.7rem !important;
+    padding-top: 1rem !important;
+    text-align: center !important;
+    width: 100% !important;
   }
 
-  .footer-bottom p {
-    font-size: 0.65rem !important;
+  .footer-bottom-bar .copyright {
+    font-size: 0.7rem !important;
+    margin: 0;
+  }
+
+  .legal-links-row {
+    justify-content: center !important;
+    flex-wrap: wrap !important;
+    gap: 0.4rem 0.7rem !important;
+  }
+
+  .legal-links-row a {
+    font-size: 0.72rem !important;
   }
   
   .card, .ribbon, .nav-logo img {
@@ -1864,9 +1917,12 @@ footer {
           box-shadow: none !important;
       }
 
-      /* Disable Legal Link Hover on Mobile */
+      /* Mobile Legal Link Styling */
+      .legal-link a {
+          color: rgba(255, 255, 255, 0.55) !important;
+      }
       .legal-link a:hover {
-          color: #666 !important;
+          color: #FFD700 !important;
       }
 }
 
@@ -2051,28 +2107,21 @@ footer {
 }
 
 /* Themed Perimeters for Index Page Cards in Resting State */
+/* Subtle Resting Perimeter across all rooms matching Homepage Showcase */
 .solid-glass.earth-theme, 
 body:has(.bg-essays) .solid-glass,
 .card-simple.earth-theme,
-body:has(.bg-essays) .card-simple {
-    border: 1px solid rgba(129, 199, 132, 0.35) !important;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7), 0 0 16px rgba(129, 199, 132, 0.14) !important;
-}
-
+body:has(.bg-essays) .card-simple,
 .solid-glass.fire-theme, 
 body:has(.bg-poems) .solid-glass,
 .card-simple.fire-theme,
-body:has(.bg-poems) .card-simple {
-    border: 1px solid rgba(229, 115, 115, 0.35) !important;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7), 0 0 16px rgba(229, 115, 115, 0.14) !important;
-}
-
+body:has(.bg-poems) .card-simple,
 .solid-glass.water-theme, 
 body:has(.bg-fiction) .solid-glass,
 .card-simple.water-theme,
 body:has(.bg-fiction) .card-simple {
-    border: 1px solid rgba(100, 181, 246, 0.35) !important;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7), 0 0 16px rgba(100, 181, 246, 0.14) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    box-shadow: none !important;
 }
 
 /* Radiant Edge Glow and Deep Atmospheric Drop Shadows on Hover (Desktop Only) */
@@ -3987,4 +4036,1081 @@ img,
 
 .nav-logo img {
     pointer-events: none; /* Clicks pass to parent link; image cannot be dragged or copied */
+}
+
+
+/* =========================================
+   PUBLIC POLICIES & LEGAL PAGES
+   ========================================= */
+.policy-card {
+    padding: 3rem 3.5rem !important;
+    max-width: 900px;
+    margin: 0 auto;
+    width: 100%;
+    line-height: 1.8;
+}
+
+/* Allow text selection on policy pages for legal reference and reader accessibility */
+.policy-card .reading-text,
+.policy-text {
+    -webkit-user-select: text !important;
+    -moz-user-select: text !important;
+    -ms-user-select: text !important;
+    user-select: text !important;
+}
+
+.policy-meta-pill {
+    display: inline-block;
+    padding: 0.3rem 0.85rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #FFD700;
+    background: rgba(255, 215, 0, 0.08);
+    border: 1px solid rgba(255, 215, 0, 0.28);
+    border-radius: 999px;
+    margin-bottom: 2rem;
+}
+
+.policy-section {
+    margin-bottom: 2.8rem;
+    padding-bottom: 1.8rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.policy-section:last-of-type {
+    border-bottom: none;
+    margin-bottom: 1rem;
+    padding-bottom: 0;
+}
+
+.policy-section h2 {
+    color: #FFD700;
+    font-size: 1.35rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.policy-section h3 {
+    color: #ffffff;
+    font-size: 1.12rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    margin-top: 1.6rem;
+    margin-bottom: 0.75rem;
+}
+
+.policy-section p {
+    color: #d8dde6;
+    font-size: 1.02rem;
+    line-height: 1.8;
+    margin-bottom: 1.1rem;
+}
+
+.policy-section ul,
+.policy-section ol {
+    color: #d8dde6;
+    padding-left: 1.4rem;
+    margin-bottom: 1.4rem;
+}
+
+.policy-section li {
+    margin-bottom: 0.65rem;
+    line-height: 1.7;
+}
+
+.policy-callout {
+    background: rgba(255, 215, 0, 0.04);
+    border-left: 3px solid #FFD700;
+    padding: 1.25rem 1.6rem;
+    margin: 1.5rem 0;
+    border-radius: 0 8px 8px 0;
+}
+
+.policy-callout p {
+    margin-bottom: 0;
+    font-size: 0.96rem;
+    color: #f0f3f8;
+}
+
+.policy-contact-box {
+    background: rgba(10, 16, 24, 0.75);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 12px;
+    padding: 1.8rem 2.2rem;
+    margin-top: 2.5rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+
+.policy-contact-box h3 {
+    color: #FFD700;
+    margin-top: 0;
+    margin-bottom: 0.6rem;
+}
+
+.placeholder-pill {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    background: rgba(255, 215, 0, 0.12);
+    border: 1px dashed rgba(255, 215, 0, 0.5);
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 0.9em;
+    color: #FFD700;
+}
+
+/* Policy & Legal Content Link Styling - Eliminates Browser Blue */
+.policy-card a:not(.subscribe-btn):not(.btn):not(.legal-hub-card),
+.policy-text a:not(.subscribe-btn):not(.btn):not(.legal-hub-card),
+.policy-section a:not(.subscribe-btn):not(.btn):not(.legal-hub-card),
+.policy-contact-box a:not(.subscribe-btn):not(.btn):not(.legal-hub-card),
+.policy-callout a:not(.subscribe-btn):not(.btn):not(.legal-hub-card) {
+    color: #FFD700 !important;
+    text-decoration: underline !important;
+    text-decoration-color: rgba(255, 215, 0, 0.45) !important;
+    text-underline-offset: 3px;
+    font-weight: 500;
+    display: inline !important;
+    transition: all 0.25s ease !important;
+}
+
+/* Retain gold color on visited links */
+.policy-card a:visited:not(.subscribe-btn):not(.btn):not(.legal-hub-card),
+.policy-text a:visited:not(.subscribe-btn):not(.btn):not(.legal-hub-card),
+.policy-section a:visited:not(.subscribe-btn):not(.btn):not(.legal-hub-card),
+.policy-contact-box a:visited:not(.subscribe-btn):not(.btn):not(.legal-hub-card),
+.policy-callout a:visited:not(.subscribe-btn):not(.btn):not(.legal-hub-card) {
+    color: #FFD700 !important;
+}
+
+/* Luminous hover effect on clickable policy links */
+.policy-card a:hover:not(.subscribe-btn):not(.btn):not(.legal-hub-card),
+.policy-text a:hover:not(.subscribe-btn):not(.btn):not(.legal-hub-card),
+.policy-section a:hover:not(.subscribe-btn):not(.btn):not(.legal-hub-card),
+.policy-contact-box a:hover:not(.subscribe-btn):not(.btn):not(.legal-hub-card),
+.policy-callout a:hover:not(.subscribe-btn):not(.btn):not(.legal-hub-card) {
+    color: #ffffff !important;
+    text-decoration-color: #FFD700 !important;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.75), 0 0 20px rgba(255, 215, 0, 0.35) !important;
+}
+
+/* Button link hover in policy cards */
+.policy-contact-box .subscribe-btn {
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+}
+/* replaced by gold button hover */
+
+/* Dedicated Interactive Cards for Legal Directory Hub */
+.legal-hub-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin: 2rem 0;
+}
+
+.legal-hub-card {
+    display: block !important;
+    padding: 1.4rem 1.8rem;
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 215, 0, 0.18);
+    border-radius: 10px;
+    text-decoration: none !important;
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+    position: relative;
+    cursor: pointer;
+}
+
+.legal-hub-card:hover {
+    background: rgba(255, 215, 0, 0.06) !important;
+    border-color: rgba(255, 215, 0, 0.5) !important;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 215, 0, 0.2) !important;
+}
+
+.legal-hub-card .card-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.legal-hub-card .card-title {
+    color: #FFD700 !important;
+    font-size: 1.18rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-decoration: none !important;
+    transition: all 0.25s ease !important;
+}
+
+.legal-hub-card:hover .card-title {
+    color: #ffffff !important;
+    text-shadow: 0 0 12px rgba(255, 215, 0, 0.8) !important;
+}
+
+.legal-hub-card .card-arrow {
+    color: #FFD700;
+    font-size: 1.15rem;
+    transition: transform 0.25s ease, color 0.25s ease !important;
+}
+
+.legal-hub-card:hover .card-arrow {
+    transform: translateX(5px);
+    color: #ffffff !important;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+}
+
+.legal-hub-card p {
+    color: #c9d2de !important;
+    font-size: 0.98rem;
+    line-height: 1.6;
+    margin: 0 !important;
+    text-decoration: none !important;
+}
+
+@media (max-width: 900px) {
+    .policy-card {
+        padding: 2.2rem 1.4rem !important;
+    }
+    .policy-section h2 {
+        font-size: 1.22rem;
+    }
+    .policy-contact-box {
+        padding: 1.4rem 1.2rem;
+    }
+}
+
+
+/* ==========================================================================
+   EDITORIAL & MASTHEAD HUB (ABOUT PAGE)
+   ========================================================================== */
+.editorial-hub-section {
+    margin-top: 2.8rem;
+    padding-top: 2.2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.editorial-hub-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin: 1.6rem 0 2rem;
+}
+
+.editorial-hub-card {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1.5rem 1.8rem;
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 215, 0, 0.18);
+    border-radius: 10px;
+    text-decoration: none !important;
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+}
+
+.editorial-hub-card:hover {
+    background: rgba(255, 215, 0, 0.05) !important;
+    border-color: rgba(255, 215, 0, 0.5) !important;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 215, 0, 0.15) !important;
+}
+
+.editorial-hub-card h4 {
+    margin: 0 0 0.55rem 0;
+    color: #FFD700 !important;
+    font-size: 1.12rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    transition: color 0.25s ease;
+}
+
+.editorial-hub-card:hover h4 {
+    color: #ffffff !important;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+}
+
+.editorial-hub-card p {
+    margin: 0 !important;
+    color: #cbd5e1 !important;
+    font-size: 0.94rem;
+    line-height: 1.6;
+}
+
+.editorial-hub-card .card-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 1rem;
+    color: #FFD700 !important;
+    font-size: 0.86rem;
+    font-weight: 500;
+    transition: all 0.25s ease;
+}
+
+.editorial-hub-card:hover .card-action {
+    color: #ffffff !important;
+    padding-left: 4px;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.7);
+}
+
+@media (max-width: 768px) {
+    .editorial-hub-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+}
+
+
+/* ==========================================================================
+   HOMEPAGE FOOTER: 3-COLUMN BALANCED GRID
+   ========================================================================== */
+.footer-grid-layout {
+    padding: 2.8rem 4rem 2rem !important;
+    background: rgba(10, 15, 20, 0.96);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.footer-grid-container {
+    max-width: 1260px;
+    margin: 0 auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1.15fr 1fr;
+    gap: 2.5rem;
+    align-items: center;
+}
+
+/* Left Column: The Dispatch */
+.footer-grid-layout .footer-catch {
+    flex: none;
+    max-width: 330px;
+    text-align: left;
+}
+
+.footer-grid-layout .footer-catch p {
+    color: #e0e0e0;
+    font-size: 0.92rem;
+    margin-bottom: 0.85rem;
+    letter-spacing: 0.04em;
+    line-height: 1.5;
+}
+
+/* Center Column: Quote, Copyright, Legal */
+.footer-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.6rem;
+}
+
+.footer-center .footer-quote {
+    font-style: italic;
+    color: #cbd5e1;
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.footer-center .copyright {
+    color: rgba(255, 255, 255, 0.52);
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    margin: 0;
+}
+
+.footer-legal-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-top: 0.15rem;
+}
+
+.footer-legal-links a {
+    color: rgba(255, 255, 255, 0.55);
+    text-decoration: none;
+    font-size: 0.74rem;
+    letter-spacing: 0.04em;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.footer-legal-links a:hover {
+    color: #FFD700;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.footer-legal-links .legal-dot {
+    color: rgba(255, 215, 0, 0.35);
+    font-size: 0.75rem;
+    user-select: none;
+}
+
+/* Right Column: Navigation Rows & Socials */
+.footer-grid-layout .footer-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+    gap: 0.7rem;
+}
+
+.footer-nav-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.85rem;
+}
+
+.footer-nav-row a {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    text-decoration: none;
+    transition: color 0.25s ease, text-shadow 0.25s ease;
+    white-space: nowrap;
+}
+
+.footer-nav-row a:hover {
+    color: #FFD700;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+}
+
+/* .footer-nav-row a.highlight-room unlocked */
+
+.footer-nav-row .nav-dot {
+    color: rgba(255, 215, 0, 0.35);
+    font-size: 0.75rem;
+    user-select: none;
+}
+
+.footer-nav-secondary {
+    gap: 0.95rem;
+}
+
+/* Social Icons (Sleek & Smaller) */
+.footer-grid-layout .footer-socials {
+    display: flex;
+    gap: 0.55rem;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 0.35rem;
+}
+
+.footer-grid-layout .footer-socials a {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 0.68rem;
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 50%;
+    transition: all 0.25s ease;
+    text-decoration: none;
+}
+
+.footer-grid-layout .footer-socials a:hover {
+    color: #FFD700;
+    border-color: #FFD700;
+    background: rgba(255, 215, 0, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 960px) {
+    .footer-grid-layout {
+        padding: 2.2rem 1.5rem 1.6rem !important;
+    }
+    .footer-grid-container {
+        grid-template-columns: 1fr;
+        gap: 2.2rem;
+        text-align: center;
+    }
+    .footer-grid-layout .footer-catch {
+        margin: 0 auto;
+        text-align: center;
+    }
+    .footer-grid-layout .footer-catch p {
+        text-align: center;
+    }
+    .footer-center {
+        text-align: center;
+    }
+    .footer-grid-layout .footer-right {
+        align-items: center;
+        text-align: center;
+        gap: 0.85rem;
+    }
+    .footer-nav-row {
+        justify-content: center;
+    }
+    .footer-grid-layout .footer-socials {
+        justify-content: center;
+        margin-top: 0.2rem;
+    }
+}
+
+
+/* =========================================
+   HOMEPAGE PATRONAGE & SUPPORT SECTION
+   ========================================= */
+.home-patronage-section {
+    position: relative;
+    z-index: 20;
+    max-width: 820px;
+    margin: 0 auto 5rem;
+    padding: 0 1.5rem;
+    text-align: center;
+}
+
+.patronage-card {
+    background: rgba(14, 20, 27, 0.65) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 16px;
+    padding: 2.8rem 2.5rem;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.1rem;
+    transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.patronage-card:hover {
+    border-color: rgba(255, 215, 0, 0.22) !important;
+    box-shadow: 0 16px 45px rgba(0, 0, 0, 0.45), 0 0 25px rgba(255, 215, 0, 0.06);
+}
+
+.patronage-eyebrow {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.24em;
+    color: #FFD700;
+    opacity: 0.85;
+    font-weight: 500;
+}
+
+.patronage-title {
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: #fff;
+    margin: 0;
+    letter-spacing: 0.02em;
+    font-family: var(--font-heading, "Playfair Display", Georgia, serif);
+}
+
+.patronage-text {
+    font-size: 0.94rem;
+    line-height: 1.7;
+    color: #cbd5e1;
+    margin: 0 auto;
+    max-width: 620px;
+    letter-spacing: 0.02em;
+}
+
+.patronage-button {
+    margin-top: 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.6rem;
+    border-radius: 50px;
+    background: rgba(255, 215, 0, 0.1);
+    border: 1px solid rgba(255, 215, 0, 0.35);
+    color: #FFD700;
+    text-decoration: none;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.patronage-button:hover {
+    background: #FFD700;
+    color: #050608;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+    transform: translateY(-2px);
+}
+
+.patronage-button .btn-arrow {
+    transition: transform 0.25s ease;
+}
+
+.patronage-button:hover .btn-arrow {
+    transform: translateX(4px);
+}
+
+@media (max-width: 768px) {
+    .home-patronage-section {
+        margin: 0 auto 3.5rem;
+        padding: 0 1rem;
+    }
+    .patronage-card {
+        padding: 2rem 1.5rem;
+        gap: 0.9rem;
+    }
+    .patronage-title {
+        font-size: 1.35rem;
+    }
+    .patronage-text {
+        font-size: 0.88rem;
+    }
+}
+
+
+/* ==========================================================================
+   CONTENT SELECTION PROTECTION: FOOTER & PATRONAGE SANCTUARY
+   ========================================================================== */
+footer,
+#footer,
+.footer-grid-layout,
+.footer-grid-container,
+.footer-catch p,
+.footer-center,
+.footer-right,
+.footer-quote,
+.copyright,
+.footer-legal-links,
+.footer-nav-row,
+.footer-socials,
+.home-patronage-section,
+#patronage-sanctuary,
+.patronage-card,
+.patronage-eyebrow,
+.patronage-title,
+.patronage-text,
+.patronage-button {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+    -webkit-touch-callout: none !important;
+}
+
+/* Explicitly preserve selection and typing inside inputs */
+footer input,
+footer textarea,
+.footer-grid-layout input,
+.footer-grid-layout textarea,
+.footer-subscribe-form input {
+    -webkit-user-select: text !important;
+    -moz-user-select: text !important;
+    -ms-user-select: text !important;
+    user-select: text !important;
+}
+
+/* ==========================================================================
+   GLOBAL LINK PURIFICATION: ZERO BROWSER PURPLE OR BLUE
+   ========================================================================== */
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.25s ease, text-shadow 0.25s ease, text-decoration-color 0.25s ease;
+}
+
+a:visited {
+    color: inherit;
+}
+
+/* Navigation & Directory Links: Retain clean palette on visited */
+.directory-tier a:not(.active):visited {
+    color: rgba(255, 255, 255, 0.72) !important;
+    text-shadow: none !important;
+}
+.mobile-nav-overlay a:not(.active):visited {
+    color: #e0e0e0 !important;
+    text-shadow: none !important;
+}
+
+/* ==========================================================================
+   RIBBON HEADER ACTIVE TAB & HOME ICON GOLDEN GLOW
+   Guarantees active status always glows in radiant Dendra Folio Gold
+   ========================================================================== */
+.directory-tier a.active,
+.directory-tier a.active:visited,
+.directory-tier a.active:hover {
+    color: #FFD700 !important;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.45) !important;
+    font-weight: 500 !important;
+}
+
+.home-icon.active,
+.home-icon.active:visited,
+.tier-left .home-icon.active,
+.tier-left .home-icon.active:visited,
+.mobile-home-icon.active,
+.mobile-home-icon.active:visited {
+    color: #FFD700 !important;
+    text-shadow: 0 0 12px rgba(255, 215, 0, 0.85), 0 0 22px rgba(255, 215, 0, 0.45) !important;
+}
+
+.mobile-nav-overlay a.active,
+.mobile-nav-overlay a.active:visited {
+    color: #FFD700 !important;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.45) !important;
+}
+.footer-nav-row a:visited {
+    color: rgba(255, 255, 255, 0.75) !important;
+}
+.footer-legal-links a:visited {
+    color: rgba(255, 255, 255, 0.55) !important;
+}
+.footer-socials a:visited {
+    color: rgba(255, 255, 255, 0.65) !important;
+}
+.legal-hub-card:visited .card-title {
+    color: #FFD700 !important;
+}
+.legal-hub-card:visited .card-arrow {
+    color: #FFD700 !important;
+}
+.editorial-hub-card:visited h4 {
+    color: #FFD700 !important;
+}
+.editorial-hub-card:visited p {
+    color: #cbd5e1 !important;
+}
+.editorial-hub-card:visited .card-action {
+    color: #FFD700 !important;
+}
+.contact-email-link:visited {
+    color: #e0e0e0 !important;
+}
+
+/* ==========================================================================
+   THE DENDRA FOLIO GOLDEN MARK (ALL EDITORIAL & CONTENT INLINE LINKS)
+   Permanent luminous gold signature styling across all pages
+   ========================================================================== */
+.reading-text a:not(.btn):not(.editorial-hub-card),
+.about-card a:not(.btn):not(.editorial-hub-card):not(.social-icon),
+.content-card a:not(.btn):not(.card-cover):not(.editorial-hub-card),
+.policy-card a:not(.subscribe-btn):not(.btn):not(.legal-hub-card),
+.policy-text a:not(.subscribe-btn):not(.btn):not(.legal-hub-card),
+.policy-section a:not(.subscribe-btn):not(.btn):not(.legal-hub-card),
+.policy-contact-box a:not(.subscribe-btn):not(.btn):not(.legal-hub-card),
+.policy-callout a:not(.subscribe-btn):not(.btn):not(.legal-hub-card),
+.legal-hub-section a:not(.legal-hub-card):not(.btn),
+.legal-hub-container a:not(.legal-hub-card):not(.btn),
+.editorial-hub-section p a:not(.editorial-hub-card):not(.btn),
+.contact-badge a:not(.social-icon),
+.post-content p a,
+.post-content li a,
+main p a:not(.btn):not(.read-link):not(.editorial-hub-card):not(.legal-hub-card):not(.patronage-button):not(.patronage-link):not(.subscribe-btn):not(.card-action),
+main li a:not(.btn):not(.editorial-hub-card):not(.legal-hub-card):not(.card-action) {
+    color: #FFD700 !important;
+    text-decoration: underline !important;
+    text-decoration-color: rgba(255, 215, 0, 0.45) !important;
+    text-underline-offset: 3px;
+    font-weight: 500;
+    transition: all 0.25s ease !important;
+}
+
+/* VISITED: Always remain gold - ABSOLUTELY NEVER PURPLE */
+.reading-text a:visited:not(.btn):not(.editorial-hub-card),
+.about-card a:visited:not(.btn):not(.editorial-hub-card):not(.social-icon),
+.content-card a:visited:not(.btn):not(.card-cover):not(.editorial-hub-card),
+.policy-card a:visited:not(.subscribe-btn):not(.btn):not(.legal-hub-card),
+.policy-text a:visited:not(.subscribe-btn):not(.btn):not(.legal-hub-card),
+.policy-section a:visited:not(.subscribe-btn):not(.btn):not(.legal-hub-card),
+.policy-contact-box a:visited:not(.subscribe-btn):not(.btn):not(.legal-hub-card),
+.policy-callout a:visited:not(.subscribe-btn):not(.btn):not(.legal-hub-card),
+.legal-hub-section a:visited:not(.legal-hub-card):not(.btn),
+.legal-hub-container a:visited:not(.legal-hub-card):not(.btn),
+.editorial-hub-section p a:visited:not(.editorial-hub-card):not(.btn),
+.contact-badge a:visited:not(.social-icon),
+.contact-email-link:visited,
+.post-content p a:visited,
+.post-content li a:visited,
+main p a:visited:not(.btn):not(.read-link):not(.editorial-hub-card):not(.legal-hub-card):not(.patronage-button):not(.patronage-link):not(.subscribe-btn):not(.card-action),
+main li a:visited:not(.btn):not(.editorial-hub-card):not(.legal-hub-card):not(.card-action) {
+    color: #FFD700 !important;
+    text-decoration-color: rgba(255, 215, 0, 0.45) !important;
+}
+
+/* HOVER: Pure white illumination with radiant celestial gold glow */
+.reading-text a:hover:not(.btn):not(.editorial-hub-card),
+.about-card a:hover:not(.btn):not(.editorial-hub-card):not(.social-icon),
+.content-card a:hover:not(.btn):not(.card-cover):not(.editorial-hub-card),
+.policy-card a:hover:not(.subscribe-btn):not(.btn):not(.legal-hub-card),
+.policy-text a:hover:not(.subscribe-btn):not(.btn):not(.legal-hub-card),
+.policy-section a:hover:not(.subscribe-btn):not(.btn):not(.legal-hub-card),
+.policy-contact-box a:hover:not(.subscribe-btn):not(.btn):not(.legal-hub-card),
+.policy-callout a:hover:not(.subscribe-btn):not(.btn):not(.legal-hub-card),
+.legal-hub-section a:hover:not(.legal-hub-card):not(.btn),
+.legal-hub-container a:hover:not(.legal-hub-card):not(.btn),
+.editorial-hub-section p a:hover:not(.editorial-hub-card):not(.btn),
+.contact-badge a:hover:not(.social-icon),
+.contact-email-link:hover,
+.post-content p a:hover,
+.post-content li a:hover,
+main p a:hover:not(.btn):not(.read-link):not(.editorial-hub-card):not(.legal-hub-card):not(.patronage-button):not(.patronage-link):not(.subscribe-btn):not(.card-action),
+main li a:hover:not(.btn):not(.editorial-hub-card):not(.legal-hub-card):not(.card-action) {
+    color: #ffffff !important;
+    text-decoration-color: #FFD700 !important;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.75), 0 0 20px rgba(255, 215, 0, 0.35) !important;
+}
+
+
+/* ==========================================================================
+   GLOBAL CONTENT SELECTION PROTECTION: CONFINED EXCLUSIVELY TO LEGAL PAGES
+   Removes text selection across the header, homepage, cards, reading text, etc.
+   ========================================================================== */
+*, *::before, *::after {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+    -webkit-touch-callout: none !important;
+}
+
+/* Explicitly enable text selection ONLY on Legal & Policy pages */
+body.legal-page,
+body.legal-page *,
+body.policy-page,
+body.policy-page *,
+.policy-page,
+.policy-page *,
+.policy-container,
+.policy-container *,
+.policy-card,
+.policy-card *,
+.policy-text,
+.policy-text *,
+.policy-section,
+.policy-section *,
+.legal-hub-container,
+.legal-hub-container * {
+    -webkit-user-select: text !important;
+    -moz-user-select: text !important;
+    -ms-user-select: text !important;
+    user-select: text !important;
+    -webkit-touch-callout: default !important;
+}
+
+/* Allow typing and selection in form inputs and textareas across the entire site */
+input, textarea, select, [contenteditable="true"] {
+    -webkit-user-select: text !important;
+    -moz-user-select: text !important;
+    -ms-user-select: text !important;
+    user-select: text !important;
+}
+
+/* ==========================================================================
+   MUSEUM STAGE CARD: GRADIENT FADE TOWARDS THE RIGHT
+   ========================================================================== */
+.museum-stage .stage-content {
+    background: linear-gradient(90deg, rgba(10, 15, 20, 0.78) 0%, rgba(10, 15, 20, 0.45) 55%, rgba(10, 15, 20, 0.02) 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-right: none !important;
+    border-radius: 12px 0 0 12px !important;
+    -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 62%, rgba(0, 0, 0, 0) 100%);
+    mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 62%, rgba(0, 0, 0, 0) 100%);
+    padding-right: 3.5rem !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .museum-stage .stage-content:hover {
+        border-color: rgba(255, 215, 0, 0.6) !important;
+        box-shadow: -8px 14px 40px rgba(0, 0, 0, 0.85), 0 0 25px rgba(255, 215, 0, 0.2) !important;
+        transform: translateY(-3px);
+    }
+}
+
+/* ==========================================================================
+   HOMEPAGE PATRONAGE CARD & SUBPAGE SHOWCASE UNIFICATION
+   Ensures all cards across home and room pages share identical visual DNA
+   ========================================================================== */
+.patronage-showcase-card {
+    max-width: 820px;
+    margin: 0 auto;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 10px !important;
+    padding: 2.2rem 2.2rem !important;
+}
+
+.patronage-showcase-card:hover {
+    border-color: rgba(255, 215, 0, 0.65) !important;
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.85), 0 0 22px rgba(255, 215, 0, 0.32) !important;
+    transform: translateY(-5px);
+    background: rgba(10, 15, 20, 0.65) !important;
+}
+
+/* Room Page Featured Grid Layouts */
+.prose-grid-room,
+.verse-grid-room {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)) !important;
+    gap: 1.8rem !important;
+    max-width: 1140px !important;
+    margin: 0 auto 4.5rem !important;
+    padding: 0 1.5rem !important;
+}
+
+.tales-grid-room {
+    display: flex !important;
+    justify-content: center !important;
+    max-width: 1140px !important;
+    margin: 0 auto 4.5rem !important;
+    padding: 0 1.5rem !important;
+}
+
+.tales-grid-room .showcase-card {
+    width: 100% !important;
+    max-width: 780px !important;
+}
+
+/* Subpage Hover Theme Accents matching Homepage */
+@media (hover: hover) and (pointer: fine) {
+    .prose-grid-room .showcase-card:hover,
+    body:has(.bg-essays) .showcase-card:hover {
+        border-color: rgba(129, 199, 132, 0.65) !important;
+        box-shadow: 0 14px 35px rgba(0, 0, 0, 0.85), 0 0 22px rgba(129, 199, 132, 0.32) !important;
+        transform: translateY(-5px) !important;
+        background: rgba(10, 15, 20, 0.65) !important;
+    }
+
+    .verse-grid-room .showcase-card:hover,
+    body:has(.bg-poems) .showcase-card:hover {
+        border-color: rgba(229, 115, 115, 0.65) !important;
+        box-shadow: 0 14px 35px rgba(0, 0, 0, 0.85), 0 0 22px rgba(229, 115, 115, 0.32) !important;
+        transform: translateY(-5px) !important;
+        background: rgba(10, 15, 20, 0.65) !important;
+    }
+
+    .tales-grid-room .showcase-card:hover,
+    body:has(.bg-fiction) .showcase-card:hover {
+        border-color: rgba(100, 181, 246, 0.65) !important;
+        box-shadow: 0 14px 35px rgba(0, 0, 0, 0.85), 0 0 22px rgba(100, 181, 246, 0.32) !important;
+        transform: translateY(-5px) !important;
+        background: rgba(10, 15, 20, 0.65) !important;
+    }
+
+    .showcase-card:hover .read-link {
+        color: #ffffff !important;
+        padding-left: 4px;
+        text-shadow: 0 0 8px rgba(255, 215, 0, 0.7);
+    }
+}
+
+/* Subtle Archive Cards across Rooms */
+.content-archive .card-simple {
+    background: rgba(10, 15, 20, 0.4) !important;
+    border: 1px solid rgba(255, 255, 255, 0.04) !important;
+    border-radius: 10px !important;
+    padding: 1.4rem 1.6rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    transition: all 0.3s ease !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .content-archive .card-simple:not(.cursor-default):hover {
+        transform: translateY(-3px) !important;
+        background: rgba(10, 15, 20, 0.6) !important;
+        border-color: rgba(255, 255, 255, 0.18) !important;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7) !important;
+    }
+}
+
+
+/* ==========================================================================
+   SUPPORT PAGE PAYMENT BUTTON HOVER FIX
+   Prevents whiteout; provides crisp, radiant gold background with black text
+   ========================================================================== */
+.policy-contact-box .subscribe-btn {
+    background: rgba(255, 215, 0, 0.12) !important;
+    border: 1px solid rgba(255, 215, 0, 0.6) !important;
+    color: #FFD700 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.6rem !important;
+    padding: 0.85rem 2.2rem !important;
+    border-radius: 50px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.15em !important;
+    text-transform: uppercase !important;
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+    text-decoration: none !important;
+}
+
+.policy-contact-box .subscribe-btn .placeholder-pill {
+    background: rgba(255, 215, 0, 0.15) !important;
+    color: #FFD700 !important;
+    border: 1px dashed rgba(255, 215, 0, 0.5) !important;
+    transition: all 0.3s ease !important;
+}
+
+.policy-contact-box .subscribe-btn:hover {
+    background: #FFD700 !important;
+    color: #050608 !important;
+    border-color: #FFD700 !important;
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.6), 0 8px 25px rgba(0, 0, 0, 0.5) !important;
+    transform: translateY(-2px) !important;
+}
+
+.policy-contact-box .subscribe-btn:hover,
+.policy-contact-box .subscribe-btn:hover * {
+    color: #050608 !important;
+    background: transparent !important;
+    border-color: rgba(5, 6, 8, 0.45) !important;
+    text-shadow: none !important;
+}
+
+/* ==========================================================================
+   HOMEPAGE PATRONAGE CARD SPACING & HOVER GAP
+   Prevents button from creeping into the paragraph text on hover
+   ========================================================================== */
+.patronage-showcase-card {
+    max-width: 820px;
+    margin: 0 auto;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 10px !important;
+    padding: 2.2rem 2.4rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.patronage-showcase-card .item-excerpt {
+    margin: 0.6rem 0 1.6rem 0 !important;
+    line-height: 1.75 !important;
+    color: #cbd5e1 !important;
+    font-size: 0.95rem !important;
+    letter-spacing: 0.015em !important;
+}
+
+.patronage-showcase-card .read-link {
+    margin-top: 1.2rem !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.4rem !important;
+    color: #FFD700 !important;
+    font-weight: 500 !important;
+    transition: color 0.3s ease, padding-left 0.3s ease !important;
+}
+
+.patronage-showcase-card:hover .read-link {
+    transform: none !important;
+    padding-left: 6px !important;
+    color: #ffffff !important;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.7) !important;
 }
