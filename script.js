@@ -110,15 +110,7 @@ function updateCinematicPhysics(now) {
         const progressBar = document.getElementById('reading-progress');
         const isHomePage = document.body.classList.contains("home-page") || document.getElementById("showcase-gallery") !== null;
 
-        if (isHomePage && jupiterEl) {
-            jupiterEl.style.transition = "opacity 1.2s ease-out";
-            requestAnimationFrame(() => {
-                jupiterEl.style.opacity = "0.35";
-                setTimeout(() => {
-                    if (jupiterEl) jupiterEl.style.transition = "none";
-                }, 1300);
-            });
-        }
+
         physicsCache.elements = { jupiterEl, quoteSection, librarySection, showcaseSection, spaceBg, cards, progressBar, isHomePage };
     }
     const { jupiterEl, quoteSection, librarySection, showcaseSection, spaceBg, cards, progressBar, isHomePage } = physicsCache.elements;
@@ -224,14 +216,14 @@ function updateCinematicPhysics(now) {
     ========================================================================== */
 
     // ==========================================================================
-    // DIRECTION A: UNIVERSAL CELESTIAL CLOCK ENGINE (1-HOUR ORBITAL SWING ONE-WAY)
+    // DIRECTION A: UNIVERSAL CELESTIAL CLOCK ENGINE (1.5-HOUR ORBITAL SWING ONE-WAY)
     // Synchronized across all pages via Universal Epoch Time (Date.now())
-    // 1 hour (3,600,000ms) one way -> 2 hours (7,200,000ms) full to-and-fro cycle
-    // 30 minutes (1,800,000ms) full 360° axial rotation
+    // 1.5 hours (5,400,000ms) one way -> 3 hours (10,800,000ms) full to-and-fro cycle
+    // 45 minutes (2,700,000ms) full 360° axial rotation
     // Fixed constant celestial scale eliminates vertical beating / throbbing
     // ==========================================================================
-    const CELESTIAL_ORBIT_CYCLE_MS = 7200000;   // 2 hours full swing (1 hour one side)
-    const CELESTIAL_ROTATION_CYCLE_MS = 1800000; // 30 minutes full 360° axial rotation
+    const CELESTIAL_ORBIT_CYCLE_MS = 10800000;   // 3 hours full swing (1.5 hours one side)
+    const CELESTIAL_ROTATION_CYCLE_MS = 2700000; // 45 minutes full 360° axial rotation
 
     if (jupiterEl && windowWidth >= 900) {
         const epochNow = Date.now();
@@ -452,6 +444,9 @@ function initSubscribeScroll() {
         });
     });
 }
+
+// Immediately compute initial celestial coordinates & physics on script load (prevents any visual flash)
+updateCinematicPhysics(performance.now());
 
 // ========== GLOBAL INITIALIZATION & MOBILE MENU ==========
 document.addEventListener("DOMContentLoaded", () => {

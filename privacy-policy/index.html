@@ -45,6 +45,23 @@
 
   <div class="space-bg"></div>
   <div class="planet jupiter"></div>
+  <script>
+    (function(){
+      var j = document.querySelector(".planet.jupiter");
+      if (!j || window.innerWidth < 901) return;
+      var w = window.innerWidth, h = window.innerHeight;
+      var eh = Math.min(h, Math.max(w * 0.72, 720));
+      var sf = Math.min(Math.max(w / 1400, 0.72), 1.15);
+      var endX = w - 225 + (0.20 * 450 * 0.75 * sf);
+      var t = (1 - Math.cos(2 * Math.PI * ((Date.now() % 10800000) / 10800000))) / 2;
+      var mt = 1 - t;
+      var x = mt * mt * (-180 * sf) + 2 * mt * t * (w * 0.48) + t * t * endX;
+      var y = mt * mt * (eh * 0.12) + 2 * mt * t * (eh * 0.70) + t * t * (eh * 0.32);
+      var rot = ((Date.now() % 2700000) / 2700000) * 360;
+      j.style.transform = "translate3d(" + x.toFixed(2) + "px," + y.toFixed(2) + "px,0) rotate(" + rot.toFixed(2) + "deg) scale(" + (0.85 * sf).toFixed(2) + ")";
+      j.style.opacity = "0.26";
+    })();
+  </script>
 
   <header class="ribbon concept-c">
     <div class="masthead-tier">
@@ -171,6 +188,10 @@
               <li><strong>Email Delivery:</strong> EmailOctopus manages subscriber lists and email dispatches in compliance with international anti-spam standards (CAN-SPAM, GDPR).</li>
             </ul>
             <p>Each service provider processes personal data strictly as a data processor pursuant to written agreements and stringent confidentiality standards. Because these cloud services operate globally, data may be processed on secure servers located outside India. Any cross-border data transfer complies fully with Section 16 of the DPDPA 2023 and applicable regulations.</p>
+
+            <h3>Use of AI in Platform Development & Privacy Boundaries</h3>
+            <p>In the spirit of complete transparency: Dendra Folio uses AI-assisted tools (specifically Google Antigravity) in aspects of website development, technical maintenance, and administrative drafting. The reason is simple: the maker of the publication, Pranshu Gupta, is a writer without professional coding or web development expertise who used Antigravity's assistance to build and design this website.</p>
+            <p>From a data privacy standpoint, these engineering tools operate strictly at the level of site code, stylesheets, and infrastructure. <strong>We do not input, process, or train AI models on reader personal information, email addresses, reading progress, private library notes, or unpublished contributor manuscripts.</strong> All user data remains securely isolated within our encrypted production databases and is never exposed to external generative training pipelines.</p>
           </section>
 
           <section class="policy-section">
@@ -268,6 +289,8 @@
           <p class="footer-quote">"The ultimate goal is to be free."</p>
           <p class="copyright">© 2026 Dendra Folio. All rights reserved.</p>
           <div class="footer-legal-links">
+            <a href="../editorial-policy/">Editorial Policy</a>
+            <span class="legal-dot">·</span>
             <a href="../ai-policy/">AI Policy</a>
             <span class="legal-dot">·</span>
             <a href="../privacy-policy/">Privacy Policy</a>
@@ -286,7 +309,7 @@
             <a href="../fiction/">Fiction</a>
           </div>
           <div class="footer-nav-row footer-nav-secondary">
-            <a href="../support-us/">Support</a>
+            <a href="../support-us/">Support Us</a>
             <span class="nav-dot">·</span>
             <a href="../about/">About</a>
           </div>

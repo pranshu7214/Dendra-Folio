@@ -90,7 +90,7 @@
 2. The parties agree to resolve any dispute or misunderstanding through amicable, good-faith dialogue. If a dispute cannot be resolved within thirty (30) days of written notice, it shall be subject to the exclusive jurisdiction of the competent courts in `[City/Jurisdiction, India]`.
 
 ### 13. Entire Agreement
-1. This Agreement, together with the Dendra Folio AI Policy and Master Article Register entry, constitutes the complete understanding between the parties regarding the Work, superseding all prior oral or informal discussions.
+1. This Agreement, together with the Dendra Folio Editorial Policy, AI Policy, and Master Article Register entry, constitutes the complete understanding between the parties regarding the Work, superseding all prior oral or informal discussions.
 2. Modifications must be executed in writing and signed or formally recorded by both parties.
 3. Execution via electronic signature, recorded email confirmation, or verifiable digital agreement is valid and legally binding.
 

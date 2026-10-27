@@ -45,6 +45,23 @@
 
   <div class="space-bg bg-about"></div>
   <div class="planet jupiter"></div>
+  <script>
+    (function(){
+      var j = document.querySelector(".planet.jupiter");
+      if (!j || window.innerWidth < 901) return;
+      var w = window.innerWidth, h = window.innerHeight;
+      var eh = Math.min(h, Math.max(w * 0.72, 720));
+      var sf = Math.min(Math.max(w / 1400, 0.72), 1.15);
+      var endX = w - 225 + (0.20 * 450 * 0.75 * sf);
+      var t = (1 - Math.cos(2 * Math.PI * ((Date.now() % 10800000) / 10800000))) / 2;
+      var mt = 1 - t;
+      var x = mt * mt * (-180 * sf) + 2 * mt * t * (w * 0.48) + t * t * endX;
+      var y = mt * mt * (eh * 0.12) + 2 * mt * t * (eh * 0.70) + t * t * (eh * 0.32);
+      var rot = ((Date.now() % 2700000) / 2700000) * 360;
+      j.style.transform = "translate3d(" + x.toFixed(2) + "px," + y.toFixed(2) + "px,0) rotate(" + rot.toFixed(2) + "deg) scale(" + (0.85 * sf).toFixed(2) + ")";
+      j.style.opacity = "0.26";
+    })();
+  </script>
 
   <header class="ribbon concept-c">
     <div class="masthead-tier">
@@ -157,7 +174,15 @@
                 <span class="card-action">Legal & Policies Directory &rarr;</span>
               </a>
 
-              <a href="../support-us/" class="editorial-hub-card" style="grid-column: 1 / -1;">
+              <a href="../editorial-policy/" class="editorial-hub-card">
+                <div>
+                  <h4><i class="fa-solid fa-book-open"></i> Editorial Policy</h4>
+                  <p>Our foundational commitments to slow reading, curation criteria across our three rooms, pseudonym sovereignty, and corrections policy.</p>
+                </div>
+                <span class="card-action">Editorial Standards &rarr;</span>
+              </a>
+
+              <a href="../support-us/" class="editorial-hub-card">
                 <div>
                   <h4><i class="fa-solid fa-heart"></i> Patronage & Independence</h4>
                   <p>Dendra Folio is completely free of advertising, corporate sponsors, and paid paywalls. Voluntary reader support sustains our hosting, reader libraries, and editorial care.</p>
@@ -216,6 +241,8 @@
           <p class="footer-quote">"The ultimate goal is to be free."</p>
           <p class="copyright">© 2026 Dendra Folio. All rights reserved.</p>
           <div class="footer-legal-links">
+            <a href="../editorial-policy/">Editorial Policy</a>
+            <span class="legal-dot">·</span>
             <a href="../ai-policy/">AI Policy</a>
             <span class="legal-dot">·</span>
             <a href="../privacy-policy/">Privacy Policy</a>
@@ -234,9 +261,9 @@
             <a href="../fiction/">Fiction</a>
           </div>
           <div class="footer-nav-row footer-nav-secondary">
-            <a href="../support-us/">Support</a>
+            <a href="../support-us/">Support Us</a>
             <span class="nav-dot">·</span>
-            <a href="../about/">About</a>
+            <a href="../about/" class="active">About</a>
           </div>
           <div class="footer-socials">
             <a href="https://instagram.com/pranshu.space/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>

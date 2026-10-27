@@ -51,6 +51,23 @@
 
   <div class="space-bg bg-poems long-read-bg"></div>
   <div class="planet jupiter"></div>
+  <script>
+    (function(){
+      var j = document.querySelector(".planet.jupiter");
+      if (!j || window.innerWidth < 901) return;
+      var w = window.innerWidth, h = window.innerHeight;
+      var eh = Math.min(h, Math.max(w * 0.72, 720));
+      var sf = Math.min(Math.max(w / 1400, 0.72), 1.15);
+      var endX = w - 225 + (0.20 * 450 * 0.75 * sf);
+      var t = (1 - Math.cos(2 * Math.PI * ((Date.now() % 10800000) / 10800000))) / 2;
+      var mt = 1 - t;
+      var x = mt * mt * (-180 * sf) + 2 * mt * t * (w * 0.48) + t * t * endX;
+      var y = mt * mt * (eh * 0.12) + 2 * mt * t * (eh * 0.70) + t * t * (eh * 0.32);
+      var rot = ((Date.now() % 2700000) / 2700000) * 360;
+      j.style.transform = "translate3d(" + x.toFixed(2) + "px," + y.toFixed(2) + "px,0) rotate(" + rot.toFixed(2) + "deg) scale(" + (0.85 * sf).toFixed(2) + ")";
+      j.style.opacity = "0.26";
+    })();
+  </script>
 
     <header class="ribbon concept-c">
     <div class="masthead-tier">
@@ -270,6 +287,8 @@
           <p class="footer-quote">"The ultimate goal is to be free."</p>
           <p class="copyright">© 2026 Dendra Folio. All rights reserved.</p>
           <div class="footer-legal-links">
+            <a href="../editorial-policy/">Editorial Policy</a>
+            <span class="legal-dot">·</span>
             <a href="../ai-policy/">AI Policy</a>
             <span class="legal-dot">·</span>
             <a href="../privacy-policy/">Privacy Policy</a>
@@ -283,12 +302,12 @@
           <div class="footer-nav-row">
             <a href="../essays/">Essays</a>
             <span class="nav-dot">·</span>
-            <a href="../poems/">Poems</a>
+            <a href="../poems/" class="active">Poems</a>
             <span class="nav-dot">·</span>
             <a href="../fiction/">Fiction</a>
           </div>
           <div class="footer-nav-row footer-nav-secondary">
-            <a href="../support-us/">Support</a>
+            <a href="../support-us/">Support Us</a>
             <span class="nav-dot">·</span>
             <a href="../about/">About</a>
           </div>

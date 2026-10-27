@@ -45,6 +45,23 @@
 
   <div class="space-bg"></div>
   <div class="planet jupiter"></div>
+  <script>
+    (function(){
+      var j = document.querySelector(".planet.jupiter");
+      if (!j || window.innerWidth < 901) return;
+      var w = window.innerWidth, h = window.innerHeight;
+      var eh = Math.min(h, Math.max(w * 0.72, 720));
+      var sf = Math.min(Math.max(w / 1400, 0.72), 1.15);
+      var endX = w - 225 + (0.20 * 450 * 0.75 * sf);
+      var t = (1 - Math.cos(2 * Math.PI * ((Date.now() % 10800000) / 10800000))) / 2;
+      var mt = 1 - t;
+      var x = mt * mt * (-180 * sf) + 2 * mt * t * (w * 0.48) + t * t * endX;
+      var y = mt * mt * (eh * 0.12) + 2 * mt * t * (eh * 0.70) + t * t * (eh * 0.32);
+      var rot = ((Date.now() % 2700000) / 2700000) * 360;
+      j.style.transform = "translate3d(" + x.toFixed(2) + "px," + y.toFixed(2) + "px,0) rotate(" + rot.toFixed(2) + "deg) scale(" + (0.85 * sf).toFixed(2) + ")";
+      j.style.opacity = "0.26";
+    })();
+  </script>
 
   <header class="ribbon concept-c">
     <div class="masthead-tier">
@@ -167,9 +184,17 @@
           </section>
 
           <section class="policy-section">
+            <h2>A Note on Our Use of AI</h2>
+            <p>Dendra Folio uses AI-assisted tools in some aspects of website development, technical maintenance, and administrative drafting. These tools help us build and operate the publication; they do not replace our commitment to human literary authorship.</p>
+            <p>The reason is straightforward: the maker of the website, Pranshu Gupta, is a writer who does not professionally know coding and has no software development expertise. Wanting an independent, quiet place to publish and read, he took the help of Google Antigravity to build and design this site.</p>
+            <p>We expect published work to represent the author's own intellectual and creative expression. We assess substantive generative AI use in submitted work according to our editorial policy, and we do not knowingly present AI-generated writing as a writer's unaided original work.</p>
+            <p>We remain responsible for our editorial decisions, the policies we adopt, and the experience we offer our readers and contributors.</p>
+          </section>
+
+          <section class="policy-section">
             <h2>Editorial Disclosures & Questions</h2>
             <p>Contributors wishing to disclose the material use of assistive research or translation tools in their writing process may do so directly in their submission cover email to our editorial desk.</p>
-            <p>For general publication correspondence, please visit our <a href="../about/">About page</a>.</p>
+            <p>For our comprehensive curation standards and corrections guidelines, see our <a href="../editorial-policy/">Editorial Policy</a>. For general publication correspondence, please visit our <a href="../about/">About page</a>.</p>
           </section>
 
         </div>
@@ -207,6 +232,8 @@
           <p class="footer-quote">"The ultimate goal is to be free."</p>
           <p class="copyright">© 2026 Dendra Folio. All rights reserved.</p>
           <div class="footer-legal-links">
+            <a href="../editorial-policy/">Editorial Policy</a>
+            <span class="legal-dot">·</span>
             <a href="../ai-policy/">AI Policy</a>
             <span class="legal-dot">·</span>
             <a href="../privacy-policy/">Privacy Policy</a>
@@ -225,7 +252,7 @@
             <a href="../fiction/">Fiction</a>
           </div>
           <div class="footer-nav-row footer-nav-secondary">
-            <a href="../support-us/">Support</a>
+            <a href="../support-us/">Support Us</a>
             <span class="nav-dot">·</span>
             <a href="../about/">About</a>
           </div>

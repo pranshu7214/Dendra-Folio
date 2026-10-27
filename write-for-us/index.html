@@ -45,6 +45,23 @@
 
   <div class="space-bg"></div>
   <div class="planet jupiter"></div>
+  <script>
+    (function(){
+      var j = document.querySelector(".planet.jupiter");
+      if (!j || window.innerWidth < 901) return;
+      var w = window.innerWidth, h = window.innerHeight;
+      var eh = Math.min(h, Math.max(w * 0.72, 720));
+      var sf = Math.min(Math.max(w / 1400, 0.72), 1.15);
+      var endX = w - 225 + (0.20 * 450 * 0.75 * sf);
+      var t = (1 - Math.cos(2 * Math.PI * ((Date.now() % 10800000) / 10800000))) / 2;
+      var mt = 1 - t;
+      var x = mt * mt * (-180 * sf) + 2 * mt * t * (w * 0.48) + t * t * endX;
+      var y = mt * mt * (eh * 0.12) + 2 * mt * t * (eh * 0.70) + t * t * (eh * 0.32);
+      var rot = ((Date.now() % 2700000) / 2700000) * 360;
+      j.style.transform = "translate3d(" + x.toFixed(2) + "px," + y.toFixed(2) + "px,0) rotate(" + rot.toFixed(2) + "deg) scale(" + (0.85 * sf).toFixed(2) + ")";
+      j.style.opacity = "0.26";
+    })();
+  </script>
 
   <header class="ribbon concept-c">
     <div class="masthead-tier">
@@ -107,6 +124,10 @@
             <p>Every piece submitted undergoes careful editorial review. While submission does not guarantee acceptance, every manuscript is received with appreciation for the labor of the writer.</p>
           </section>
 
+          <div class="policy-callout">
+            <p><strong>Editorial Standards & Policy:</strong> Before submitting your manuscript, please review our comprehensive <a href="../editorial-policy/">Editorial Policy</a>. It details our curation principles across Prose, Verses, and Tales, our stance on byline sovereignty and pseudonyms, ethical attribution, and our commitment never to upload contributor manuscripts into external AI systems.</p>
+          </div>
+
           <section class="policy-section">
             <h2>The Three Rooms We Curate</h2>
             <p>Our publication is organized into three distinct editorial rooms:</p>
@@ -139,7 +160,7 @@
               <li><strong>Originality:</strong> All submitted work must be original to the author. If your piece incorporates third-party quotations, translations, or historical excerpts, you must hold the necessary permissions or fall strictly under the doctrine of fair dealing under Section 52 of the Indian Copyright Act, 1957.</li>
               <li><strong>Simultaneous Submissions:</strong> We permit simultaneous submissions. If your piece is accepted by another publication prior to formal acceptance by Dendra Folio, you must notify our editors immediately so it can be withdrawn.</li>
               <li><strong>Prior Publication:</strong> Please state clearly whether the piece has appeared previously anywhere in print or online (including on personal Substacks, Medium, or blogs). We give primary priority to unpublished original writing.</li>
-              <li><strong>AI Policy Compliance:</strong> In accordance with our <a href="../ai-policy/">AI Policy</a>, we do not accept work substantially written, generated, or rewritten by artificial intelligence. Any material assistive research or translation use must be transparently disclosed upon submission.</li>
+              <li><strong>AI Policy Compliance:</strong> In accordance with our <a href="../editorial-policy/">Editorial Policy</a> and <a href="../ai-policy/">AI Policy</a>, we do not accept work substantially written, generated, or rewritten by artificial intelligence. Any material assistive research or translation use must be transparently disclosed upon submission.</li>
             </ul>
           </section>
 
@@ -214,6 +235,8 @@
           <p class="footer-quote">"The ultimate goal is to be free."</p>
           <p class="copyright">© 2026 Dendra Folio. All rights reserved.</p>
           <div class="footer-legal-links">
+            <a href="../editorial-policy/">Editorial Policy</a>
+            <span class="legal-dot">·</span>
             <a href="../ai-policy/">AI Policy</a>
             <span class="legal-dot">·</span>
             <a href="../privacy-policy/">Privacy Policy</a>
@@ -232,7 +255,7 @@
             <a href="../fiction/">Fiction</a>
           </div>
           <div class="footer-nav-row footer-nav-secondary">
-            <a href="../support-us/">Support</a>
+            <a href="../support-us/">Support Us</a>
             <span class="nav-dot">·</span>
             <a href="../about/">About</a>
           </div>
