@@ -1,0 +1,48 @@
+# ==========================================
+# Dendra Folio - Git Exclusion Rules
+# ==========================================
+
+# 1. Local Development & Editor Tooling
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# 2. Local Scratch, Automation & Maintenance Scripts
+scratch/
+__pycache__/
+*.py[cod]
+*$py.class
+*.log
+
+# 3. Sensitive Credentials, Secrets & Keys
+.env
+.env.*
+*.pem
+*.key
+*.pfx
+*.cert
+credentials.json
+secrets/
+
+# 4. Internal Legal Documents & Unpublished Drafts
+CONTRIBUTOR_AGREEMENT.md
+contracts/
+submissions/
+drafts/
+*.draft.*
+
+# 5. Local Backups, Archives & Database Dumps
+*.bak
+*.backup
+*.zip
+*.tar.gz
+*.rar
+*.7z
+*.sql
+*.dump
+
+# 6. Operating System Metadata
+.DS_Store
+Thumbs.db
+desktop.ini
