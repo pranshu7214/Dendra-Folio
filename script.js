@@ -87,13 +87,42 @@ window.addEventListener("resize", () => {
     }, 150);
 });
 
-// Recalculate metrics after full page load to ensure maxScroll is correct
-window.addEventListener("load", () => {
+// Recalculate metrics & launch Universal Celestial Clock
+function startPhysicsEngine() {
     physicsCache.metrics = null;
     updateRibbonScrollState();
     if (animationFrameId === null) {
         animationFrameId = requestAnimationFrame(updateCinematicPhysics);
     }
+}
+
+if (document.readyState === "complete" || document.readyState === "interactive") {
+    startPhysicsEngine();
+} else {
+    window.addEventListener("DOMContentLoaded", startPhysicsEngine);
+    window.addEventListener("load", startPhysicsEngine);
+}
+
+// TAB-SWITCH INSTANT RE-SYNC:
+// Browsers pause requestAnimationFrame while tabs are inactive in the background.
+// When returning to this tab, update Jupiter's position synchronously BEFORE the
+// compositor paints the next frame, completely eliminating any split-second snap/pop!
+document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) {
+        physicsCache.metrics = null;
+        updateCinematicPhysics(performance.now());
+        if (animationFrameId === null) {
+            animationFrameId = requestAnimationFrame(updateCinematicPhysics);
+        }
+    }
+});
+window.addEventListener("focus", () => {
+    physicsCache.metrics = null;
+    updateCinematicPhysics(performance.now());
+});
+window.addEventListener("pageshow", () => {
+    physicsCache.metrics = null;
+    updateCinematicPhysics(performance.now());
 });
 
 function updateCinematicPhysics(now) {
@@ -216,14 +245,14 @@ function updateCinematicPhysics(now) {
     ========================================================================== */
 
     // ==========================================================================
-    // DIRECTION A: UNIVERSAL CELESTIAL CLOCK ENGINE (1.5-HOUR ORBITAL SWING ONE-WAY)
+    // DIRECTION A: UNIVERSAL CELESTIAL CLOCK ENGINE (75-MINUTE ORBITAL SWING ONE-WAY)
     // Synchronized across all pages via Universal Epoch Time (Date.now())
-    // 1.5 hours (5,400,000ms) one way -> 3 hours (10,800,000ms) full to-and-fro cycle
-    // 45 minutes (2,700,000ms) full 360° axial rotation
+    // 75 minutes (4,500,000ms) one way -> 150 minutes (9,000,000ms) full to-and-fro cycle
+    // 30 minutes (1,800,000ms) full 360° axial rotation
     // Fixed constant celestial scale eliminates vertical beating / throbbing
     // ==========================================================================
-    const CELESTIAL_ORBIT_CYCLE_MS = 10800000;   // 3 hours full swing (1.5 hours one side)
-    const CELESTIAL_ROTATION_CYCLE_MS = 2700000; // 45 minutes full 360° axial rotation
+    const CELESTIAL_ORBIT_CYCLE_MS = 9000000;    // 150 minutes full swing (75 minutes one side)
+    const CELESTIAL_ROTATION_CYCLE_MS = 1800000; // 30 minutes full 360° axial rotation
 
     if (jupiterEl && windowWidth >= 900) {
         const epochNow = Date.now();

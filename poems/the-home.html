@@ -59,11 +59,11 @@
       var eh = Math.min(h, Math.max(w * 0.72, 720));
       var sf = Math.min(Math.max(w / 1400, 0.72), 1.15);
       var endX = w - 225 + (0.20 * 450 * 0.75 * sf);
-      var t = (1 - Math.cos(2 * Math.PI * ((Date.now() % 10800000) / 10800000))) / 2;
+      var t = (1 - Math.cos(2 * Math.PI * ((Date.now() % 9000000) / 9000000))) / 2;
       var mt = 1 - t;
       var x = mt * mt * (-180 * sf) + 2 * mt * t * (w * 0.48) + t * t * endX;
       var y = mt * mt * (eh * 0.12) + 2 * mt * t * (eh * 0.70) + t * t * (eh * 0.32);
-      var rot = ((Date.now() % 2700000) / 2700000) * 360;
+      var rot = ((Date.now() % 1800000) / 1800000) * 360;
       j.style.transform = "translate3d(" + x.toFixed(2) + "px," + y.toFixed(2) + "px,0) rotate(" + rot.toFixed(2) + "deg) scale(" + (0.85 * sf).toFixed(2) + ")";
       j.style.opacity = "0.26";
     })();
@@ -315,7 +315,7 @@
             <a href="https://instagram.com/pranshu.space/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
             <a href="https://x.com/dendrafolio" target="_blank" rel="noopener noreferrer" aria-label="X Twitter"><i class="fa-brands fa-x-twitter"></i></a>
             <a href="https://www.linkedin.com/in/pranshu-gupta-7020883a8/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-            <a href="mailto:think@pranshu.space" target="_blank" rel="noopener noreferrer" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+            <a href="mailto:hello@dendrafolio.com" target="_blank" rel="noopener noreferrer" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
           </div>
         </div>
 
